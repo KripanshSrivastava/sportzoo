@@ -15,15 +15,22 @@ function SortableBlockCard({
   onToggleOpen,
   onEdit,
   onDelete,
+  onToggleHidden,
 }: {
   block: Block;
   isOpen: boolean;
   onToggleOpen: () => void;
   onEdit: (next: Record<string, unknown>) => void;
   onDelete: () => void;
+  onToggleHidden: () => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: block.id });
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : block.hidden ? 0.6 : 1,
+    ...(block.hidden ? { borderStyle: "dashed" as const } : {}),
+  };
   const def = BLOCK_DEFS[block.type];
 
   return (
@@ -41,11 +48,16 @@ function SortableBlockCard({
             ⠿
           </button>
           <div>
-            <p className="m-0 text-sm font-semibold">{def.label}</p>
+            <p className="m-0 text-sm font-semibold">
+              {def.label} {block.hidden && <span className="text-muted font-normal">(hidden)</span>}
+            </p>
             <p className="text-muted m-0 text-xs">{def.description}</p>
           </div>
         </div>
         <div className="flex shrink-0 gap-2">
+          <button type="button" className="btn btn-secondary" onClick={onToggleHidden}>
+            {block.hidden ? "Show" : "Hide"}
+          </button>
           <button type="button" className="btn btn-secondary" onClick={onToggleOpen}>
             {isOpen ? "Collapse" : "Edit"}
           </button>
@@ -94,6 +106,10 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
     setBlocks((bs) => bs && bs.map((b) => (b.id === id ? { ...b, props: next } : b)));
   }
 
+  function toggleHidden(id: string) {
+    setBlocks((bs) => bs && bs.map((b) => (b.id === id ? { ...b, hidden: !b.hidden } : b)));
+  }
+
   function deleteBlock(id: string) {
     if (!confirm("Remove this section from the page?")) return;
     setBlocks((bs) => bs && bs.filter((b) => b.id !== id));
@@ -119,7 +135,12 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
       const data = await res.json();
       if (!res.ok || !data.ok) {
         setStatus("error");
-        setMessage(data.message ?? "Failed to save.");
+        const raw = data.message ?? "Failed to save.";
+        setMessage(
+          /page_blocks/i.test(raw)
+            ? "Setup isn't finished yet — ask your developer to run the latest database migration (supabase/schema.sql), then try saving again."
+            : raw
+        );
         return;
       }
       setStatus("saved");
@@ -146,6 +167,7 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
                 onToggleOpen={() => setOpenId(openId === block.id ? null : block.id)}
                 onEdit={(next) => updateBlockProps(block.id, next)}
                 onDelete={() => deleteBlock(block.id)}
+                onToggleHidden={() => toggleHidden(block.id)}
               />
             ))}
           </div>

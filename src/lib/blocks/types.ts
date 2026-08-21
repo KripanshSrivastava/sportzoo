@@ -22,4 +22,6 @@ export interface Block {
   id: string;
   type: BlockType;
   props: Record<string, unknown>;
+  /** Hidden sections stay saved (content and position kept) but don't render on the live site. */
+  hidden?: boolean;
 }

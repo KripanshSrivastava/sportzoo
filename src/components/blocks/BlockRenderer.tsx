@@ -19,6 +19,7 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
     <>
       {blocks.map((block) => {
+        if (block.hidden) return null;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const p = block.props as any;
         switch (block.type) {
