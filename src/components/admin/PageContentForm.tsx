@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import type { FieldSchema } from "@/lib/pageContentSchemas";
 import { linesToList, linesToObjects, listToLines, objectsToLines } from "@/lib/pageContentSchemas";
 import type { PageKey } from "@/lib/pageContent";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 function contentToFormValues(fields: FieldSchema[], content: Record<string, unknown>): Record<string, string> {
   const values: Record<string, string> = {};
   for (const field of fields) {
     const raw = content[field.key];
-    if (field.type === "text" || field.type === "textarea") {
+    if (field.type === "text" || field.type === "textarea" || field.type === "image") {
       values[field.key] = typeof raw === "string" ? raw : "";
     } else if (field.type === "lines") {
       values[field.key] = listToLines(raw);
@@ -25,7 +26,7 @@ function formValuesToContent(fields: FieldSchema[], values: Record<string, strin
   const content: Record<string, unknown> = {};
   for (const field of fields) {
     const raw = values[field.key] ?? "";
-    if (field.type === "text" || field.type === "textarea") {
+    if (field.type === "text" || field.type === "textarea" || field.type === "image") {
       content[field.key] = raw;
     } else if (field.type === "lines") {
       content[field.key] = linesToList(raw);
@@ -77,28 +78,38 @@ export function PageContentForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex max-w-3xl flex-col gap-4">
-      {fields.map((field) => (
-        <div className="field" key={field.key}>
-          <label htmlFor={field.key}>{field.label}</label>
-          {field.type === "text" ? (
-            <input
-              id={field.key}
-              className="input"
-              value={values[field.key] ?? ""}
-              onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-            />
-          ) : (
-            <textarea
-              id={field.key}
-              className="input"
-              rows={field.type === "textarea" ? 3 : 5}
-              value={values[field.key] ?? ""}
-              onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
-            />
-          )}
-          {field.hint && <p className="text-muted mt-1 text-xs">{field.hint}</p>}
-        </div>
-      ))}
+      {fields.map((field) =>
+        field.type === "image" ? (
+          <ImageUploadField
+            key={field.key}
+            label={field.label}
+            folder="pages"
+            value={values[field.key] ?? ""}
+            onChange={(url) => setValues((v) => ({ ...v, [field.key]: url }))}
+          />
+        ) : (
+          <div className="field" key={field.key}>
+            <label htmlFor={field.key}>{field.label}</label>
+            {field.type === "text" ? (
+              <input
+                id={field.key}
+                className="input"
+                value={values[field.key] ?? ""}
+                onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+              />
+            ) : (
+              <textarea
+                id={field.key}
+                className="input"
+                rows={field.type === "textarea" ? 3 : 5}
+                value={values[field.key] ?? ""}
+                onChange={(e) => setValues((v) => ({ ...v, [field.key]: e.target.value }))}
+              />
+            )}
+            {field.hint && <p className="text-muted mt-1 text-xs">{field.hint}</p>}
+          </div>
+        )
+      )}
 
       {message && (
         <p className="text-sm font-medium" style={{ color: "#b3261e" }}>

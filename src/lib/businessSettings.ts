@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { siteConfig } from "@/config/site";
+import { siteImages } from "@/config/images";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 /**
@@ -22,6 +23,7 @@ export interface BusinessSettings {
   serviceArea: string;
   mapUrl: string;
   businessHours: string;
+  logoUrl: string | null;
 }
 
 function toPhoneHref(phone: string) {
@@ -48,6 +50,7 @@ const defaults: BusinessSettings = {
   serviceArea: siteConfig.serviceArea,
   mapUrl: siteConfig.mapUrl,
   businessHours: siteConfig.businessHours,
+  logoUrl: siteImages.logo,
 };
 
 /**
@@ -83,6 +86,7 @@ export const getBusinessSettings = cache(async (): Promise<BusinessSettings> => 
       serviceArea: data.service_area || defaults.serviceArea,
       mapUrl: data.map_url || defaults.mapUrl,
       businessHours: data.business_hours || defaults.businessHours,
+      logoUrl: data.logo_url || defaults.logoUrl,
     };
   } catch {
     return defaults;

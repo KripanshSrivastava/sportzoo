@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import type { BusinessSettings } from "@/lib/businessSettings";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 type FormState = BusinessSettings;
 
-const FIELDS: { key: keyof FormState; label: string; type?: "text" | "textarea" | "email" }[] = [
+const FIELDS: { key: Exclude<keyof FormState, "logoUrl">; label: string; type?: "text" | "textarea" | "email" }[] = [
   { key: "brand", label: "Brand name" },
   { key: "tagline", label: "Tagline" },
   { key: "shortTagline", label: "Short tagline (used in page titles)" },
@@ -84,6 +85,13 @@ export default function AdminSettingsPage() {
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <ImageUploadField
+          label="Logo (shown in the header)"
+          folder="branding"
+          value={form.logoUrl ?? ""}
+          onChange={(url) => setForm({ ...form, logoUrl: url })}
+        />
+
         {FIELDS.map(({ key, label, type }) => (
           <div className="field" key={key}>
             <label htmlFor={key}>{label}</label>

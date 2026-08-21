@@ -19,6 +19,7 @@ export async function Hero() {
     "heroDescription",
     `${settings.brand} plans corporate offsites and employee engagement events, and books artists, venues, and event equipment for companies across ${settings.primaryCity} and India — one accountable team from the first brief to the final invoice.`
   );
+  const heroImage = textOr(content, "heroImageUrl", siteImages.hero);
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--color-accent-900)", color: "var(--color-neutral-100)" }}>
       <div
@@ -54,14 +55,14 @@ export async function Hero() {
           </div>
         </div>
 
-        {/* To change this photo, see src/config/images.ts (siteImages.hero) */}
+        {/* Editable at /admin/pages/home — falls back to src/config/images.ts (siteImages.hero) */}
         <div
           className="blueprint relative aspect-[4/3] w-full overflow-hidden"
           style={{ borderColor: "color-mix(in srgb, var(--color-neutral-100) 30%, transparent)" }}
         >
           <BlueprintCorners color="var(--color-neutral-300)" />
           <Image
-            src={siteImages.hero}
+            src={heroImage}
             alt="Corporate offsite and conference event"
             fill
             sizes="(min-width: 1024px) 40vw, 90vw"

@@ -1,6 +1,6 @@
 import type { PageKey } from "./pageContent";
 
-export type FieldType = "text" | "textarea" | "lines" | "pairs" | "triples";
+export type FieldType = "text" | "textarea" | "lines" | "pairs" | "triples" | "image";
 
 export interface FieldSchema {
   key: string;
@@ -30,6 +30,7 @@ export const PAGE_CONTENT_SCHEMAS: Record<PageKey, { label: string; fields: Fiel
       { key: "heroEyebrow", label: "Hero eyebrow tag", type: "text" },
       { key: "heroTitle", label: "Hero heading", type: "textarea" },
       { key: "heroDescription", label: "Hero description", type: "textarea" },
+      { key: "heroImageUrl", label: "Hero photo", type: "image" },
       {
         key: "reasons",
         label: "\"Why choose us\" reasons",

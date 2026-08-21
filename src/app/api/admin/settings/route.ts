@@ -36,6 +36,7 @@ export async function PUT(req: NextRequest) {
     service_area: String(body.serviceArea ?? "").slice(0, 100) || null,
     map_url: String(body.mapUrl ?? "").slice(0, 500) || null,
     business_hours: String(body.businessHours ?? "").slice(0, 200) || null,
+    logo_url: body.logoUrl ? String(body.logoUrl).slice(0, 500) : null,
     updated_at: new Date().toISOString(),
   };
 

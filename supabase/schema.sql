@@ -21,9 +21,14 @@ create table if not exists business_settings (
   service_area text,
   map_url text,
   business_hours text,
+  logo_url text,
   updated_at timestamptz not null default now(),
   constraint business_settings_single_row check (id = 1)
 );
+
+-- Adds logo_url for installs whose business_settings table already existed
+-- before this column was introduced. No-op on a fresh install.
+alter table business_settings add column if not exists logo_url text;
 
 insert into business_settings (id)
 values (1)

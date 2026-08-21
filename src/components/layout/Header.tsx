@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { mainNav } from "@/config/nav";
-import { siteImages } from "@/config/images";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
@@ -23,14 +22,15 @@ export function Header() {
     >
       <div className="container-page flex h-16 items-center gap-4 sm:h-20">
         <Link href="/" className="mr-auto flex items-center gap-2" aria-label={siteConfig.brand}>
-          {siteImages.logo ? (
+          {siteConfig.logoUrl ? (
             <Image
-              src={siteImages.logo}
+              src={siteConfig.logoUrl}
               alt={siteConfig.brand}
               width={320}
               height={180}
               className="h-12 w-auto sm:h-14"
               priority
+              unoptimized
             />
           ) : (
             <span className="flex items-center gap-2 text-lg font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-heading)" }}>
