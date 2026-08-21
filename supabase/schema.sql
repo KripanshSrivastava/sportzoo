@@ -132,6 +132,67 @@ create policy "public read published events" on events for select using (publish
 -- reads/writes to it go through the admin API or the registration API route,
 -- both of which use the service-role key and bypass RLS entirely.
 
+-- Service pages (the ~25 pages under /corporate-events/[slug],
+-- /artist-booking/[slug], /venue-booking/[slug], /event-rentals/[slug]).
+-- Seeded from src/config/services.ts on first read; once a row exists here
+-- for a slug it takes over from the static fallback for that page.
+create table if not exists service_pages (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  category text not null, -- corporate-events | artist-booking | venue-booking | event-rentals
+  name text not null,
+  h1 text not null default '',
+  meta_title text not null default '',
+  meta_description text not null default '',
+  intro text[] not null default '{}',
+  problems text[] not null default '{}',
+  inclusions jsonb not null default '[]', -- [{ title, desc }]
+  process jsonb not null default '[]',    -- [{ title, desc }]
+  benefits text[] not null default '{}',
+  use_cases text[] not null default '{}',
+  faqs jsonb not null default '[]',       -- [{ q, a }]
+  published boolean not null default true,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+-- Cities for /corporate-event-management/[city]. Seeded from
+-- src/config/site.ts's targetCities on first read.
+create table if not exists cities (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  name text not null,
+  published boolean not null default true,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
+alter table service_pages enable row level security;
+alter table cities enable row level security;
+
+drop policy if exists "public read published service_pages" on service_pages;
+create policy "public read published service_pages" on service_pages for select using (published = true);
+
+drop policy if exists "public read published cities" on cities;
+create policy "public read published cities" on cities for select using (published = true);
+
+-- Editable text for the pages that don't share a common shape (Home, About,
+-- Contact, and the 4 service-category overview pages). One row per page,
+-- keyed by a fixed page_key; content is a flat JSON object of that page's
+-- editable fields (hero text, FAQs, repeatable lists), read by
+-- src/lib/pageContent.ts and merged over each page's built-in defaults.
+create table if not exists page_content (
+  page_key text primary key,
+  content jsonb not null default '{}',
+  updated_at timestamptz not null default now()
+);
+
+alter table page_content enable row level security;
+
+drop policy if exists "public read page_content" on page_content;
+create policy "public read page_content" on page_content for select using (true);
+
 -- ---------------------------------------------------------------------
 -- After running this file, also create a public Storage bucket named
 -- "media" (Project → Storage → New bucket → name it "media", toggle

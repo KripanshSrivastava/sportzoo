@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { siteConfig, targetCities } from "@/config/site";
-import { allServices } from "@/config/services";
+import { siteConfig } from "@/config/site";
 import { blogPosts } from "@/content/blog";
 import { getPublishedEvents } from "@/lib/eventsData";
+import { getServicePagesForCategory } from "@/lib/servicePagesData";
+import { getPublishedCities } from "@/lib/citiesData";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
@@ -20,8 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/terms-and-conditions",
   ];
 
-  const servicePaths = allServices.map((s) => `/${s.parentSlug}/${s.slug}`);
-  const cityPaths = targetCities.map((c) => `/corporate-event-management/${c.slug}`);
+  const serviceCategories = ["corporate-events", "artist-booking", "venue-booking", "event-rentals"] as const;
+  const servicesByCategory = await Promise.all(serviceCategories.map((c) => getServicePagesForCategory(c)));
+  const servicePaths = servicesByCategory.flat().map((s) => `/${s.parentSlug}/${s.slug}`);
+
+  const cities = await getPublishedCities();
+  const cityPaths = cities.map((c) => `/corporate-event-management/${c.slug}`);
+
   const blogPaths = blogPosts.map((p) => `/blog/${p.slug}`);
   const events = await getPublishedEvents();
   const eventPaths = events.map((ev) => `/events/${ev.slug}`);

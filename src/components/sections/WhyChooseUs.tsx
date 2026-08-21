@@ -1,7 +1,8 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Blueprint } from "@/components/ui/Blueprint";
+import { getPageContent, listOr } from "@/lib/pageContent";
 
-const reasons = [
+const defaultReasons = [
   {
     title: "One team, not five vendors",
     desc: "Venue, artists, equipment, and on-ground execution managed by a single accountable team instead of coordinated across separate suppliers.",
@@ -28,7 +29,9 @@ const reasons = [
   },
 ];
 
-export function WhyChooseUs() {
+export async function WhyChooseUs() {
+  const content = await getPageContent("home");
+  const reasons = listOr(content, "reasons", defaultReasons);
   return (
     <Section style={{ background: "var(--color-surface)" }}>
       <SectionHeading

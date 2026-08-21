@@ -1,15 +1,18 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Blueprint } from "@/components/ui/Blueprint";
+import { getPageContent, listOr } from "@/lib/pageContent";
 
-const steps = [
-  { n: "01", title: "Brief", desc: "Tell us your objective, headcount, dates, and budget — by call, WhatsApp, or the enquiry form." },
-  { n: "02", title: "Proposal", desc: "We share a costed proposal with venue, artist, and format options within 24–48 hours." },
-  { n: "03", title: "Planning", desc: "Once approved, we lock vendors, build the detailed schedule, and confirm every logistic." },
-  { n: "04", title: "Execution", desc: "Our team manages the event on the ground, in real time, start to finish." },
-  { n: "05", title: "Reporting", desc: "You receive a wrap-up report — attendance, spend reconciliation, and photos — after every engagement." },
+const defaultSteps = [
+  { title: "Brief", desc: "Tell us your objective, headcount, dates, and budget — by call, WhatsApp, or the enquiry form." },
+  { title: "Proposal", desc: "We share a costed proposal with venue, artist, and format options within 24–48 hours." },
+  { title: "Planning", desc: "Once approved, we lock vendors, build the detailed schedule, and confirm every logistic." },
+  { title: "Execution", desc: "Our team manages the event on the ground, in real time, start to finish." },
+  { title: "Reporting", desc: "You receive a wrap-up report — attendance, spend reconciliation, and photos — after every engagement." },
 ];
 
-export function ProcessSteps() {
+export async function ProcessSteps() {
+  const content = await getPageContent("home");
+  const steps = listOr(content, "processSteps", defaultSteps);
   return (
     <Section>
       <SectionHeading
@@ -18,10 +21,10 @@ export function ProcessSteps() {
         description="No lengthy back-and-forth before you get a real number. Here's exactly how an engagement with Elephant Corporate runs."
       />
       <ol className="mt-11 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-5">
-        {steps.map((s) => (
-          <Blueprint key={s.n} as="li" className="p-5">
+        {steps.map((s, i) => (
+          <Blueprint key={s.title} as="li" className="p-5">
             <span style={{ fontFamily: "var(--font-heading)", fontSize: "30px", fontWeight: 600, color: "var(--color-accent-700)" }}>
-              {s.n}
+              {String(i + 1).padStart(2, "0")}
             </span>
             <p className="card-title mt-2 text-[15px]">{s.title}</p>
             <p className="card-body text-[12.5px]">{s.desc}</p>

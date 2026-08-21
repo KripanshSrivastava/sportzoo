@@ -5,6 +5,9 @@ import { QuoteForm } from "@/components/forms/QuoteForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteConfig, targetCities } from "@/config/site";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { getPageContent, textOr } from "@/lib/pageContent";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   const settings = await getBusinessSettings();
@@ -17,6 +20,13 @@ export async function generateMetadata() {
 
 export default async function ContactPage() {
   const settings = await getBusinessSettings();
+  const content = await getPageContent("contact");
+  const heroTitle = textOr(content, "heroTitle", "Contact Us");
+  const heroDescription = textOr(
+    content,
+    "heroDescription",
+    "Have a question before requesting a quote? Reach us directly or send an enquiry below."
+  );
   return (
     <>
       <JsonLd
@@ -31,10 +41,8 @@ export default async function ContactPage() {
 
       <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-16">
         <div className="container-page">
-          <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Contact Us</h1>
-          <p className="mt-4 max-w-2xl text-lg text-slate-300">
-            Have a question before requesting a quote? Reach us directly or send an enquiry below.
-          </p>
+          <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">{heroTitle}</h1>
+          <p className="mt-4 max-w-2xl text-lg text-slate-300">{heroDescription}</p>
         </div>
       </section>
 

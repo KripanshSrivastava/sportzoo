@@ -1,15 +1,13 @@
 import { notFound } from "next/navigation";
-import { eventRentalServices } from "@/config/services";
 import { ServicePageTemplate } from "@/components/sections/ServicePageTemplate";
 import { buildMetadata } from "@/lib/seo";
+import { getServicePageBySlug } from "@/lib/servicePagesData";
 
-export function generateStaticParams() {
-  return eventRentalServices.map((s) => ({ slug: s.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = eventRentalServices.find((s) => s.slug === slug);
+  const service = await getServicePageBySlug("event-rentals", slug);
   if (!service) return {};
   return buildMetadata({
     title: service.metaTitle,
@@ -20,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function EventRentalsServicePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = eventRentalServices.find((s) => s.slug === slug);
+  const service = await getServicePageBySlug("event-rentals", slug);
   if (!service) notFound();
   return <ServicePageTemplate service={service} />;
 }

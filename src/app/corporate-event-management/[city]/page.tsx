@@ -7,16 +7,14 @@ import { FAQSection } from "@/components/sections/FAQSection";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
-import { targetCities } from "@/config/site";
-import { corporateEventServices } from "@/config/services";
+import { getPublishedCityBySlug } from "@/lib/citiesData";
+import { getServicePagesForCategory } from "@/lib/servicePagesData";
 
-export function generateStaticParams() {
-  return targetCities.map((c) => ({ city: c.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params;
-  const cityData = targetCities.find((c) => c.slug === city);
+  const cityData = await getPublishedCityBySlug(city);
   if (!cityData) return {};
   return buildMetadata({
     title: `Corporate Event Organisers in ${cityData.name} | Elephant Corporate`,
@@ -27,8 +25,9 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 
 export default async function CityEventPage({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params;
-  const cityData = targetCities.find((c) => c.slug === city);
+  const cityData = await getPublishedCityBySlug(city);
   if (!cityData) notFound();
+  const corporateEventServices = await getServicePagesForCategory("corporate-events");
 
   const faqs = [
     {

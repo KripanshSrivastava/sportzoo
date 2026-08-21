@@ -3,9 +3,22 @@ import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { BlueprintCorners } from "@/components/ui/Blueprint";
 import { siteImages } from "@/config/images";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { getPageContent, textOr } from "@/lib/pageContent";
 
 export async function Hero() {
   const settings = await getBusinessSettings();
+  const content = await getPageContent("home");
+  const eyebrow = textOr(content, "heroEyebrow", "Corporate Event Management Partner");
+  const title = textOr(
+    content,
+    "heroTitle",
+    "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End"
+  );
+  const description = textOr(
+    content,
+    "heroDescription",
+    `${settings.brand} plans corporate offsites and employee engagement events, and books artists, venues, and event equipment for companies across ${settings.primaryCity} and India — one accountable team from the first brief to the final invoice.`
+  );
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--color-accent-900)", color: "var(--color-neutral-100)" }}>
       <div
@@ -22,15 +35,13 @@ export async function Hero() {
             className="tag tag-outline"
             style={{ color: "var(--color-accent-300)", borderColor: "var(--color-accent-300)", marginBottom: "20px" }}
           >
-            Corporate Event Management Partner
+            {eyebrow}
           </span>
           <h1 className="mt-5 max-w-[620px] text-[34px] leading-[1.08] sm:text-[42px] lg:text-[52px] lg:leading-[1.06]">
-            Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End
+            {title}
           </h1>
           <p className="mt-6 max-w-[520px] text-[17px] leading-relaxed" style={{ color: "var(--color-neutral-300)" }}>
-            {settings.brand} plans corporate offsites and employee engagement events, and books artists, venues, and
-            event equipment for companies across {settings.primaryCity} and India — one accountable team
-            from the first brief to the final invoice.
+            {description}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <QuoteButton label="Get a Custom Quote" size="lg" />

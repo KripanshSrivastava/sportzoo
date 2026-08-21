@@ -1,8 +1,9 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { getPageContent, listOr } from "@/lib/pageContent";
 
 // DEMO DATA — fictional quotes and names for preview purposes.
 // Replace with real client feedback before launch.
-const testimonials = [
+const defaultTestimonials = [
   {
     quote:
       "We had six weeks and a leadership team that couldn't afford a badly run offsite. Elephant Corporate handled everything we didn't have time for and the whole thing ran itself.",
@@ -23,7 +24,9 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
+export async function Testimonials() {
+  const content = await getPageContent("home");
+  const testimonials = listOr(content, "testimonials", defaultTestimonials);
   return (
     <Section>
       <SectionHeading eyebrow="Client Feedback" title="What clients say" />

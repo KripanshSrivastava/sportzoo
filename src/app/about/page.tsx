@@ -4,6 +4,9 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { getPageContent, textOr, listOr } from "@/lib/pageContent";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = buildMetadata({
   title: "About Elephant Corporate | Corporate Event Management Company",
@@ -12,7 +15,7 @@ export const metadata = buildMetadata({
   path: "/about",
 });
 
-const values = [
+const defaultValues = [
   {
     title: "Accountability over hand-offs",
     desc: "One team owns your event from brief to bill — we don't sub-contract the parts that are hard to coordinate.",
@@ -33,6 +36,20 @@ const values = [
 
 export default async function AboutPage() {
   const settings = await getBusinessSettings();
+  const content = await getPageContent("about");
+  const heroTitle = textOr(content, "heroTitle", "About Elephant Corporate");
+  const heroDescription = textOr(
+    content,
+    "heroDescription",
+    "Elephant Corporate exists because corporate events are usually planned by people whose actual job is something else — HR, admin, or the founder's office. We take that work off your plate, end to end."
+  );
+  const defaultIntro = [
+    `${settings.brand} is a corporate event management company serving companies across ${settings.primaryCity} and India. We work with HR managers, admin teams, founders, office managers, and procurement teams who need a single, accountable partner — not a list of vendors to coordinate independently.`,
+    "Our work spans four connected disciplines: corporate events (offsites, recognition ceremonies, annual day, sports days, team building, gifting, and conferences), artist booking and entertainment, venue booking and management, and event rentals and equipment. Because all four sit under one team, an offsite that needs a venue and entertainment, or a conference that needs AV production, is planned as one engagement — not handed off between separate agencies.",
+    "We built Elephant Corporate around what corporate clients actually need from an events partner: fast, costed proposals; transparent line-item pricing; a dedicated point of contact; and on-ground execution that doesn't require your team to manage the day itself.",
+  ];
+  const intro = listOr(content, "intro", defaultIntro);
+  const values = listOr(content, "values", defaultValues);
   return (
     <>
       <Breadcrumbs items={[{ name: "About", path: "/about" }]} />
@@ -40,36 +57,17 @@ export default async function AboutPage() {
       <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
         <div className="container-page">
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-            About Elephant Corporate
+            {heroTitle}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            Elephant Corporate exists because corporate events are usually planned by people whose actual job is
-            something else — HR, admin, or the founder&apos;s office. We take that work off your plate, end
-            to end.
-          </p>
+          <p className="mt-6 max-w-2xl text-lg text-slate-300">{heroDescription}</p>
         </div>
       </section>
 
       <Section className="bg-white">
         <div className="max-w-3xl space-y-5 text-base leading-relaxed text-slate-700">
-          <p>
-            {settings.brand} is a corporate event management company serving companies across{" "}
-            {settings.primaryCity} and India. We work with HR managers, admin teams, founders, office
-            managers, and procurement teams who need a single, accountable partner — not a list of vendors to
-            coordinate independently.
-          </p>
-          <p>
-            Our work spans four connected disciplines: corporate events (offsites, recognition ceremonies,
-            annual day, sports days, team building, gifting, and conferences), artist booking and
-            entertainment, venue booking and management, and event rentals and equipment. Because all four
-            sit under one team, an offsite that needs a venue and entertainment, or a conference that needs
-            AV production, is planned as one engagement — not handed off between separate agencies.
-          </p>
-          <p>
-            We built Elephant Corporate around what corporate clients actually need from an events partner: fast,
-            costed proposals; transparent line-item pricing; a dedicated point of contact; and on-ground
-            execution that doesn&apos;t require your team to manage the day itself.
-          </p>
+          {intro.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
       </Section>
 

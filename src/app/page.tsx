@@ -12,6 +12,7 @@ import { FAQSection } from "@/components/sections/FAQSection";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { siteConfig } from "@/config/site";
+import { getPageContent, listOr } from "@/lib/pageContent";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,7 @@ export const metadata = buildMetadata({
   path: "/",
 });
 
-const homeFaqs = [
+const defaultHomeFaqs = [
   {
     q: "What does Elephant Corporate actually manage?",
     a: "Corporate events (offsites, annual day, recognition ceremonies, team building, gifting, conferences), artist booking and entertainment, venue booking, and event rentals and equipment — either as separate bookings or combined into one managed event.",
@@ -45,7 +46,9 @@ const homeFaqs = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getPageContent("home");
+  const homeFaqs = listOr(content, "faqs", defaultHomeFaqs);
   return (
     <>
       <Hero />

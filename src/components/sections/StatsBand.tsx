@@ -1,11 +1,15 @@
-const stats = [
+import { getPageContent, listOr } from "@/lib/pageContent";
+
+const defaultStats = [
   { label: "Proposal turnaround", value: "24–48 hrs" },
   { label: "Service coverage", value: "Pan-India" },
   { label: "Point of contact per client", value: "1 dedicated" },
   { label: "On-ground presence", value: "Every engagement" },
 ];
 
-export function StatsBand() {
+export async function StatsBand() {
+  const content = await getPageContent("home");
+  const stats = listOr(content, "stats", defaultStats);
   return (
     <div style={{ background: "var(--color-accent-900)" }}>
       <div className="container-page grid grid-cols-2 gap-6 py-11 sm:grid-cols-4">

@@ -1,6 +1,7 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { getPageContent, listOr } from "@/lib/pageContent";
 
-const industries = [
+const defaultIndustries = [
   "Information Technology & SaaS",
   "Banking, Financial Services & Insurance",
   "Manufacturing & Engineering",
@@ -11,7 +12,9 @@ const industries = [
   "Real Estate & Infrastructure",
 ];
 
-export function IndustriesServed() {
+export async function IndustriesServed() {
+  const content = await getPageContent("home");
+  const industries = listOr(content, "industries", defaultIndustries);
   return (
     <Section className="bg-white">
       <SectionHeading eyebrow="Who We Work With" title="Industries we serve" />
