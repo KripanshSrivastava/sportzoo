@@ -2,7 +2,23 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #101828;
+
+  --color-navy-950: #0b1220;
+  --color-navy-900: #0f1b2d;
+  --color-navy-800: #16273f;
+  --color-navy-700: #1e3555;
+  --color-navy-600: #2a496f;
+
+  --color-accent: #ff7a1a;
+  --color-accent-dark: #e0630a;
+  --color-accent-light: #ffe8d6;
+
+  --color-electric: #2563eb;
+  --color-electric-dark: #1d4ed8;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
 }
 
 @theme inline {
@@ -12,15 +28,42 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-electric);
+  outline-offset: 2px;
+}
+
+.container-page {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-inline: 2rem;
+  }
 }
