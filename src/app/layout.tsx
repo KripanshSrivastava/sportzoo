@@ -46,8 +46,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <SiteConfigProvider value={settings}>
-          <JsonLd data={organizationJsonLd()} />
-          <JsonLd data={websiteJsonLd()} />
+          <JsonLd data={organizationJsonLd(settings)} />
+          <JsonLd data={websiteJsonLd(settings)} />
           <AnalyticsScripts />
           <SiteChrome>{children}</SiteChrome>
         </SiteConfigProvider>

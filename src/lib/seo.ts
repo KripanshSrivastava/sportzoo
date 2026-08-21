@@ -13,7 +13,7 @@ const isProd = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
 export function buildMetadata({ title, description, path, noIndex, ogImage }: PageMetaInput): Metadata {
   const url = `${siteConfig.url}${path}`;
-  const image = ogImage ?? `${siteConfig.url}/images/og-default.jpg`;
+  const image = ogImage ?? `${siteConfig.url}/og-default`;
   const shouldIndex = isProd && !noIndex;
 
   // Callers may or may not already include the brand suffix — normalise to

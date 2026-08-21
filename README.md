@@ -119,26 +119,33 @@ wired into every call/WhatsApp/quote button and the lead form's submit handler:
 Configure these as GA4 conversion events / GTM triggers once GTM is live. Every primary CTA also carries
 `data-cta` / `data-location` attributes for click tracking outside GTM if needed.
 
-## 7. Deployment (Vercel)
+## 7. Deployment
 
-1. Push this repository to GitHub/GitLab/Bitbucket and import it in Vercel.
-2. Set environment variables in the Vercel project (Project Settings → Environment Variables):
-   - `NEXT_PUBLIC_SITE_ENV=production` on the Production environment **only** — leave it unset (or any
-     other value) on Preview deployments so preview URLs stay out of search engines
-     (`src/app/robots.ts` and `src/lib/seo.ts` both key off this).
-   - `RESEND_API_KEY` (and `LEAD_WEBHOOK_URL` if you're also using one), analytics IDs, etc. as needed.
-3. Deploy. Vercel auto-detects Next.js — no custom build command required. This project is built to run
-   comfortably on Vercel's free/hobby serverless tier (no VPS/VPC needed) — no background processes, no
-   heavy dependencies, and the lead email send is a single lightweight HTTPS call.
-4. Point `elephantcorporate.in` at the Vercel project and confirm HTTPS is issued.
+**Currently deployed on: Hostinger** (Node.js hosting, domain DNS managed via Cloudflare — see project
+history for the DNS setup). Whichever host you use, the same environment variables need to be set there,
+not just in `.env.local`:
+
+- `NEXT_PUBLIC_SITE_ENV=production` — **critical for SEO**. Without this, `src/app/robots.ts` blocks all
+  crawlers and every page's metadata sets `noindex`, so the live site won't get indexed at all. Set it in
+  Hostinger's hosting panel under environment variables / Node.js app settings.
+- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `LEAD_NOTIFY_EMAIL` — lead form email delivery.
+- `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` — admin panel.
+- Analytics IDs (`NEXT_PUBLIC_GA4_ID` etc.) and `NEXT_PUBLIC_GSC_VERIFICATION` as needed.
+
+Build command: `npm run build`. Start command: `npm run start`. This is a full Node.js app (App Router,
+middleware, API routes, dynamic Supabase-backed pages) — it needs a real Node.js runtime, not static file
+hosting.
+
+If you ever move to Vercel instead: push to GitHub and import the repo there — Vercel auto-detects Next.js,
+no custom build command needed, and the same environment variables apply.
 
 ## 8. Google Search Console setup
 
-1. Add `elephantcorporate.in` as a property in Search Console (Domain property recommended).
+1. Add `elephantcorporate.app` as a property in Search Console (Domain property recommended).
 2. Use the "HTML tag" verification method, copy the `content` value, and set it as
    `NEXT_PUBLIC_GSC_VERIFICATION` in Vercel production env vars, then redeploy.
-3. Submit `https://elephantcorporate.in/sitemap.xml` under Sitemaps.
-4. Confirm `https://elephantcorporate.in/robots.txt` allows crawling (it only does once
+3. Submit `https://elephantcorporate.app/sitemap.xml` under Sitemaps.
+4. Confirm `https://elephantcorporate.app/robots.txt` allows crawling (it only does once
    `NEXT_PUBLIC_SITE_ENV=production` is set — check this first if verification or indexing seems stuck).
 
 ## 9. Project structure

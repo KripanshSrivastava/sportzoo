@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import type { BusinessSettings } from "@/lib/businessSettings";
 
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
@@ -6,40 +7,40 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export function organizationJsonLd() {
+export function organizationJsonLd(settings: BusinessSettings) {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "@id": `${siteConfig.url}/#organization`,
-    name: siteConfig.brand,
+    name: settings.brand,
     legalName: siteConfig.legalName,
     url: siteConfig.url,
-    description: siteConfig.description,
+    description: settings.description,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.officeAddress,
-      addressLocality: siteConfig.primaryCity,
+      streetAddress: settings.officeAddress,
+      addressLocality: settings.primaryCity,
       addressCountry: "IN",
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: siteConfig.phone,
-      email: siteConfig.email,
+      telephone: settings.phone,
+      email: settings.email,
       contactType: "sales",
       areaServed: "IN",
       availableLanguage: ["en", "hi"],
     },
-    sameAs: Object.values(siteConfig.social).filter((v) => v && !v.startsWith("[")),
+    sameAs: Object.values(siteConfig.social).filter((v) => v && !v.startsWith("[") && v !== "#"),
   };
 }
 
-export function websiteJsonLd() {
+export function websiteJsonLd(settings: BusinessSettings) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteConfig.url}/#website`,
     url: siteConfig.url,
-    name: siteConfig.brand,
+    name: settings.brand,
     publisher: { "@id": `${siteConfig.url}/#organization` },
   };
 }
