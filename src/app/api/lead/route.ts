@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   try {
     await deliverLead({ ...parsed.data, submittedAt: new Date().toISOString(), ip });
   } catch (err) {
-    console.error("[sportzoo] Lead delivery failed:", err);
+    console.error("[elephant-corporate] Lead delivery failed:", err);
     return NextResponse.json(
       { ok: false, message: "We couldn't submit your enquiry right now. Please call or WhatsApp us instead." },
       { status: 502 }

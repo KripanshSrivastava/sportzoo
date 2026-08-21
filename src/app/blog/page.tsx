@@ -6,9 +6,9 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { blogPosts } from "@/content/blog";
 
 export const metadata = buildMetadata({
-  title: "Blog & Resources | Sportzoo",
+  title: "Blog & Resources | Elephant Corporate",
   description:
-    "Practical guides on corporate event planning, offsites, employee engagement, artist booking, and venue selection from the Sportzoo team.",
+    "Practical guides on corporate event planning, offsites, employee engagement, artist booking, and venue selection from the Elephant Corporate team.",
   path: "/blog",
 });
 

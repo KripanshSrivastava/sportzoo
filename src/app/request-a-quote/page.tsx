@@ -6,9 +6,9 @@ import { CallButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Request a Quote | Sportzoo Corporate Events",
+  title: "Request a Quote | Elephant Corporate",
   description:
-    "Tell Sportzoo about your corporate event, artist, venue, or rental requirement and receive a costed proposal within 24–48 hours.",
+    "Tell Elephant Corporate about your corporate event, artist, venue, or rental requirement and receive a costed proposal within 24–48 hours.",
   path: "/request-a-quote",
 });
 

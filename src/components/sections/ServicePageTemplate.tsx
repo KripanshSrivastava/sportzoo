@@ -130,7 +130,7 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
       <Section className="bg-white">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <SectionHeading eyebrow="Benefits" title={`Why choose Sportzoo for ${service.name.toLowerCase()}`} />
+            <SectionHeading eyebrow="Benefits" title={`Why choose Elephant Corporate for ${service.name.toLowerCase()}`} />
             <ul className="mt-6 space-y-3">
               {service.benefits.map((b) => (
                 <li key={b} className="flex gap-3 text-sm leading-relaxed text-slate-700">

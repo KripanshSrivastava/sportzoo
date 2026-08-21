@@ -5,23 +5,21 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
-import { caseStudies, getCaseStudyBySlug } from "@/content/caseStudies";
+import { getPublishedCaseStudyBySlug } from "@/lib/caseStudiesData";
 import { placeholderPhoto } from "@/lib/placeholderImages";
 
-export function generateStaticParams() {
-  return caseStudies.map((c) => ({ slug: c.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const c = getCaseStudyBySlug(slug);
+  const c = await getPublishedCaseStudyBySlug(slug);
   if (!c) return {};
-  return buildMetadata({ title: `${c.title} | Sportzoo`, description: c.summary, path: `/case-studies/${c.slug}`, noIndex: true });
+  return buildMetadata({ title: `${c.title} | Elephant Corporate`, description: c.summary, path: `/case-studies/${c.slug}`, noIndex: true });
 }
 
 export default async function CaseStudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const c = getCaseStudyBySlug(slug);
+  const c = await getPublishedCaseStudyBySlug(slug);
   if (!c) notFound();
 
   return (
@@ -36,10 +34,10 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </div>
       </section>
 
-      {/* DEMO PHOTO — replace with real event photography before launch */}
+      {/* Cover photo — set in /admin/case-studies, or falls back to a stock placeholder */}
       <div className="relative aspect-[21/9] w-full">
         <Image
-          src={placeholderPhoto(`${c.slug}-hero`, 1400, 600)}
+          src={c.coverImageUrl || placeholderPhoto(`${c.slug}-hero`, 1400, 600)}
           alt={c.title}
           fill
           sizes="100vw"

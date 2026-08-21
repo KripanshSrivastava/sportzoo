@@ -9,15 +9,15 @@ import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { artistBookingServices } from "@/config/services";
 
 export const metadata = buildMetadata({
-  title: "Artist Booking & Entertainment for Corporate Events | Sportzoo",
+  title: "Artist Booking & Entertainment for Corporate Events | Elephant Corporate",
   description:
-    "Sportzoo books singers, bands, DJs, anchors, speakers, and comedians for corporate events — vetted, briefed, and coordinated end to end.",
+    "Elephant Corporate books singers, bands, DJs, anchors, speakers, and comedians for corporate events — vetted, briefed, and coordinated end to end.",
   path: "/artist-booking",
 });
 
 const faqs = [
   {
-    q: "What kinds of performers can Sportzoo book for corporate events?",
+    q: "What kinds of performers can Elephant Corporate book for corporate events?",
     a: "Live singers and bands, DJs, anchors and emcees, motivational speakers, stand-up comedians, and specialty acts — see each service page for details.",
   },
   {
@@ -41,7 +41,7 @@ export default function ArtistBookingPage() {
             Artist Booking & Entertainment for Corporate Events
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            Sportzoo books singers, live bands, DJs, anchors, speakers, and comedians for corporate events —
+            Elephant Corporate books singers, live bands, DJs, anchors, speakers, and comedians for corporate events —
             curated from a vetted talent network, briefed on your event, and coordinated end to end.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -55,7 +55,7 @@ export default function ArtistBookingPage() {
         <SectionHeading
           eyebrow="Our Talent Services"
           title="Every act, one booking team"
-          description="Whichever performer or presenter you need, the same Sportzoo team handles shortlisting, contracting, technical requirements, and on-day coordination."
+          description="Whichever performer or presenter you need, the same Elephant Corporate team handles shortlisting, contracting, technical requirements, and on-day coordination."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {artistBookingServices.map((s) => (

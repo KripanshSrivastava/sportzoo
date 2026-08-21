@@ -1,22 +1,24 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { whatsappLinkForPage } from "@/config/site";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function WhatsAppFloat() {
+  const settings = useSiteConfig();
   const pathname = usePathname();
   const pageLabel = pathname === "/" ? "your services" : pathname.replace(/^\//, "").replace(/-/g, " ");
 
   return (
     <a
-      href={whatsappLinkForPage(pageLabel)}
+      href={buildWhatsAppLink(settings.whatsappHref, settings.brand, pageLabel)}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackEvent("whatsapp_click", { source: "float" })}
       data-cta="whatsapp"
       data-location="float"
-      aria-label="Chat with Sportzoo on WhatsApp"
+      aria-label={`Chat with ${settings.brand} on WhatsApp`}
       className="fixed bottom-24 right-4 z-40 flex h-[52px] w-[52px] items-center justify-center transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 sm:bottom-6 sm:right-5"
       style={{ background: "var(--color-accent)", color: "var(--color-bg)", boxShadow: "var(--shadow-lg)" }}
     >

@@ -31,9 +31,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Corporate Offsite Planning",
     h1: "Corporate Offsite Planning for Teams That Need to Actually Get Something Done",
-    metaTitle: "Corporate Offsite Planning Company | Sportzoo",
+    metaTitle: "Corporate Offsite Planning Company | Elephant Corporate",
     metaDescription:
-      "Sportzoo plans corporate offsites end to end — venue selection, agenda design, logistics, and on-ground execution. Get a custom offsite quote in 24 hours.",
+      "Elephant Corporate plans corporate offsites end to end — venue selection, agenda design, logistics, and on-ground execution. Get a custom offsite quote in 24 hours.",
     primaryKeyword: "corporate offsite planning company",
     secondaryKeywords: [
       "corporate offsite planners",
@@ -42,7 +42,7 @@ export const corporateEventServices: ServicePage[] = [
       "annual offsite organisers",
     ],
     intro: [
-      "A corporate offsite is only worth the time and budget if it produces a real outcome — sharper strategy, a stronger team, or a reset after a hard quarter. Sportzoo plans corporate offsites for leadership teams, departments, and full organisations, handling venue selection, agenda design, logistics, and on-ground execution so your internal team isn't running a second job on top of their actual one.",
+      "A corporate offsite is only worth the time and budget if it produces a real outcome — sharper strategy, a stronger team, or a reset after a hard quarter. Elephant Corporate plans corporate offsites for leadership teams, departments, and full organisations, handling venue selection, agenda design, logistics, and on-ground execution so your internal team isn't running a second job on top of their actual one.",
       "We work with HR, admin, and founders' offices across company sizes — from a 15-person leadership retreat to a 300-person all-hands offsite — and manage every moving part: venue, meeting spaces, facilitation support, entertainment, meals, and the informal moments that make an offsite worth remembering.",
     ],
     problems: [
@@ -92,7 +92,7 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Rewards & Recognition Events",
     h1: "Rewards and Recognition Event Management That Makes Recognition Feel Earned",
-    metaTitle: "Rewards and Recognition Event Management | Sportzoo",
+    metaTitle: "Rewards and Recognition Event Management | Elephant Corporate",
     metaDescription:
       "End-to-end rewards and recognition event management — venue, stage production, awards design, and guest experience. Request a quote for your next recognition ceremony.",
     primaryKeyword: "rewards and recognition event management",
@@ -102,7 +102,7 @@ export const corporateEventServices: ServicePage[] = [
       "recognition ceremony management company",
     ],
     intro: [
-      "A recognition ceremony that feels thrown together undercuts the very message it's meant to send. Sportzoo manages rewards and recognition events — from format design and stage production to trophies, guest experience, and photography — so the evening matches the seriousness of the achievement being celebrated.",
+      "A recognition ceremony that feels thrown together undercuts the very message it's meant to send. Elephant Corporate manages rewards and recognition events — from format design and stage production to trophies, guest experience, and photography — so the evening matches the seriousness of the achievement being celebrated.",
       "We plan these events for HR and admin teams who need the ceremony to run without a hitch, because everyone in the room, including leadership, is watching.",
     ],
     problems: [
@@ -150,9 +150,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Corporate Annual Day",
     h1: "Corporate Annual Day Management for Companies That Want It Done Right, Once a Year",
-    metaTitle: "Corporate Annual Day Organisers | Sportzoo",
+    metaTitle: "Corporate Annual Day Organisers | Elephant Corporate",
     metaDescription:
-      "Sportzoo manages corporate annual day events end to end — venue, program, entertainment, and logistics. Talk to us about your next annual day.",
+      "Elephant Corporate manages corporate annual day events end to end — venue, program, entertainment, and logistics. Talk to us about your next annual day.",
     primaryKeyword: "corporate annual day organisers",
     secondaryKeywords: [
       "corporate annual day management company",
@@ -160,7 +160,7 @@ export const corporateEventServices: ServicePage[] = [
       "company annual function organisers",
     ],
     intro: [
-      "Annual day is often the one event in the year where the entire company — and sometimes families — are in the same room. Sportzoo manages corporate annual day events end to end: venue, program design, entertainment, catering, and logistics, so HR and admin teams can focus on the parts only they can own, like leadership speeches and internal communication.",
+      "Annual day is often the one event in the year where the entire company — and sometimes families — are in the same room. Elephant Corporate manages corporate annual day events end to end: venue, program design, entertainment, catering, and logistics, so HR and admin teams can focus on the parts only they can own, like leadership speeches and internal communication.",
     ],
     problems: [
       "Planning stretches thin internal teams already running day-to-day HR operations.",
@@ -207,9 +207,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Corporate Sports Day",
     h1: "Corporate Sports Day Organisers for Genuinely Fun, Well-Run Days",
-    metaTitle: "Corporate Sports Day Organisers | Sportzoo",
+    metaTitle: "Corporate Sports Day Organisers | Elephant Corporate",
     metaDescription:
-      "Sportzoo organises corporate sports days — venue, sports format, equipment, referees, and logistics — for companies that want a well-run, inclusive event.",
+      "Elephant Corporate organises corporate sports days — venue, sports format, equipment, referees, and logistics — for companies that want a well-run, inclusive event.",
     primaryKeyword: "corporate sports day organisers",
     secondaryKeywords: [
       "corporate sports day management",
@@ -217,7 +217,7 @@ export const corporateEventServices: ServicePage[] = [
       "corporate sports meet organisers",
     ],
     intro: [
-      "A corporate sports day works when it's genuinely inclusive and genuinely well organised — not just a handful of people playing cricket while everyone else stands around. Sportzoo plans the sport format, venue, equipment, referees, and logistics for corporate sports days, drawing on our background in sports event operations to build a day that works for people of every fitness level.",
+      "A corporate sports day works when it's genuinely inclusive and genuinely well organised — not just a handful of people playing cricket while everyone else stands around. Elephant Corporate plans the sport format, venue, equipment, referees, and logistics for corporate sports days, drawing on our background in sports event operations to build a day that works for people of every fitness level.",
     ],
     problems: [
       "Sports selection skews toward a few enthusiasts instead of the whole workforce.",
@@ -264,9 +264,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Corporate Outings & Team Building",
     h1: "Corporate Outings and Team-Building Activities Planned Around Your Team, Not a Template",
-    metaTitle: "Corporate Team Building Activities & Outings | Sportzoo",
+    metaTitle: "Corporate Team Building Activities & Outings | Elephant Corporate",
     metaDescription:
-      "Sportzoo plans corporate outings and team-building activities matched to your team size, objective, and budget. Get a custom outing proposal.",
+      "Elephant Corporate plans corporate outings and team-building activities matched to your team size, objective, and budget. Get a custom outing proposal.",
     primaryKeyword: "corporate team-building activities",
     secondaryKeywords: [
       "corporate outing planners",
@@ -274,7 +274,7 @@ export const corporateEventServices: ServicePage[] = [
       "corporate team building event organisers",
     ],
     intro: [
-      "Generic team-building activities feel generic because they're picked off a fixed list without asking what the team actually needs — better cross-functional trust, a break after a hard stretch, or simply a good day out. Sportzoo plans corporate outings and team-building activities matched to your team's size, objective, and budget, and manages the venue, activities, facilitation, and meals.",
+      "Generic team-building activities feel generic because they're picked off a fixed list without asking what the team actually needs — better cross-functional trust, a break after a hard stretch, or simply a good day out. Elephant Corporate plans corporate outings and team-building activities matched to your team's size, objective, and budget, and manages the venue, activities, facilitation, and meals.",
     ],
     problems: [
       "Off-the-shelf activity packages don't map to the team's actual dynamic or objective.",
@@ -286,7 +286,7 @@ export const corporateEventServices: ServicePage[] = [
       { title: "Activity and venue curation", desc: "Options ranging from adventure and outdoor activities to structured team challenges, matched to your objective." },
       { title: "Facilitation", desc: "Facilitators for structured team-building formats, where the objective calls for it." },
       { title: "F&B and hospitality", desc: "Meals and refreshments planned around the day's schedule." },
-      { title: "On-ground coordination", desc: "A Sportzoo coordinator present through the outing to manage schedule and safety." },
+      { title: "On-ground coordination", desc: "An Elephant Corporate coordinator present through the outing to manage schedule and safety." },
     ],
     process: [
       { title: "Objective discussion", desc: "We ask what you want the day to achieve, not just how many people are attending." },
@@ -319,9 +319,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Corporate Gifting",
     h1: "Corporate Gifting That Reflects Well on the Company Giving It",
-    metaTitle: "Corporate Gifting Company | Sportzoo",
+    metaTitle: "Corporate Gifting Company | Elephant Corporate",
     metaDescription:
-      "Sportzoo sources, customises, and delivers corporate gifts for festivals, milestones, and events — at scale, on schedule. Request a corporate gifting quote.",
+      "Elephant Corporate sources, customises, and delivers corporate gifts for festivals, milestones, and events — at scale, on schedule. Request a corporate gifting quote.",
     primaryKeyword: "corporate gifting company",
     secondaryKeywords: [
       "corporate gift sourcing",
@@ -330,7 +330,7 @@ export const corporateEventServices: ServicePage[] = [
       "bulk corporate gift delivery",
     ],
     intro: [
-      "Corporate gifting done well is a small, consistent signal of how a company treats its people and partners. Sportzoo sources, customises, and delivers corporate gifts for festivals, milestones, onboarding, and events — managing vendor sourcing, branding, packaging, and delivery logistics so gifting is handled once, correctly, at whatever scale you need.",
+      "Corporate gifting done well is a small, consistent signal of how a company treats its people and partners. Elephant Corporate sources, customises, and delivers corporate gifts for festivals, milestones, onboarding, and events — managing vendor sourcing, branding, packaging, and delivery logistics so gifting is handled once, correctly, at whatever scale you need.",
     ],
     problems: [
       "Gift sourcing gets left to whoever has time, resulting in inconsistent quality or late delivery.",
@@ -377,9 +377,9 @@ export const corporateEventServices: ServicePage[] = [
     parentSlug: "corporate-events",
     name: "Conferences & Meetings",
     h1: "Conference and Corporate Meeting Management for Events That Need to Run on Time",
-    metaTitle: "Corporate Conference & Meeting Management | Sportzoo",
+    metaTitle: "Corporate Conference & Meeting Management | Elephant Corporate",
     metaDescription:
-      "Sportzoo manages corporate conferences and meetings — venue, AV, registration, and on-ground execution. Request a quote for your next conference.",
+      "Elephant Corporate manages corporate conferences and meetings — venue, AV, registration, and on-ground execution. Request a quote for your next conference.",
     primaryKeyword: "corporate conference management company",
     secondaryKeywords: [
       "corporate meeting planners",
@@ -387,7 +387,7 @@ export const corporateEventServices: ServicePage[] = [
       "business conference organisers",
     ],
     intro: [
-      "Conferences and large corporate meetings have zero tolerance for logistics failures — a delayed session or a broken mic reflects on the whole organisation. Sportzoo manages corporate conferences and meetings end to end: venue and AV, registration, and on-ground execution, so the content of the meeting gets the attention, not the logistics around it.",
+      "Conferences and large corporate meetings have zero tolerance for logistics failures — a delayed session or a broken mic reflects on the whole organisation. Elephant Corporate manages corporate conferences and meetings end to end: venue and AV, registration, and on-ground execution, so the content of the meeting gets the attention, not the logistics around it.",
     ],
     problems: [
       "Venue AV capability is assumed rather than verified, causing on-the-day technical issues.",
@@ -436,9 +436,9 @@ export const artistBookingServices: ServicePage[] = [
     parentSlug: "artist-booking",
     name: "Live Music & DJ Booking",
     h1: "Live Music and DJ Booking for Corporate Events, Without the Vendor Hunt",
-    metaTitle: "Corporate Live Band, Singer & DJ Booking | Sportzoo",
+    metaTitle: "Corporate Live Band, Singer & DJ Booking | Elephant Corporate",
     metaDescription:
-      "Book verified singers, live bands, and DJs for corporate events through Sportzoo — curated by budget, genre, and event type, with contracts and logistics handled.",
+      "Book verified singers, live bands, and DJs for corporate events through Elephant Corporate — curated by budget, genre, and event type, with contracts and logistics handled.",
     primaryKeyword: "corporate event artist booking",
     secondaryKeywords: [
       "book DJ for corporate event",
@@ -446,7 +446,7 @@ export const artistBookingServices: ServicePage[] = [
       "corporate event singer booking",
     ],
     intro: [
-      "Booking entertainment directly from social media or word of mouth is a gamble — no verified performance history, no clear contract, and no backup if someone cancels close to the date. Sportzoo curates and books singers, live bands, and DJs for corporate events, working from a vetted performer network matched to your event's genre, formality, and budget.",
+      "Booking entertainment directly from social media or word of mouth is a gamble — no verified performance history, no clear contract, and no backup if someone cancels close to the date. Elephant Corporate curates and books singers, live bands, and DJs for corporate events, working from a vetted performer network matched to your event's genre, formality, and budget.",
       "We handle the shortlist, negotiation, contracting, and on-day coordination, so the performance fits the event instead of being booked in isolation from it.",
     ],
     problems: [
@@ -459,7 +459,7 @@ export const artistBookingServices: ServicePage[] = [
       { title: "Curated shortlist", desc: "2–3 performer options matched to your event's genre, formality, and audience." },
       { title: "Contracting and terms", desc: "Clear performance terms, timing, and cancellation policy handled on your behalf." },
       { title: "Technical rider coordination", desc: "Sound, stage, and setup requirements communicated to the venue in advance." },
-      { title: "On-day coordination", desc: "A Sportzoo coordinator manages performer arrival, soundcheck, and set timing." },
+      { title: "On-day coordination", desc: "An Elephant Corporate coordinator manages performer arrival, soundcheck, and set timing." },
       { title: "Backup planning", desc: "Contingency options identified for high-stakes dates." },
     ],
     process: [
@@ -493,9 +493,9 @@ export const artistBookingServices: ServicePage[] = [
     parentSlug: "artist-booking",
     name: "Anchors & Emcees",
     h1: "Anchor and Emcee Booking for Corporate Events That Need Someone Steady on Stage",
-    metaTitle: "Corporate Event Anchor & Emcee Booking | Sportzoo",
+    metaTitle: "Corporate Event Anchor & Emcee Booking | Elephant Corporate",
     metaDescription:
-      "Book experienced anchors and emcees for corporate events, conferences, and award ceremonies through Sportzoo — briefed on your run-of-show in advance.",
+      "Book experienced anchors and emcees for corporate events, conferences, and award ceremonies through Elephant Corporate — briefed on your run-of-show in advance.",
     primaryKeyword: "corporate event anchor booking",
     secondaryKeywords: [
       "emcee for corporate event",
@@ -503,7 +503,7 @@ export const artistBookingServices: ServicePage[] = [
       "award ceremony host booking",
     ],
     intro: [
-      "A good anchor holds a program together — keeping timing on track, reading the room, and handling the unplanned moments that come up in any live event. Sportzoo books anchors and emcees for corporate events, conferences, and award ceremonies, and briefs them on your run-of-show, pronunciation of names, and tone before the event, not on the day itself.",
+      "A good anchor holds a program together — keeping timing on track, reading the room, and handling the unplanned moments that come up in any live event. Elephant Corporate books anchors and emcees for corporate events, conferences, and award ceremonies, and briefs them on your run-of-show, pronunciation of names, and tone before the event, not on the day itself.",
     ],
     problems: [
       "Anchors booked without a proper brief mispronounce names or misjudge the tone of the event.",
@@ -515,13 +515,13 @@ export const artistBookingServices: ServicePage[] = [
       { title: "Curated anchor shortlist", desc: "Matched to your event's tone — formal conference, celebratory annual day, or high-energy team event." },
       { title: "Run-of-show briefing", desc: "The anchor receives your full schedule, name pronunciations, and award sequence in advance." },
       { title: "Rehearsal coordination", desc: "A run-through scheduled ahead of the event where the format calls for it." },
-      { title: "On-day support", desc: "A Sportzoo coordinator on standby to manage any last-minute schedule changes with the anchor." },
+      { title: "On-day support", desc: "An Elephant Corporate coordinator on standby to manage any last-minute schedule changes with the anchor." },
     ],
     process: [
       { title: "Brief", desc: "Share your event type, language preference, and tone." },
       { title: "Shortlist and selection", desc: "We share anchor profiles and sample reels for your review." },
       { title: "Briefing pack", desc: "Run-of-show, names, and award sequence shared with the anchor ahead of time." },
-      { title: "Event day", desc: "Anchor performs with a Sportzoo coordinator managing real-time changes." },
+      { title: "Event day", desc: "Anchor performs with a Elephant Corporate coordinator managing real-time changes." },
     ],
     benefits: [
       "Anchors briefed properly in advance, not walked through the schedule minutes before going live.",
@@ -547,9 +547,9 @@ export const artistBookingServices: ServicePage[] = [
     parentSlug: "artist-booking",
     name: "Speakers, Comedians & Specialty Acts",
     h1: "Motivational Speakers, Comedians and Specialty Acts for Corporate Events",
-    metaTitle: "Corporate Speaker & Comedian Booking | Sportzoo",
+    metaTitle: "Corporate Speaker & Comedian Booking | Elephant Corporate",
     metaDescription:
-      "Book motivational speakers, stand-up comedians, and specialty performers for corporate events and conferences through Sportzoo's vetted talent network.",
+      "Book motivational speakers, stand-up comedians, and specialty performers for corporate events and conferences through Elephant Corporate's vetted talent network.",
     primaryKeyword: "corporate motivational speaker booking",
     secondaryKeywords: [
       "corporate stand-up comedian booking",
@@ -557,7 +557,7 @@ export const artistBookingServices: ServicePage[] = [
       "specialty act booking for events",
     ],
     intro: [
-      "A motivational speaker, comedian, or specialty performer can set the tone for an entire conference or annual day — but only if their material and delivery actually fit a corporate audience. Sportzoo books motivational speakers, stand-up comedians, and specialty acts (magicians, dancers, cultural performers) for corporate events, screened for corporate-appropriate content and matched to your audience.",
+      "A motivational speaker, comedian, or specialty performer can set the tone for an entire conference or annual day — but only if their material and delivery actually fit a corporate audience. Elephant Corporate books motivational speakers, stand-up comedians, and specialty acts (magicians, dancers, cultural performers) for corporate events, screened for corporate-appropriate content and matched to your audience.",
     ],
     problems: [
       "Content that works for a general audience doesn't always translate to a corporate setting.",
@@ -604,9 +604,9 @@ export const venueBookingServices: ServicePage[] = [
     parentSlug: "venue-booking",
     name: "Conference & Meeting Venues",
     h1: "Conference and Meeting Venue Booking, Checked Against What You Actually Need",
-    metaTitle: "Corporate Conference & Meeting Venue Booking | Sportzoo",
+    metaTitle: "Corporate Conference & Meeting Venue Booking | Elephant Corporate",
     metaDescription:
-      "Sportzoo sources and books conference halls and corporate meeting venues — AV, capacity, and connectivity verified before you commit. Get a venue shortlist.",
+      "Elephant Corporate sources and books conference halls and corporate meeting venues — AV, capacity, and connectivity verified before you commit. Get a venue shortlist.",
     primaryKeyword: "corporate conference venue booking",
     secondaryKeywords: [
       "conference hall booking",
@@ -614,7 +614,7 @@ export const venueBookingServices: ServicePage[] = [
       "book auditorium for corporate event",
     ],
     intro: [
-      "A conference venue that looks right in photos can still fail on the day — untested AV, patchy connectivity, or not enough breakout space for parallel sessions. Sportzoo sources and books conference halls, auditoriums, and corporate meeting venues, verifying capacity, AV capability, and connectivity before we shortlist anything for you.",
+      "A conference venue that looks right in photos can still fail on the day — untested AV, patchy connectivity, or not enough breakout space for parallel sessions. Elephant Corporate sources and books conference halls, auditoriums, and corporate meeting venues, verifying capacity, AV capability, and connectivity before we shortlist anything for you.",
     ],
     problems: [
       "Venue capacity is estimated from brochures rather than verified for your actual session format.",
@@ -627,7 +627,7 @@ export const venueBookingServices: ServicePage[] = [
       { title: "Site visit coordination", desc: "Arranged visits or detailed venue walkthroughs where an in-person visit isn't practical." },
       { title: "Rate negotiation", desc: "Negotiated on your behalf, with transparent, itemised costing." },
       { title: "Contracting and booking", desc: "Terms, cancellation policy, and booking confirmation handled for you." },
-      { title: "On-day venue coordination", desc: "A Sportzoo coordinator on-site to manage the venue relationship during your event." },
+      { title: "On-day venue coordination", desc: "An Elephant Corporate coordinator on-site to manage the venue relationship during your event." },
     ],
     process: [
       { title: "Requirement brief", desc: "Capacity, format, dates, and budget shared with us." },
@@ -660,9 +660,9 @@ export const venueBookingServices: ServicePage[] = [
     parentSlug: "venue-booking",
     name: "Offsite & Retreat Venues",
     h1: "Offsite and Retreat Venue Booking for Teams That Need a Change of Scene, Done Right",
-    metaTitle: "Corporate Offsite Venue Booking | Sportzoo",
+    metaTitle: "Corporate Offsite Venue Booking | Elephant Corporate",
     metaDescription:
-      "Sportzoo sources resorts, farmhouses, and retreat venues for corporate offsites — matched to group size, budget, and agenda. Get a venue shortlist.",
+      "Elephant Corporate sources resorts, farmhouses, and retreat venues for corporate offsites — matched to group size, budget, and agenda. Get a venue shortlist.",
     primaryKeyword: "corporate offsite venue booking",
     secondaryKeywords: [
       "offsite resort booking for companies",
@@ -670,7 +670,7 @@ export const venueBookingServices: ServicePage[] = [
       "farmhouse booking for corporate event",
     ],
     intro: [
-      "Offsite venues need to do two jobs at once — support focused working sessions and give the team room to actually unwind. Sportzoo sources resorts, farmhouses, and retreat-style venues for corporate offsites, matched to your group size, budget, and agenda, with meeting infrastructure and informal space both accounted for.",
+      "Offsite venues need to do two jobs at once — support focused working sessions and give the team room to actually unwind. Elephant Corporate sources resorts, farmhouses, and retreat-style venues for corporate offsites, matched to your group size, budget, and agenda, with meeting infrastructure and informal space both accounted for.",
     ],
     problems: [
       "Scenic venues sometimes lack usable meeting space for structured sessions.",
@@ -694,7 +694,7 @@ export const venueBookingServices: ServicePage[] = [
       "Venues checked for both work and downtime needs, not just scenery.",
       "Negotiated group rates on accommodation and meeting space.",
       "Room configuration verified against your actual rooming list.",
-      "Works standalone or as part of a Sportzoo-managed offsite.",
+      "Works standalone or as part of a Elephant Corporate-managed offsite.",
     ],
     useCases: [
       "Leadership and team offsites",
@@ -714,9 +714,9 @@ export const venueBookingServices: ServicePage[] = [
     parentSlug: "venue-booking",
     name: "Banquet & Large-Format Venues",
     h1: "Banquet and Large-Format Venue Booking for Annual Day, Award Nights and Big Gatherings",
-    metaTitle: "Corporate Banquet & Event Venue Booking | Sportzoo",
+    metaTitle: "Corporate Banquet & Event Venue Booking | Elephant Corporate",
     metaDescription:
-      "Sportzoo books banquet halls and large-format venues for annual day, award ceremonies, and company-wide events — capacity and layout verified upfront.",
+      "Elephant Corporate books banquet halls and large-format venues for annual day, award ceremonies, and company-wide events — capacity and layout verified upfront.",
     primaryKeyword: "banquet hall booking for corporate event",
     secondaryKeywords: [
       "large event venue booking",
@@ -724,7 +724,7 @@ export const venueBookingServices: ServicePage[] = [
       "exhibition center booking",
     ],
     intro: [
-      "Large-format events — annual day, award nights, exhibitions — need venues that can genuinely handle the guest count, not just the seating chart on paper. Sportzoo books banquet halls, exhibition centers, and other large-format venues, verifying real usable capacity, stage sightlines, and parking or access before confirming.",
+      "Large-format events — annual day, award nights, exhibitions — need venues that can genuinely handle the guest count, not just the seating chart on paper. Elephant Corporate books banquet halls, exhibition centers, and other large-format venues, verifying real usable capacity, stage sightlines, and parking or access before confirming.",
     ],
     problems: [
       "Advertised capacity doesn't account for stage, catering stations, and walkways, leaving less usable space than expected.",
@@ -771,9 +771,9 @@ export const eventRentalServices: ServicePage[] = [
     parentSlug: "event-rentals",
     name: "Audio Visual & Production Equipment",
     h1: "Audio Visual and Production Equipment Rental for Events That Can't Afford a Technical Glitch",
-    metaTitle: "Corporate Event AV Equipment Rental | Sportzoo",
+    metaTitle: "Corporate Event AV Equipment Rental | Elephant Corporate",
     metaDescription:
-      "Sportzoo rents and manages sound, screens, lighting, and staging for corporate events and conferences, with a technician on-site through the event.",
+      "Elephant Corporate rents and manages sound, screens, lighting, and staging for corporate events and conferences, with a technician on-site through the event.",
     primaryKeyword: "event AV equipment rental",
     secondaryKeywords: [
       "sound system rental for corporate event",
@@ -781,7 +781,7 @@ export const eventRentalServices: ServicePage[] = [
       "stage and lighting rental for events",
     ],
     intro: [
-      "A broken mic or a screen that won't connect is the kind of small failure that overshadows an otherwise well-planned event. Sportzoo rents and manages sound systems, screens and LED walls, lighting, and staging for corporate events and conferences, with a technician present on-site to handle setup and run the show, not just drop off equipment.",
+      "A broken mic or a screen that won't connect is the kind of small failure that overshadows an otherwise well-planned event. Elephant Corporate rents and manages sound systems, screens and LED walls, lighting, and staging for corporate events and conferences, with a technician present on-site to handle setup and run the show, not just drop off equipment.",
     ],
     problems: [
       "Equipment is delivered without a technician, leaving your team to troubleshoot mid-event.",
@@ -827,9 +827,9 @@ export const eventRentalServices: ServicePage[] = [
     parentSlug: "event-rentals",
     name: "Event Decor, Tent & Branding",
     h1: "Event Decor, Tent and Branding Services That Match the Occasion",
-    metaTitle: "Corporate Event Decor & Branding Services | Sportzoo",
+    metaTitle: "Corporate Event Decor & Branding Services | Elephant Corporate",
     metaDescription:
-      "Sportzoo provides decor, tent, infrastructure, and branding/fabrication services for corporate events — themed to your event and delivered on schedule.",
+      "Elephant Corporate provides decor, tent, infrastructure, and branding/fabrication services for corporate events — themed to your event and delivered on schedule.",
     primaryKeyword: "corporate event decor and branding",
     secondaryKeywords: [
       "event tent rental for corporate event",
@@ -837,7 +837,7 @@ export const eventRentalServices: ServicePage[] = [
       "corporate event infrastructure rental",
     ],
     intro: [
-      "Decor and branding are what make a venue feel like your event rather than a generic rented hall. Sportzoo provides decor, tent and infrastructure, and branding/fabrication services for corporate events — themed to your occasion, built to your brand guidelines, and delivered and struck on schedule.",
+      "Decor and branding are what make a venue feel like your event rather than a generic rented hall. Elephant Corporate provides decor, tent and infrastructure, and branding/fabrication services for corporate events — themed to your occasion, built to your brand guidelines, and delivered and struck on schedule.",
     ],
     problems: [
       "Generic decor doesn't reflect the company's brand or the occasion's tone.",
@@ -861,7 +861,7 @@ export const eventRentalServices: ServicePage[] = [
       "Decor and branding built to your actual brand guidelines, not generic templates.",
       "Outdoor infrastructure planned by people who account for weather and access constraints.",
       "Setup and strike timed against venue access, avoiding overtime charges.",
-      "Works as a standalone booking or alongside a Sportzoo-managed event.",
+      "Works as a standalone booking or alongside a Elephant Corporate-managed event.",
     ],
     useCases: [
       "Annual day and award ceremony decor",
@@ -881,9 +881,9 @@ export const eventRentalServices: ServicePage[] = [
     parentSlug: "event-rentals",
     name: "Event Games & Engagement Activities",
     h1: "Event Games and Engagement Activities to Keep a Corporate Crowd Actually Involved",
-    metaTitle: "Corporate Event Games & Engagement Activities | Sportzoo",
+    metaTitle: "Corporate Event Games & Engagement Activities | Elephant Corporate",
     metaDescription:
-      "Sportzoo supplies event games, engagement activities, and VR/AI experience zones for corporate events — booked and managed on-site.",
+      "Elephant Corporate supplies event games, engagement activities, and VR/AI experience zones for corporate events — booked and managed on-site.",
     primaryKeyword: "corporate event games rental",
     secondaryKeywords: [
       "engagement activities for corporate events",
@@ -891,7 +891,7 @@ export const eventRentalServices: ServicePage[] = [
       "interactive activities for office events",
     ],
     intro: [
-      "A conference break or annual day floor plan is more memorable with something people can actually do — a game zone, an interactive activity, or a VR experience — rather than another standee and a coffee counter. Sportzoo supplies and manages event games, engagement activities, and VR/AI experience zones for corporate events, staffed on-site so they run themselves.",
+      "A conference break or annual day floor plan is more memorable with something people can actually do — a game zone, an interactive activity, or a VR experience — rather than another standee and a coffee counter. Elephant Corporate supplies and manages event games, engagement activities, and VR/AI experience zones for corporate events, staffed on-site so they run themselves.",
     ],
     problems: [
       "Break-time and floor engagement is often an afterthought with nothing planned beyond catering.",

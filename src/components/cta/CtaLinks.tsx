@@ -1,8 +1,9 @@
 "use client";
 
-import { siteConfig, whatsappLinkForPage } from "@/config/site";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
 import { ButtonLink } from "@/components/ui/Button";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 type Variant = "primary" | "secondary" | "outline" | "ghost";
 type Size = "md" | "lg";
@@ -16,6 +17,7 @@ export function CallButton({
   variant?: Variant;
   size?: Size;
 }) {
+  const siteConfig = useSiteConfig();
   return (
     <ButtonLink
       href={siteConfig.phoneHref}
@@ -40,9 +42,10 @@ export function WhatsAppButton({
   variant?: Variant;
   size?: Size;
 }) {
+  const siteConfig = useSiteConfig();
   return (
     <ButtonLink
-      href={whatsappLinkForPage(pageLabel)}
+      href={buildWhatsAppLink(siteConfig.whatsappHref, siteConfig.brand, pageLabel)}
       variant={variant}
       size={size}
       dataAttrs={{ cta: "whatsapp", location: "inline" }}

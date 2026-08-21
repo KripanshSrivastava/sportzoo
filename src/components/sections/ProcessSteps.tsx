@@ -15,7 +15,7 @@ export function ProcessSteps() {
       <SectionHeading
         eyebrow="How It Works"
         title="A straightforward, five-step process"
-        description="No lengthy back-and-forth before you get a real number. Here's exactly how an engagement with Sportzoo runs."
+        description="No lengthy back-and-forth before you get a real number. Here's exactly how an engagement with Elephant Corporate runs."
       />
       <ol className="mt-11 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-5">
         {steps.map((s) => (

@@ -8,7 +8,7 @@ export function ServiceLocations() {
       <SectionHeading
         eyebrow="Where We Work"
         title={`${siteConfig.serviceArea} Service Coverage`}
-        description={`Headquartered in ${siteConfig.primaryCity}, Sportzoo delivers corporate event management, artist booking, venue booking, and event rentals anywhere in India.`}
+        description={`Headquartered in ${siteConfig.primaryCity}, Elephant Corporate delivers corporate event management, artist booking, venue booking, and event rentals anywhere in India.`}
       />
       <div className="card mt-8 inline-flex items-center gap-2.5 px-4 py-2.5">
         <span className="tag tag-accent">Pan India</span>

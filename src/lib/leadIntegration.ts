@@ -64,7 +64,7 @@ async function sendViaResend(lead: LeadRecord): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
 
-  const from = process.env.RESEND_FROM_EMAIL || "Sportzoo Leads <onboarding@resend.dev>";
+  const from = process.env.RESEND_FROM_EMAIL || "Elephant Corporate Leads <onboarding@resend.dev>";
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -76,7 +76,7 @@ async function sendViaResend(lead: LeadRecord): Promise<boolean> {
       from,
       to: [NOTIFY_EMAIL],
       reply_to: lead.workEmail,
-      subject: `New Sportzoo enquiry — ${lead.companyName} (${lead.service})`,
+      subject: `New Elephant Corporate enquiry — ${lead.companyName} (${lead.service})`,
       html: buildEmailHtml(lead),
     }),
   });
@@ -111,7 +111,7 @@ export async function deliverLead(lead: LeadRecord): Promise<void> {
     // No integration configured yet — log server-side so nothing is silently
     // lost during local development or before RESEND_API_KEY is set.
     console.log(
-      `[sportzoo] New lead (no RESEND_API_KEY or LEAD_WEBHOOK_URL configured — would have emailed ${NOTIFY_EMAIL}):`,
+      `[elephant-corporate] New lead (no RESEND_API_KEY or LEAD_WEBHOOK_URL configured — would have emailed ${NOTIFY_EMAIL}):`,
       JSON.stringify(lead, null, 2)
     );
   }

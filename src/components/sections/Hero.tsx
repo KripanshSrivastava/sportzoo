@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
-import { siteConfig } from "@/config/site";
 import { BlueprintCorners } from "@/components/ui/Blueprint";
 import { siteImages } from "@/config/images";
+import { getBusinessSettings } from "@/lib/businessSettings";
 
-export function Hero() {
+export async function Hero() {
+  const settings = await getBusinessSettings();
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--color-accent-900)", color: "var(--color-neutral-100)" }}>
       <div
@@ -27,8 +28,8 @@ export function Hero() {
             Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End
           </h1>
           <p className="mt-6 max-w-[520px] text-[17px] leading-relaxed" style={{ color: "var(--color-neutral-300)" }}>
-            Sportzoo plans corporate offsites and employee engagement events, and books artists, venues, and
-            event equipment for companies across {siteConfig.primaryCity} and India — one accountable team
+            {settings.brand} plans corporate offsites and employee engagement events, and books artists, venues, and
+            event equipment for companies across {settings.primaryCity} and India — one accountable team
             from the first brief to the final invoice.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

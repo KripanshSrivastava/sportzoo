@@ -32,8 +32,8 @@ export function WhyChooseUs() {
   return (
     <Section style={{ background: "var(--color-surface)" }}>
       <SectionHeading
-        eyebrow="Why Sportzoo"
-        title="Why companies choose Sportzoo"
+        eyebrow="Why Elephant Corporate"
+        title="Why companies choose Elephant Corporate"
         description="Corporate clients don't need another vendor — they need a partner who can be trusted with budget, timelines, and their people."
       />
       <div className="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

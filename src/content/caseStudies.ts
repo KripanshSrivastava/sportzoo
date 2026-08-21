@@ -30,9 +30,9 @@ export const caseStudies: CaseStudy[] = [
     challenge:
       "The client's leadership team needed a 3-day offsite before the new financial year, but had just 6 weeks to plan it internally alongside their regular workload, with a fixed budget that earlier venue quotes were already exceeding.",
     solution:
-      "Sportzoo shortlisted three retreat venues within budget within 48 hours, verified AV and breakout space in person, and built a run-of-show that split the agenda into focused morning sessions and unstructured afternoons.",
+      "Elephant Corporate shortlisted three retreat venues within budget within 48 hours, verified AV and breakout space in person, and built a run-of-show that split the agenda into focused morning sessions and unstructured afternoons.",
     execution:
-      "A single Sportzoo coordinator managed venue confirmation, rooming, and F&B, and was on-site for all three days to run the schedule so the leadership team could stay in the room instead of managing logistics.",
+      "A single Elephant Corporate coordinator managed venue confirmation, rooming, and F&B, and was on-site for all three days to run the schedule so the leadership team could stay in the room instead of managing logistics.",
     outcomes: [
       "Venue and full itinerary confirmed within 9 days of the first call",
       "Delivered within 4% of the original per-person budget",
@@ -40,7 +40,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     testimonial: {
       quote:
-        "We had six weeks and a leadership team that couldn't afford a badly run offsite. Sportzoo handled everything we didn't have time for and the whole thing ran itself.",
+        "We had six weeks and a leadership team that couldn't afford a badly run offsite. Elephant Corporate handled everything we didn't have time for and the whole thing ran itself.",
       attribution: "Head of People, Nexora Tech (demo testimonial)",
     },
   },
@@ -53,9 +53,9 @@ export const caseStudies: CaseStudy[] = [
     challenge:
       "The client wanted to combine their annual day with employee recognition for the first time, but hadn't accounted for the venue capacity and catering needed once employee families were added to the guest list.",
     solution:
-      "Sportzoo re-shortlisted venues against the real 600-guest count, built a combined run-of-show for the celebration and award segments, and planned catering and seating around a mixed-age, family-inclusive crowd.",
+      "Elephant Corporate re-shortlisted venues against the real 600-guest count, built a combined run-of-show for the celebration and award segments, and planned catering and seating around a mixed-age, family-inclusive crowd.",
     execution:
-      "Decor, stage production, and an anchor were booked through Sportzoo's artist and venue network, with a rehearsal held the evening before to lock award sequencing and presenter timing.",
+      "Decor, stage production, and an anchor were booked through Elephant Corporate's artist and venue network, with a rehearsal held the evening before to lock award sequencing and presenter timing.",
     outcomes: [
       "Usable venue capacity confirmed for 600 guests with no last-minute overflow issues",
       "Recognition segment ran without a single award mix-up on stage",
@@ -71,13 +71,13 @@ export const caseStudies: CaseStudy[] = [
     challenge:
       "The client's marketing team needed a launch venue with strong AV and a presence-building entertainment segment, but had only 3 weeks and no existing vendor relationships to draw on.",
     solution:
-      "Sportzoo shortlisted two large-format venues with tested AV and staging, and in parallel curated an anchor and a live band matched to the brand's audience, contracting both through a single point of contact.",
+      "Elephant Corporate shortlisted two large-format venues with tested AV and staging, and in parallel curated an anchor and a live band matched to the brand's audience, contracting both through a single point of contact.",
     execution:
-      "Technical riders were coordinated with the venue ahead of time, and a Sportzoo coordinator managed performer arrival, soundcheck, and the anchor's run-of-show through the event.",
+      "Technical riders were coordinated with the venue ahead of time, and a Elephant Corporate coordinator managed performer arrival, soundcheck, and the anchor's run-of-show through the event.",
     outcomes: [
       "Venue and entertainment confirmed within 8 days, inside the 3-week deadline",
       "Zero technical delays during the live segment",
-      "Client rebooked Sportzoo for their next regional launch event",
+      "Client rebooked Elephant Corporate for their next regional launch event",
     ],
   },
 ];

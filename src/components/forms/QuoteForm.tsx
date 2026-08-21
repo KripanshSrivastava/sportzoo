@@ -261,7 +261,7 @@ export function QuoteForm({ defaultService, sourcePage }: { defaultService?: str
             aria-invalid={!!errors.consent}
             aria-describedby={errors.consent ? "consent-error" : undefined}
           />
-          I agree to be contacted by Sportzoo about my enquiry and consent to my information being processed
+          I agree to be contacted by Elephant Corporate about my enquiry and consent to my information being processed
           as described in the{" "}
           <a href="/privacy-policy" className="underline">
             Privacy Policy

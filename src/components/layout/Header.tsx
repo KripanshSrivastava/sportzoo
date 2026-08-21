@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { mainNav } from "@/config/nav";
-import { siteConfig } from "@/config/site";
+import { siteImages } from "@/config/images";
 import { trackEvent } from "@/lib/analytics";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function Header() {
+  const siteConfig = useSiteConfig();
   const [open, setOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
@@ -19,18 +22,27 @@ export function Header() {
       }}
     >
       <div className="container-page flex h-16 items-center gap-4 sm:h-20">
-        <Link
-          href="/"
-          className="mr-auto flex items-center gap-2 text-lg font-semibold"
-          style={{ color: "var(--color-text)", fontFamily: "var(--font-heading)" }}
-        >
-          <span
-            className="flex h-7 w-7 items-center justify-center text-lg font-semibold"
-            style={{ border: "1px solid var(--color-accent)", color: "var(--color-accent)" }}
-          >
-            S
-          </span>
-          {siteConfig.brand}
+        <Link href="/" className="mr-auto flex items-center gap-2" aria-label={siteConfig.brand}>
+          {siteImages.logo ? (
+            <Image
+              src={siteImages.logo}
+              alt={siteConfig.brand}
+              width={320}
+              height={180}
+              className="h-12 w-auto sm:h-14"
+              priority
+            />
+          ) : (
+            <span className="flex items-center gap-2 text-lg font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-heading)" }}>
+              <span
+                className="flex h-7 w-7 items-center justify-center text-lg font-semibold"
+                style={{ border: "1px solid var(--color-accent)", color: "var(--color-accent)" }}
+              >
+                {siteConfig.brand.charAt(0)}
+              </span>
+              {siteConfig.brand}
+            </span>
+          )}
         </Link>
 
         <nav className="hidden items-stretch gap-4 self-stretch xl:flex" aria-label="Primary">

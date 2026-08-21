@@ -1,10 +1,10 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
-import { siteConfig } from "@/config/site";
 import { CallButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { Blueprint } from "@/components/ui/Blueprint";
+import { getBusinessSettings } from "@/lib/businessSettings";
 
-export function LeadFormSection({
+export async function LeadFormSection({
   defaultService,
   sourcePage,
   title = "Plan your event or booking",
@@ -15,6 +15,7 @@ export function LeadFormSection({
   title?: string;
   description?: string;
 }) {
+  const settings = await getBusinessSettings();
   return (
     <Section id="quote-form">
       <div className="grid gap-10 lg:grid-cols-5">
@@ -27,7 +28,7 @@ export function LeadFormSection({
               <WhatsAppButton pageLabel={sourcePage} variant="secondary" label="Chat on WhatsApp" />
             </div>
             <p className="m-0 text-xs" style={{ color: "var(--color-neutral-600)" }}>
-              {siteConfig.businessHours}
+              {settings.businessHours}
             </p>
           </Blueprint>
         </div>

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/Section";
-import { caseStudies } from "@/content/caseStudies";
+import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
 import { placeholderPhoto } from "@/lib/placeholderImages";
 
-export function CaseStudiesPreview() {
+export async function CaseStudiesPreview() {
+  const caseStudies = await getPublishedCaseStudies();
   return (
     <Section className="bg-slate-50">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -23,7 +24,7 @@ export function CaseStudiesPreview() {
             {/* DEMO PHOTO — replace with real event photography before launch */}
             <div className="relative aspect-[16/10]">
               <Image
-                src={placeholderPhoto(c.slug, 640, 400)}
+                src={c.coverImageUrl || placeholderPhoto(c.slug, 640, 400)}
                 alt={c.title}
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"

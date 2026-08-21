@@ -4,21 +4,26 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteConfig, targetCities } from "@/config/site";
+import { getBusinessSettings } from "@/lib/businessSettings";
 
-export const metadata = buildMetadata({
-  title: "Contact Sportzoo | Corporate Events, Artists, Venues & Rentals",
-  description: `Contact Sportzoo for corporate event management, artist booking, venue booking, and event rental enquiries in ${siteConfig.primaryCity} and across India.`,
-  path: "/contact",
-});
+export async function generateMetadata() {
+  const settings = await getBusinessSettings();
+  return buildMetadata({
+    title: `Contact ${settings.brand} | Corporate Events, Artists, Venues & Rentals`,
+    description: `Contact ${settings.brand} for corporate event management, artist booking, venue booking, and event rental enquiries in ${settings.primaryCity} and across India.`,
+    path: "/contact",
+  });
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getBusinessSettings();
   return (
     <>
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "ContactPage",
-          name: "Contact Sportzoo",
+          name: `Contact ${settings.brand}`,
           url: `${siteConfig.url}/contact`,
         }}
       />
@@ -38,10 +43,10 @@ export default function ContactPage() {
           <div className="space-y-8 lg:col-span-2">
             <div>
               <SectionHeading title="Office" />
-              <p className="mt-3 text-sm leading-relaxed text-slate-700">{siteConfig.officeAddress}</p>
-              {siteConfig.mapUrl && !siteConfig.mapUrl.startsWith("[") && (
+              <p className="mt-3 text-sm leading-relaxed text-slate-700">{settings.officeAddress}</p>
+              {settings.mapUrl && !settings.mapUrl.startsWith("[") && (
                 <a
-                  href={siteConfig.mapUrl}
+                  href={settings.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 inline-block text-sm font-semibold text-[color:var(--color-electric)]"
@@ -52,24 +57,24 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Phone</h3>
-              <a href={siteConfig.phoneHref} className="text-sm text-slate-700 hover:text-[color:var(--color-electric)]">
-                {siteConfig.phone}
+              <a href={settings.phoneHref} className="text-sm text-slate-700 hover:text-[color:var(--color-electric)]">
+                {settings.phone}
               </a>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Email</h3>
-              <a href={`mailto:${siteConfig.email}`} className="text-sm text-slate-700 hover:text-[color:var(--color-electric)]">
-                {siteConfig.email}
+              <a href={`mailto:${settings.email}`} className="text-sm text-slate-700 hover:text-[color:var(--color-electric)]">
+                {settings.email}
               </a>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Business Hours</h3>
-              <p className="text-sm text-slate-700">{siteConfig.businessHours}</p>
+              <p className="text-sm text-slate-700">{settings.businessHours}</p>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Service Areas</h3>
               <p className="text-sm text-slate-700">
-                {siteConfig.serviceArea} — including {targetCities.map((c) => c.name).join(", ")}
+                {settings.serviceArea} — including {targetCities.map((c) => c.name).join(", ")}
               </p>
             </div>
           </div>

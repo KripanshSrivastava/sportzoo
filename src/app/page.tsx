@@ -13,16 +13,18 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { siteConfig } from "@/config/site";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = buildMetadata({
   title: `Corporate Event Management Company | ${siteConfig.brand}`,
   description:
-    "Sportzoo is a corporate event management company serving companies across India — offsites, annual day, rewards ceremonies, artist booking, venue booking, and event rentals.",
+    "Elephant Corporate is a corporate event management company serving companies across India — offsites, annual day, rewards ceremonies, artist booking, venue booking, and event rentals.",
   path: "/",
 });
 
 const homeFaqs = [
   {
-    q: "What does Sportzoo actually manage?",
+    q: "What does Elephant Corporate actually manage?",
     a: "Corporate events (offsites, annual day, recognition ceremonies, team building, gifting, conferences), artist booking and entertainment, venue booking, and event rentals and equipment — either as separate bookings or combined into one managed event.",
   },
   {
@@ -38,7 +40,7 @@ const homeFaqs = [
     a: "Yes — from 15-person leadership offsites to company-wide annual day events with several hundred attendees.",
   },
   {
-    q: "How is Sportzoo different from a generic event management company?",
+    q: "How is Elephant Corporate different from a generic event management company?",
     a: "We manage corporate events, artist booking, venue booking, and rentals under one team, so logistics that usually get split across multiple vendors are planned and executed together.",
   },
 ];

@@ -5,13 +5,13 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 const testimonials = [
   {
     quote:
-      "We had six weeks and a leadership team that couldn't afford a badly run offsite. Sportzoo handled everything we didn't have time for and the whole thing ran itself.",
+      "We had six weeks and a leadership team that couldn't afford a badly run offsite. Elephant Corporate handled everything we didn't have time for and the whole thing ran itself.",
     name: "Ritika Sen",
     role: "Head of People, Nexora Tech",
   },
   {
     quote:
-      "The venue capacity issue would have blindsided us on the day. Sportzoo caught it during shortlisting, not after we'd already booked.",
+      "The venue capacity issue would have blindsided us on the day. Elephant Corporate caught it during shortlisting, not after we'd already booked.",
     name: "Arjun Malhotra",
     role: "Admin Manager, Bluewave Systems",
   },

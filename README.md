@@ -1,6 +1,6 @@
-# Sportzoo — Corporate Event Management Website
+# Elephant Corporate — Corporate Event Management Website
 
-A Next.js (App Router) + TypeScript + Tailwind CSS website for Sportzoo, a corporate event management
+A Next.js (App Router) + TypeScript + Tailwind CSS website for Elephant Corporate, a corporate event management
 company covering corporate events, artist booking & entertainment, venue booking, and event rentals &
 equipment. See [SEO-STRATEGY.md](./SEO-STRATEGY.md) for the keyword-to-page map and content plan.
 
@@ -67,7 +67,7 @@ the template.
 
 City data lives in **`src/config/site.ts`** as `targetCities`. Each entry needs a URL-safe `slug` (no spaces
 or brackets) and a display `name`. Adding a city automatically generates `/corporate-event-management/[slug]`
-and adds it to the sitemap, footer, and homepage service-locations section. Only add cities where Sportzoo
+and adds it to the sitemap, footer, and homepage service-locations section. Only add cities where Elephant Corporate
 has genuine local knowledge to offer — see the local SEO notes in `SEO-STRATEGY.md`.
 
 ## 5. Lead form integration
@@ -130,15 +130,15 @@ Configure these as GA4 conversion events / GTM triggers once GTM is live. Every 
 3. Deploy. Vercel auto-detects Next.js — no custom build command required. This project is built to run
    comfortably on Vercel's free/hobby serverless tier (no VPS/VPC needed) — no background processes, no
    heavy dependencies, and the lead email send is a single lightweight HTTPS call.
-4. Point `sportzoo.in` at the Vercel project and confirm HTTPS is issued.
+4. Point `elephantcorporate.in` at the Vercel project and confirm HTTPS is issued.
 
 ## 8. Google Search Console setup
 
-1. Add `sportzoo.in` as a property in Search Console (Domain property recommended).
+1. Add `elephantcorporate.in` as a property in Search Console (Domain property recommended).
 2. Use the "HTML tag" verification method, copy the `content` value, and set it as
    `NEXT_PUBLIC_GSC_VERIFICATION` in Vercel production env vars, then redeploy.
-3. Submit `https://sportzoo.in/sitemap.xml` under Sitemaps.
-4. Confirm `https://sportzoo.in/robots.txt` allows crawling (it only does once
+3. Submit `https://elephantcorporate.in/sitemap.xml` under Sitemaps.
+4. Confirm `https://elephantcorporate.in/robots.txt` allows crawling (it only does once
    `NEXT_PUBLIC_SITE_ENV=production` is set — check this first if verification or indexing seems stuck).
 
 ## 9. Project structure

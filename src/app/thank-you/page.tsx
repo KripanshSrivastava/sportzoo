@@ -4,8 +4,8 @@ import { CallButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Thank You | Sportzoo",
-  description: "Your enquiry has been received. Sportzoo will respond within 24 business hours.",
+  title: "Thank You | Elephant Corporate",
+  description: "Your enquiry has been received. Elephant Corporate will respond within 24 business hours.",
   path: "/thank-you",
   noIndex: true,
 });
@@ -19,7 +19,7 @@ export default function ThankYouPage() {
         </div>
         <h1 className="text-3xl font-bold text-[color:var(--color-navy-900)]">Thank you — we&apos;ve got it.</h1>
         <p className="mt-4 text-base leading-relaxed text-slate-600">
-          Your enquiry has been received. A member of the Sportzoo team will reach out within 24 business
+          Your enquiry has been received. A member of the Elephant Corporate team will reach out within 24 business
           hours with a costed proposal. If your timeline is urgent, call or WhatsApp us directly.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">

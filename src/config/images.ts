@@ -15,8 +15,12 @@ import { placeholderPhoto } from "@/lib/placeholderImages";
  * You can use .jpg, .png, .webp, or .avif files.
  */
 export const siteImages = {
+  // Header logo. Leave as `null` to show the text-badge fallback ("E" in a
+  // box + brand name).
+  logo: "/images/logo.jpg" as string | null,
+
   // The large photo on the homepage hero section.
-  hero: placeholderPhoto("sportzoo-hero-offsite", 900, 675),
+  hero: placeholderPhoto("elephant-hero-offsite", 900, 675),
 
   // Gallery page — 4 photos per category. Add/replace paths in each array.
   gallery: {

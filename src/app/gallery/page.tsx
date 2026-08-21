@@ -4,18 +4,21 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
-import { siteImages } from "@/config/images";
+import { getGalleryByCategory } from "@/lib/galleryData";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = buildMetadata({
-  title: "Gallery | Sportzoo Corporate Events",
-  description: "Photos from Sportzoo's corporate event, artist booking, and venue booking engagements.",
+  title: "Gallery | Elephant Corporate",
+  description: "Photos from Elephant Corporate's corporate event, artist booking, and venue booking engagements.",
   path: "/gallery",
   noIndex: true,
 });
 
-const categories = Object.keys(siteImages.gallery);
+export default async function GalleryPage() {
+  const gallery = await getGalleryByCategory();
+  const categories = Object.keys(gallery);
 
-export default function GalleryPage() {
   return (
     <>
       <Breadcrumbs items={[{ name: "Gallery", path: "/gallery" }]} />
@@ -25,7 +28,6 @@ export default function GalleryPage() {
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Gallery</h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
             Photos from our events will be added here as engagements are completed and cleared for publication.
-            The photos below are temporary demo images, not real Sportzoo events.
           </p>
         </div>
       </section>
@@ -33,9 +35,9 @@ export default function GalleryPage() {
       {categories.map((cat) => (
         <Section key={cat} className="border-b border-slate-100 bg-white">
           <SectionHeading title={cat} />
-          {/* To change these photos, see src/config/images.ts (siteImages.gallery) */}
+          {/* Manage these photos at /admin/gallery */}
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {siteImages.gallery[cat].map((src, i) => (
+            {gallery[cat].map((src, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
                 <Image
                   src={src}

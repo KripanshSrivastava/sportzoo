@@ -70,7 +70,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h2", text: "Getting the logistics off your plate" },
       {
         type: "p",
-        text: "Everything above is manageable internally for a small offsite, but the coordination load grows fast with group size and travel complexity. Sportzoo plans corporate offsites end to end — venue sourcing, agenda design, travel and stay, and on-ground execution — so your team can focus on the discussion, not the logistics behind it.",
+        text: "Everything above is manageable internally for a small offsite, but the coordination load grows fast with group size and travel complexity. Elephant Corporate plans corporate offsites end to end — venue sourcing, agenda design, travel and stay, and on-ground execution — so your team can focus on the discussion, not the logistics behind it.",
       },
     ],
   },
@@ -142,7 +142,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h2", text: "Managing it as one coordinated event" },
       {
         type: "p",
-        text: "Most of these items fail not because they're difficult individually, but because they're each owned by a different vendor with no single person tracking all ten simultaneously. Sportzoo manages corporate annual day events end to end — venue, program, entertainment, catering, and logistics — as one coordinated engagement with a dedicated on-ground team.",
+        text: "Most of these items fail not because they're difficult individually, but because they're each owned by a different vendor with no single person tracking all ten simultaneously. Elephant Corporate manages corporate annual day events end to end — venue, program, entertainment, catering, and logistics — as one coordinated engagement with a dedicated on-ground team.",
       },
     ],
   },
@@ -194,7 +194,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h2", text: "Getting this verified before you book" },
       {
         type: "p",
-        text: "Every one of these checks takes time most internal teams don't have when they're also managing the guest list, the program, and the catering. Sportzoo's venue booking service verifies capacity, AV, sightlines, and access before shortlisting anything for you, and negotiates rates on your behalf — so the venue decision is based on what we've checked, not what the brochure says.",
+        text: "Every one of these checks takes time most internal teams don't have when they're also managing the guest list, the program, and the catering. Elephant Corporate's venue booking service verifies capacity, AV, sightlines, and access before shortlisting anything for you, and negotiates rates on your behalf — so the venue decision is based on what we've checked, not what the brochure says.",
       },
     ],
   },

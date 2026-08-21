@@ -10,15 +10,15 @@ import { corporateEventServices } from "@/config/services";
 import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Corporate Event Management Company | Sportzoo",
+  title: "Corporate Event Management Company | Elephant Corporate",
   description:
-    "Sportzoo is a corporate event management company handling offsites, annual day, recognition ceremonies, sports days, team building, gifting, and conferences — end to end.",
+    "Elephant Corporate is a corporate event management company handling offsites, annual day, recognition ceremonies, sports days, team building, gifting, and conferences — end to end.",
   path: "/corporate-events",
 });
 
 const faqs = [
   {
-    q: "What types of corporate events does Sportzoo manage?",
+    q: "What types of corporate events does Elephant Corporate manage?",
     a: "Corporate offsites, rewards and recognition ceremonies, annual day events, corporate sports days, team-building outings, corporate gifting, and conferences or meetings — see each service page for details.",
   },
   {
@@ -46,7 +46,7 @@ export default function CorporateEventsPage() {
             Corporate Event Management, Planned Around What Your Company Actually Needs
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            From leadership offsites to company-wide annual day celebrations, Sportzoo plans and executes
+            From leadership offsites to company-wide annual day celebrations, Elephant Corporate plans and executes
             corporate events end to end — venue, logistics, production, and on-ground management — so your
             HR and admin teams can focus on the outcome, not the operations.
           </p>
@@ -61,7 +61,7 @@ export default function CorporateEventsPage() {
         <SectionHeading
           eyebrow="Our Event Services"
           title="Every corporate event, one planning team"
-          description="Each service below is planned and executed by the same Sportzoo team, so venue, catering, production, and logistics stay consistent across every event you run with us."
+          description="Each service below is planned and executed by the same Elephant Corporate team, so venue, catering, production, and logistics stay consistent across every event you run with us."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {corporateEventServices.map((s) => (
@@ -84,7 +84,7 @@ export default function CorporateEventsPage() {
 
       <Section className="bg-slate-50">
         <SectionHeading
-          eyebrow="Why Sportzoo"
+          eyebrow="Why Elephant Corporate"
           title="A planning process built for corporate accountability"
           description="Every engagement follows the same structure: a discovery call, a costed proposal within 24–48 hours, confirmed planning, on-ground execution, and a post-event report — so procurement and finance always know where things stand."
         />

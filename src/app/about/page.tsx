@@ -3,12 +3,12 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
-import { siteConfig } from "@/config/site";
+import { getBusinessSettings } from "@/lib/businessSettings";
 
 export const metadata = buildMetadata({
-  title: "About Sportzoo | Corporate Event Management Company",
+  title: "About Elephant Corporate | Corporate Event Management Company",
   description:
-    "Sportzoo is a corporate event management company built for HR, admin, and founders' teams who need one accountable partner for events, artists, venues, and rentals — not five vendors.",
+    "Elephant Corporate is a corporate event management company built for HR, admin, and founders' teams who need one accountable partner for events, artists, venues, and rentals — not five vendors.",
   path: "/about",
 });
 
@@ -27,11 +27,12 @@ const values = [
   },
   {
     title: "On-ground, not just on paper",
-    desc: "A Sportzoo coordinator is physically present at every event we manage.",
+    desc: "An Elephant Corporate coordinator is physically present at every event we manage.",
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getBusinessSettings();
   return (
     <>
       <Breadcrumbs items={[{ name: "About", path: "/about" }]} />
@@ -39,10 +40,10 @@ export default function AboutPage() {
       <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
         <div className="container-page">
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-            About Sportzoo
+            About Elephant Corporate
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            Sportzoo exists because corporate events are usually planned by people whose actual job is
+            Elephant Corporate exists because corporate events are usually planned by people whose actual job is
             something else — HR, admin, or the founder&apos;s office. We take that work off your plate, end
             to end.
           </p>
@@ -52,8 +53,8 @@ export default function AboutPage() {
       <Section className="bg-white">
         <div className="max-w-3xl space-y-5 text-base leading-relaxed text-slate-700">
           <p>
-            Sportzoo is a corporate event management company serving companies across{" "}
-            {siteConfig.primaryCity} and India. We work with HR managers, admin teams, founders, office
+            {settings.brand} is a corporate event management company serving companies across{" "}
+            {settings.primaryCity} and India. We work with HR managers, admin teams, founders, office
             managers, and procurement teams who need a single, accountable partner — not a list of vendors to
             coordinate independently.
           </p>
@@ -65,7 +66,7 @@ export default function AboutPage() {
             AV production, is planned as one engagement — not handed off between separate agencies.
           </p>
           <p>
-            We built Sportzoo around what corporate clients actually need from an events partner: fast,
+            We built Elephant Corporate around what corporate clients actually need from an events partner: fast,
             costed proposals; transparent line-item pricing; a dedicated point of contact; and on-ground
             execution that doesn&apos;t require your team to manage the day itself.
           </p>
@@ -85,9 +86,9 @@ export default function AboutPage() {
       </Section>
 
       <Section className="bg-white">
-        <SectionHeading eyebrow="Founder" title={`Led by ${siteConfig.ownerName}`} />
+        <SectionHeading eyebrow="Founder" title={`Led by ${settings.ownerName}`} />
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-700">
-          Sportzoo is run by {siteConfig.ownerName}, who oversees every engagement personally — from the
+          {settings.brand} is run by {settings.ownerName}, who oversees every engagement personally — from the
           first call through final execution — so clients have one accountable point of contact throughout.
         </p>
       </Section>

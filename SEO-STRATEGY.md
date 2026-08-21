@@ -1,4 +1,4 @@
-# Sportzoo SEO Strategy
+# Elephant Corporate SEO Strategy
 
 This document maps keywords to pages, defines search intent, and lists supporting content. Treat it as a living document — update it as rankings data and new service lines come in.
 
@@ -103,7 +103,7 @@ Three of the fifteen are complete, launch-ready articles in `src/content/blog.ts
 
 ## 6. Local SEO Notes
 
-- Location pages are generated from `src/config/site.ts` → `targetCities`. Only add cities where Sportzoo has genuine, useful local information to offer (venue familiarity, vendor relationships, or real service delivery) — do not mass-produce thin pages for SEO volume alone.
+- Location pages are generated from `src/config/site.ts` → `targetCities`. Only add cities where Elephant Corporate has genuine, useful local information to offer (venue familiarity, vendor relationships, or real service delivery) — do not mass-produce thin pages for SEO volume alone.
 - Each location page includes locally-relevant content (venue considerations, service availability) rather than swapping only the city name into templated copy.
 - Google Business Profile setup (not part of this codebase) should be completed for the primary city and any city with a physical presence, and linked from the Contact page once the Map URL is configured.
 - Hire4Event-style city×category directory scale (dozens of cities × every service) was deliberately not replicated — see the scope decision in the project history. If demand later justifies it, add venue/artist/rental city pages the same way `corporate-event-management/[city]` was built, one category at a time, with genuinely unique local content per page.

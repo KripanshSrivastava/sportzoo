@@ -4,11 +4,13 @@ import Link from "next/link";
 import { siteConfig, targetCities } from "@/config/site";
 import { eventsDropdown, artistDropdown, venueDropdown, rentalsDropdown } from "@/config/nav";
 import { trackEvent } from "@/lib/analytics";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 const linkStyle = { color: "var(--color-neutral-400)" };
 const headingStyle = { color: "var(--color-neutral-100)" };
 
 export function Footer() {
+  const settings = useSiteConfig();
   const year = new Date().getFullYear();
 
   return (
@@ -20,17 +22,17 @@ export function Footer() {
       <div className="container-page grid gap-8 sm:grid-cols-2 lg:grid-cols-6">
         <div className="sm:col-span-2 lg:col-span-2">
           <p className="m-0 text-xl" style={{ fontFamily: "var(--font-heading)", fontWeight: 600, color: "var(--color-neutral-100)" }}>
-            {siteConfig.brand}
+            {settings.brand}
           </p>
           <p className="mt-3 max-w-[280px] text-[13px] leading-relaxed" style={{ color: "var(--color-neutral-400)" }}>
-            {siteConfig.description}
+            {settings.description}
           </p>
           <div className="mt-4 flex flex-col gap-1.5 text-[13px]" style={{ color: "var(--color-neutral-400)" }}>
-            <a href={siteConfig.phoneHref} className="hover:underline" style={{ color: "inherit" }}>
-              {siteConfig.phone}
+            <a href={settings.phoneHref} className="hover:underline" style={{ color: "inherit" }}>
+              {settings.phone}
             </a>
-            <a href={`mailto:${siteConfig.email}`} className="hover:underline" style={{ color: "inherit" }}>
-              {siteConfig.email}
+            <a href={`mailto:${settings.email}`} className="hover:underline" style={{ color: "inherit" }}>
+              {settings.email}
             </a>
           </div>
         </div>

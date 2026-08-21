@@ -10,14 +10,15 @@
  */
 
 export const siteConfig = {
-  brand: "Sportzoo",
-  legalName: "Sportzoo Events & Entertainment Pvt. Ltd. [REPLACE WITH REAL LEGAL ENTITY NAME]",
-  domain: "sportzoo.in",
-  url: "https://sportzoo.in",
+  brand: "Elephant Corporate",
+  legalName: "Elephant Corporate Events & Entertainment Pvt. Ltd. [REPLACE WITH REAL LEGAL ENTITY NAME]",
+  // DEMO VALUE — replace with your real registered domain.
+  domain: "elephantcorporate.in",
+  url: "https://elephantcorporate.in",
   tagline: "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End.",
   shortTagline: "Corporate Event Management, Artist Booking, Venues & Rentals",
   description:
-    "Sportzoo plans and executes corporate events, and books artists, venues, and event equipment for companies across India — one accountable partner from brief to bill.",
+    "Elephant Corporate plans and executes corporate events, and books artists, venues, and event equipment for companies across India — one accountable partner from brief to bill.",
 
   ownerName: "Sachin",
 
@@ -48,7 +49,7 @@ export const siteConfig = {
   },
 } as const;
 
-// DEMO VALUES — replace with the real cities Sportzoo actually serves.
+// DEMO VALUES — replace with the real cities Elephant Corporate actually serves.
 export const targetCities = [
   { slug: "gurugram", name: "Gurugram" },
   { slug: "mumbai", name: "Mumbai" },
@@ -58,6 +59,6 @@ export const targetCities = [
 export type TargetCity = (typeof targetCities)[number];
 
 export function whatsappLinkForPage(pageLabel: string) {
-  const message = `Hi Sportzoo, I'm looking into ${pageLabel} and would like a quote.`;
+  const message = `Hi Elephant Corporate, I'm looking into ${pageLabel} and would like a quote.`;
   return `${siteConfig.whatsappHref}?text=${encodeURIComponent(message)}`;
 }

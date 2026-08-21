@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { siteConfig, whatsappLinkForPage } from "@/config/site";
+import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { trackEvent } from "@/lib/analytics";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 export function MobileStickyBar() {
+  const siteConfig = useSiteConfig();
   const pathname = usePathname();
   const [hidden, setHidden] = useState(false);
   const pageLabel = pathname === "/" ? "your services" : pathname.replace(/^\//, "").replace(/-/g, " ");
@@ -39,7 +41,7 @@ export function MobileStickyBar() {
         Call
       </a>
       <a
-        href={whatsappLinkForPage(pageLabel)}
+        href={buildWhatsAppLink(siteConfig.whatsappHref, siteConfig.brand, pageLabel)}
         target="_blank"
         rel="noopener noreferrer"
         data-cta="whatsapp"

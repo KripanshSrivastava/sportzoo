@@ -9,15 +9,15 @@ import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { venueBookingServices } from "@/config/services";
 
 export const metadata = buildMetadata({
-  title: "Corporate Venue Booking & Management | Sportzoo",
+  title: "Corporate Venue Booking & Management | Elephant Corporate",
   description:
-    "Sportzoo sources and books conference halls, offsite resorts, and banquet venues for corporate events — capacity and AV verified before you commit.",
+    "Elephant Corporate sources and books conference halls, offsite resorts, and banquet venues for corporate events — capacity and AV verified before you commit.",
   path: "/venue-booking",
 });
 
 const faqs = [
   {
-    q: "What kinds of venues does Sportzoo book?",
+    q: "What kinds of venues does Elephant Corporate book?",
     a: "Conference halls and meeting venues, offsite and retreat venues, and banquet or large-format venues — see each service page for details.",
   },
   {
@@ -41,7 +41,7 @@ export default function VenueBookingPage() {
             Venue Booking & Management for Corporate Events
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            Sportzoo sources and books conference halls, offsite resorts, and banquet venues — with capacity,
+            Elephant Corporate sources and books conference halls, offsite resorts, and banquet venues — with capacity,
             AV, and access verified before you commit, and rates negotiated on your behalf.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -55,7 +55,7 @@ export default function VenueBookingPage() {
         <SectionHeading
           eyebrow="Our Venue Services"
           title="Every venue type, one sourcing team"
-          description="Whichever format you need, the same Sportzoo team verifies capacity and AV, negotiates rates, and coordinates the venue relationship through your event."
+          description="Whichever format you need, the same Elephant Corporate team verifies capacity and AV, negotiates rates, and coordinates the venue relationship through your event."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {venueBookingServices.map((s) => (

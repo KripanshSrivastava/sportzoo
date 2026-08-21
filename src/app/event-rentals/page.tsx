@@ -9,15 +9,15 @@ import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { eventRentalServices } from "@/config/services";
 
 export const metadata = buildMetadata({
-  title: "Event Rentals & Equipment for Corporate Events | Sportzoo",
+  title: "Event Rentals & Equipment for Corporate Events | Elephant Corporate",
   description:
-    "Sportzoo rents and manages AV equipment, decor and branding, and engagement activities for corporate events — staffed on-site, not just dropped off.",
+    "Elephant Corporate rents and manages AV equipment, decor and branding, and engagement activities for corporate events — staffed on-site, not just dropped off.",
   path: "/event-rentals",
 });
 
 const faqs = [
   {
-    q: "What kinds of equipment and services does Sportzoo rent?",
+    q: "What kinds of equipment and services does Elephant Corporate rent?",
     a: "Audio visual and production equipment, decor/tent/branding, and event games and engagement activities — see each service page for details.",
   },
   {
@@ -41,7 +41,7 @@ export default function EventRentalsPage() {
             Event Rentals & Equipment for Corporate Events
           </h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
-            Sportzoo rents and manages AV equipment, decor and branding, and engagement activities for
+            Elephant Corporate rents and manages AV equipment, decor and branding, and engagement activities for
             corporate events — staffed on-site through setup, the live event, and teardown.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -55,7 +55,7 @@ export default function EventRentalsPage() {
         <SectionHeading
           eyebrow="Our Rental Services"
           title="Every rental category, one production team"
-          description="Whichever equipment or activity you need, the same Sportzoo team handles sourcing, setup, on-site staffing, and teardown."
+          description="Whichever equipment or activity you need, the same Elephant Corporate team handles sourcing, setup, on-site staffing, and teardown."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {eventRentalServices.map((s) => (

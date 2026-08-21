@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { WhatsAppFloat } from "@/components/cta/WhatsAppFloat";
-import { MobileStickyBar } from "@/components/cta/MobileStickyBar";
-import { LeadPopup } from "@/components/forms/LeadPopup";
+import { getBusinessSettings } from "@/lib/businessSettings";
+import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/components/seo/JsonLd";
 import { AnalyticsScripts } from "@/components/seo/AnalyticsScripts";
 
@@ -23,36 +20,37 @@ const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: `${siteConfig.brand} | ${siteConfig.shortTagline}`,
-    template: `%s | ${siteConfig.brand}`,
-  },
-  description: siteConfig.description,
-  verification: siteConfig.analytics.gscVerification
-    ? { google: siteConfig.analytics.gscVerification }
-    : undefined,
-  icons: { icon: "/favicon.ico" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getBusinessSettings();
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: `${settings.brand} | ${settings.shortTagline}`,
+      template: `%s | ${settings.brand}`,
+    },
+    description: settings.description,
+    verification: siteConfig.analytics.gscVerification
+      ? { google: siteConfig.analytics.gscVerification }
+      : undefined,
+    icons: { icon: "/favicon.ico" },
+  };
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const settings = await getBusinessSettings();
+
   return (
     <html
       lang="en"
       className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <JsonLd data={organizationJsonLd()} />
-        <JsonLd data={websiteJsonLd()} />
-        <AnalyticsScripts />
-        <AnnouncementBar />
-        <Header />
-        <main className="flex-1 pb-16 sm:pb-0">{children}</main>
-        <Footer />
-        <WhatsAppFloat />
-        <MobileStickyBar />
-        <LeadPopup />
+        <SiteConfigProvider value={settings}>
+          <JsonLd data={organizationJsonLd()} />
+          <JsonLd data={websiteJsonLd()} />
+          <AnalyticsScripts />
+          <SiteChrome>{children}</SiteChrome>
+        </SiteConfigProvider>
       </body>
     </html>
   );

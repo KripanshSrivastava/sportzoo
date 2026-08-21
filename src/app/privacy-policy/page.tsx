@@ -4,8 +4,8 @@ import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Privacy Policy | Sportzoo",
-  description: "How Sportzoo collects, uses, and protects the personal information you share with us.",
+  title: "Privacy Policy | Elephant Corporate",
+  description: "How Elephant Corporate collects, uses, and protects the personal information you share with us.",
   path: "/privacy-policy",
 });
 
@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
           <p className="text-slate-500">Last updated: [DATE]</p>
 
           <p>
-            This Privacy Policy explains how {siteConfig.legalName} (&ldquo;Sportzoo&rdquo;, &ldquo;we&rdquo;,
+            This Privacy Policy explains how {siteConfig.legalName} (&ldquo;Elephant Corporate&rdquo;, &ldquo;we&rdquo;,
             &ldquo;us&rdquo;) collects, uses, and protects information when you visit {siteConfig.domain} or
             submit an enquiry to us.
           </p>

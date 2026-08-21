@@ -24,7 +24,7 @@ export function ServicesOverview() {
       <h6 style={{ color: "var(--color-accent-700)" }}>What We Do</h6>
       <h2 className="mt-1.5 max-w-xl">Four disciplines, one accountable partner</h2>
       <p className="text-muted max-w-xl text-[15px]">
-        Sportzoo plans corporate events end to end and books the artists, venues, and equipment behind them —
+        Elephant Corporate plans corporate events end to end and books the artists, venues, and equipment behind them —
         so your event is planned by one team, not stitched together across separate vendors.
       </p>
 

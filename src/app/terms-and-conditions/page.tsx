@@ -4,8 +4,8 @@ import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/config/site";
 
 export const metadata = buildMetadata({
-  title: "Terms and Conditions | Sportzoo",
-  description: "Terms and conditions governing the use of Sportzoo's website and services.",
+  title: "Terms and Conditions | Elephant Corporate",
+  description: "Terms and conditions governing the use of Elephant Corporate's website and services.",
   path: "/terms-and-conditions",
 });
 
@@ -20,13 +20,13 @@ export default function TermsPage() {
 
           <p>
             These Terms and Conditions govern your use of {siteConfig.domain} and any services provided by{" "}
-            {siteConfig.legalName} (&ldquo;Sportzoo&rdquo;). By using this website or engaging our services,
+            {siteConfig.legalName} (&ldquo;Elephant Corporate&rdquo;). By using this website or engaging our services,
             you agree to these terms.
           </p>
 
           <h2 className="text-xl font-semibold text-[color:var(--color-navy-900)]">1. Services</h2>
           <p>
-            Sportzoo provides corporate event management, artist booking, venue booking, and event rental
+            Elephant Corporate provides corporate event management, artist booking, venue booking, and event rental
             services as described on this website. Specific engagement terms, including pricing,
             deliverables, and timelines, are confirmed in a written proposal or agreement for each engagement.
           </p>
@@ -46,9 +46,9 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-semibold text-[color:var(--color-navy-900)]">4. Third-party vendors</h2>
           <p>
-            Sportzoo coordinates with third-party vendors (venues, performers, equipment and production
+            Elephant Corporate coordinates with third-party vendors (venues, performers, equipment and production
             suppliers, transport providers) on your behalf. While we select and manage these vendors
-            carefully, Sportzoo is not liable for
+            carefully, Elephant Corporate is not liable for
             failures or delays caused solely by a third-party vendor outside our reasonable control.
           </p>
 
@@ -60,7 +60,7 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-semibold text-[color:var(--color-navy-900)]">6. Limitation of liability</h2>
           <p>
-            To the extent permitted by law, Sportzoo&apos;s liability for any claim arising from services rendered
+            To the extent permitted by law, Elephant Corporate&apos;s liability for any claim arising from services rendered
             is limited to the value of fees paid for the specific engagement in question.
           </p>
 

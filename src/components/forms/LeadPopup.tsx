@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 
-const SESSION_KEY = "sportzoo_lead_popup_shown";
+const SESSION_KEY = "elephant_lead_popup_shown";
 const SHOW_DELAY_MS = 4000;
 
 // Pages where the popup would just duplicate the form already on screen.

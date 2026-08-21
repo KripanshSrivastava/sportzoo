@@ -5,17 +5,21 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
-import { caseStudies } from "@/content/caseStudies";
+import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
 import { placeholderPhoto } from "@/lib/placeholderImages";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = buildMetadata({
-  title: "Our Work | Corporate Event Case Studies | Sportzoo",
-  description: "Case studies from Sportzoo's corporate event, artist booking, and venue booking engagements.",
+  title: "Our Work | Corporate Event Case Studies | Elephant Corporate",
+  description: "Case studies from Elephant Corporate's corporate event, artist booking, and venue booking engagements.",
   path: "/case-studies",
   noIndex: true,
 });
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const caseStudies = await getPublishedCaseStudies();
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Our Work", path: "/case-studies" }]} />
@@ -36,7 +40,7 @@ export default function CaseStudiesPage() {
         <SectionHeading
           eyebrow="Note"
           title="Demo case studies for preview"
-          description="The entries below use a fictional client so the page previews as finished. Replace them with real, permissioned client engagements before this site goes live — never publish placeholder content as a genuine case study."
+          description="The entries below use a fictional client so the page previews as finished. Replace them with real, permissioned client engagements through /admin/case-studies before this site goes live — never publish placeholder content as a genuine case study."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {caseStudies.map((c) => (
@@ -47,7 +51,7 @@ export default function CaseStudiesPage() {
             >
               <div className="relative aspect-[16/10]">
                 <Image
-                  src={placeholderPhoto(c.slug, 640, 400)}
+                  src={c.coverImageUrl || placeholderPhoto(c.slug, 640, 400)}
                   alt={c.title}
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"

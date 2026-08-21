@@ -6,7 +6,7 @@ export interface AttributionData {
   referrer: string;
 }
 
-const STORAGE_KEY = "sportzoo_attribution";
+const STORAGE_KEY = "elephant_attribution";
 
 export function captureAttribution(): AttributionData {
   if (typeof window === "undefined") {
