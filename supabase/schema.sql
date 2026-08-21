@@ -182,21 +182,26 @@ create policy "public read published service_pages" on service_pages for select 
 drop policy if exists "public read published cities" on cities;
 create policy "public read published cities" on cities for select using (published = true);
 
--- Editable text for the pages that don't share a common shape (Home, About,
--- Contact, and the 4 service-category overview pages). One row per page,
--- keyed by a fixed page_key; content is a flat JSON object of that page's
--- editable fields (hero text, FAQs, repeatable lists), read by
--- src/lib/pageContent.ts and merged over each page's built-in defaults.
-create table if not exists page_content (
+-- Drag-and-drop page builder for the pages that don't share a common shape
+-- (Home, About, Contact, and the 4 service-category overview pages). One row
+-- per page, keyed by a fixed page_key; blocks is an ordered JSON array of
+-- { id, type, props } — added, removed, reordered, and edited from the
+-- admin's visual page editor. Falls back to src/lib/blocks/defaults.ts
+-- (the site's original layout) until a page is saved for the first time.
+create table if not exists page_blocks (
   page_key text primary key,
-  content jsonb not null default '{}',
+  blocks jsonb not null default '[]',
   updated_at timestamptz not null default now()
 );
 
-alter table page_content enable row level security;
+alter table page_blocks enable row level security;
 
-drop policy if exists "public read page_content" on page_content;
-create policy "public read page_content" on page_content for select using (true);
+drop policy if exists "public read page_blocks" on page_blocks;
+create policy "public read page_blocks" on page_blocks for select using (true);
+
+-- Drop the earlier flat-form page-content table if it exists from a
+-- previous version of this schema — superseded entirely by page_blocks.
+drop table if exists page_content;
 
 -- ---------------------------------------------------------------------
 -- After running this file, also create a public Storage bucket named

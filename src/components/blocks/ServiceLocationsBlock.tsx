@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { Section, SectionHeading } from "@/components/ui/Section";
-import { targetCities, siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { getPublishedCities } from "@/lib/citiesData";
 
-export function ServiceLocations() {
+export async function ServiceLocationsBlock({ eyebrow, title }: { eyebrow?: string; title?: string }) {
+  const cities = await getPublishedCities();
+
   return (
     <Section style={{ background: "var(--color-surface)" }}>
       <SectionHeading
-        eyebrow="Where We Work"
-        title={`${siteConfig.serviceArea} Service Coverage`}
+        eyebrow={eyebrow || "Where We Work"}
+        title={title || `${siteConfig.serviceArea} Service Coverage`}
         description={`Headquartered in ${siteConfig.primaryCity}, Elephant Corporate delivers corporate event management, artist booking, venue booking, and event rentals anywhere in India.`}
       />
       <div className="card mt-8 inline-flex items-center gap-2.5 px-4 py-2.5">
@@ -18,7 +21,7 @@ export function ServiceLocations() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {targetCities.map((c) => (
+        {cities.map((c) => (
           <div key={c.slug} className="card p-4">
             <h3 className="m-0 text-base font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
               {c.name}

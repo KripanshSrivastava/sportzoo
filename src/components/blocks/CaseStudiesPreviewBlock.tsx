@@ -4,12 +4,14 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
 import { placeholderPhoto } from "@/lib/placeholderImages";
 
-export async function CaseStudiesPreview() {
+export async function CaseStudiesPreviewBlock({ eyebrow, title }: { eyebrow?: string; title?: string }) {
   const caseStudies = await getPublishedCaseStudies();
+  if (caseStudies.length === 0) return null;
+
   return (
     <Section className="bg-slate-50">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <SectionHeading eyebrow="Our Work" title="Recent engagements" />
+        <SectionHeading eyebrow={eyebrow || "Our Work"} title={title || "Recent engagements"} />
         <Link href="/case-studies" className="text-sm font-semibold text-[color:var(--color-electric)]">
           View all case studies →
         </Link>
@@ -21,7 +23,6 @@ export async function CaseStudiesPreview() {
             href={`/case-studies/${c.slug}`}
             className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-lg"
           >
-            {/* DEMO PHOTO — replace with real event photography before launch */}
             <div className="relative aspect-[16/10]">
               <Image
                 src={c.coverImageUrl || placeholderPhoto(c.slug, 640, 400)}
@@ -33,9 +34,7 @@ export async function CaseStudiesPreview() {
               />
             </div>
             <div className="p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">
-                {c.category}
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">{c.category}</p>
               <h3 className="mt-2 text-base font-semibold text-[color:var(--color-navy-900)] group-hover:text-[color:var(--color-electric)]">
                 {c.title}
               </h3>
