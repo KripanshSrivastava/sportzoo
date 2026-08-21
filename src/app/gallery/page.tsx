@@ -1,8 +1,10 @@
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { siteImages } from "@/config/images";
 
 export const metadata = buildMetadata({
   title: "Gallery | Sportzoo Corporate Events",
@@ -11,14 +13,7 @@ export const metadata = buildMetadata({
   noIndex: true,
 });
 
-const categories = [
-  "Corporate Offsites",
-  "Recognition Ceremonies",
-  "Annual Day",
-  "Sports Days",
-  "Team Building",
-  "Conferences",
-];
+const categories = Object.keys(siteImages.gallery);
 
 export default function GalleryPage() {
   return (
@@ -30,6 +25,7 @@ export default function GalleryPage() {
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Gallery</h1>
           <p className="mt-6 max-w-2xl text-lg text-slate-300">
             Photos from our events will be added here as engagements are completed and cleared for publication.
+            The photos below are temporary demo images, not real Sportzoo events.
           </p>
         </div>
       </section>
@@ -37,13 +33,18 @@ export default function GalleryPage() {
       {categories.map((cat) => (
         <Section key={cat} className="border-b border-slate-100 bg-white">
           <SectionHeading title={cat} />
+          {/* To change these photos, see src/config/images.ts (siteImages.gallery) */}
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex aspect-square items-center justify-center rounded-lg bg-slate-100 text-xs text-slate-400"
-              >
-                Photo placeholder
+            {siteImages.gallery[cat].map((src, i) => (
+              <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
+                <Image
+                  src={src}
+                  alt={`${cat} example ${i + 1}`}
+                  fill
+                  sizes="(min-width: 640px) 25vw, 50vw"
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
             ))}
           </div>

@@ -1,4 +1,5 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { Blueprint } from "@/components/ui/Blueprint";
 import { JsonLd, faqJsonLd } from "@/components/seo/JsonLd";
 import type { FaqItem } from "@/config/services";
 
@@ -14,21 +15,30 @@ export function FAQSection({
   if (faqs.length === 0) return null;
 
   return (
-    <Section className="bg-white">
+    <Section style={{ background: "var(--color-surface)" }}>
       <JsonLd data={faqJsonLd(faqs)} />
-      <SectionHeading eyebrow={eyebrow} title={title} />
-      <div className="mt-10 space-y-4">
-        {faqs.map((f) => (
-          <details key={f.q} className="group rounded-xl border border-slate-200 p-5 open:border-[color:var(--color-electric)]">
-            <summary className="cursor-pointer list-none text-base font-semibold text-[color:var(--color-navy-900)] marker:content-none">
-              <span className="flex items-center justify-between gap-4">
-                {f.q}
-                <span className="text-slate-400 group-open:rotate-45" aria-hidden="true">+</span>
-              </span>
-            </summary>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">{f.a}</p>
-          </details>
-        ))}
+      <div className="mx-auto max-w-[900px]">
+        <SectionHeading eyebrow={eyebrow} title={title} />
+        <div className="mt-9 flex flex-col gap-3">
+          {faqs.map((f, i) => (
+            <Blueprint key={f.q} as="details" className="group px-5 py-[18px]" {...(i === 0 ? { open: true } : {})}>
+              <summary
+                className="m-0 list-none"
+                style={{ cursor: "pointer", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "16px" }}
+              >
+                <span className="flex items-center justify-between gap-4">
+                  {f.q}
+                  <span className="text-muted shrink-0 group-open:rotate-45" aria-hidden="true">
+                    +
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-2.5 text-sm leading-relaxed" style={{ color: "var(--color-neutral-700)" }}>
+                {f.a}
+              </p>
+            </Blueprint>
+          ))}
+        </div>
       </div>
     </Section>
   );

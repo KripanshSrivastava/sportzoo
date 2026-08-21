@@ -69,7 +69,7 @@ export default function ContactPage() {
             <div>
               <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Service Areas</h3>
               <p className="text-sm text-slate-700">
-                {siteConfig.primaryCity} and {targetCities.map((c) => c.name).join(", ")}
+                {siteConfig.serviceArea} — including {targetCities.map((c) => c.name).join(", ")}
               </p>
             </div>
           </div>

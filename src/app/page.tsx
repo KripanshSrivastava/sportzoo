@@ -5,7 +5,6 @@ import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { CaseStudiesPreview } from "@/components/sections/CaseStudiesPreview";
 import { IndustriesServed } from "@/components/sections/IndustriesServed";
-import { ClientLogos } from "@/components/sections/ClientLogos";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { ServiceLocations } from "@/components/sections/ServiceLocations";
@@ -53,7 +52,6 @@ export default function HomePage() {
       <ProcessSteps />
       <CaseStudiesPreview />
       <IndustriesServed />
-      <ClientLogos />
       <Testimonials />
       <StatsBand />
       <ServiceLocations />

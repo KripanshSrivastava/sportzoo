@@ -4,18 +4,27 @@ import { targetCities, siteConfig } from "@/config/site";
 
 export function ServiceLocations() {
   return (
-    <Section className="bg-slate-50">
+    <Section style={{ background: "var(--color-surface)" }}>
       <SectionHeading
         eyebrow="Where We Work"
-        title="Service locations"
-        description={`Headquartered in ${siteConfig.primaryCity}, with corporate event management, artist booking, venue booking, and event rentals delivered across India.`}
+        title={`${siteConfig.serviceArea} Service Coverage`}
+        description={`Headquartered in ${siteConfig.primaryCity}, Sportzoo delivers corporate event management, artist booking, venue booking, and event rentals anywhere in India.`}
       />
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="card mt-8 inline-flex items-center gap-2.5 px-4 py-2.5">
+        <span className="tag tag-accent">Pan India</span>
+        <span className="text-sm" style={{ color: "var(--color-neutral-700)" }}>
+          No matter which city your event, venue, or booking is in — we cover it.
+        </span>
+      </div>
+
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {targetCities.map((c) => (
-          <div key={c.slug} className="rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="font-semibold text-[color:var(--color-navy-900)]">{c.name}</h3>
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-              <Link href={`/corporate-event-management/${c.slug}`} className="text-[color:var(--color-electric)] hover:underline">
+          <div key={c.slug} className="card p-4">
+            <h3 className="m-0 text-base font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
+              {c.name}
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+              <Link href={`/corporate-event-management/${c.slug}`} className="hover:underline">
                 Corporate events →
               </Link>
             </div>

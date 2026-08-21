@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { caseStudies } from "@/content/caseStudies";
+import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export const metadata = buildMetadata({
   title: "Our Work | Corporate Event Case Studies | Sportzoo",
@@ -33,16 +35,26 @@ export default function CaseStudiesPage() {
       <Section className="bg-white">
         <SectionHeading
           eyebrow="Note"
-          title="Case studies are being finalised"
-          description="The entries below are structural templates awaiting real client work and permission to publish. Once completed engagements are confirmed for publication, they will replace this placeholder content — see each entry's fields for what's pending."
+          title="Demo case studies for preview"
+          description="The entries below use a fictional client so the page previews as finished. Replace them with real, permissioned client engagements before this site goes live — never publish placeholder content as a genuine case study."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {caseStudies.map((c) => (
             <Link
               key={c.slug}
               href={`/case-studies/${c.slug}`}
-              className="flex flex-col overflow-hidden rounded-xl border border-dashed border-slate-300 bg-slate-50 transition-shadow hover:shadow-md"
+              className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-md"
             >
+              <div className="relative aspect-[16/10]">
+                <Image
+                  src={placeholderPhoto(c.slug, 640, 400)}
+                  alt={c.title}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
               <div className="p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">
                   {c.category}

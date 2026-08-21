@@ -81,11 +81,20 @@ The "Plan Your Event or Booking" form (`src/components/forms/QuoteForm.tsx`) pos
    (`src/lib/leadSchema.ts`), including a honeypot field.
 3. Hands the validated lead to `deliverLead()` in `src/lib/leadIntegration.ts`.
 
-**To wire up real lead delivery**, set `LEAD_WEBHOOK_URL` in your environment to a webhook endpoint (Zapier,
-Make, a serverless function, your CRM's inbound webhook, etc.) that accepts a JSON POST. Until that's set,
-leads are only logged server-side — the form still works end to end (validation, honeypot, rate limiting,
-success/error states, thank-you redirect), it just doesn't leave the server. This is the only file you need
-to touch to change where leads go (email, CRM, database — swap the implementation, keep the function
+**Lead delivery is email by default.** Every validated lead is emailed to `LEAD_NOTIFY_EMAIL`
+(`allinonesolutions.rs@gmail.com` unless you change it) via [Resend](https://resend.com) — a lightweight
+HTTPS API call, no SMTP setup, no extra npm package. To turn it on:
+
+1. Sign up at resend.com (free tier is plenty for a lead form) and create an API key.
+2. Set `RESEND_API_KEY` in your environment. `onboarding@resend.dev` works as the sender out of the box for
+   testing; verify your own sending domain in Resend and set `RESEND_FROM_EMAIL` before real launch so mail
+   doesn't land in spam.
+
+You can additionally (or instead) set `LEAD_WEBHOOK_URL` to POST every lead as JSON to a webhook (Zapier,
+Make, a CRM's inbound webhook). Until at least one of `RESEND_API_KEY` / `LEAD_WEBHOOK_URL` is set, leads are
+only logged server-side — the form still works end to end (validation, honeypot, rate limiting, success/error
+states, thank-you redirect), the lead just doesn't leave the server. `src/lib/leadIntegration.ts` is the only
+file you need to touch to change where leads go (swap in a CRM push or database write, keep the function
 signature).
 
 UTM parameters, landing page, and referrer are captured client-side (`src/lib/utm.ts`) on first page load per
@@ -117,8 +126,10 @@ Configure these as GA4 conversion events / GTM triggers once GTM is live. Every 
    - `NEXT_PUBLIC_SITE_ENV=production` on the Production environment **only** — leave it unset (or any
      other value) on Preview deployments so preview URLs stay out of search engines
      (`src/app/robots.ts` and `src/lib/seo.ts` both key off this).
-   - `LEAD_WEBHOOK_URL`, analytics IDs, etc. as needed.
-3. Deploy. Vercel auto-detects Next.js — no custom build command required.
+   - `RESEND_API_KEY` (and `LEAD_WEBHOOK_URL` if you're also using one), analytics IDs, etc. as needed.
+3. Deploy. Vercel auto-detects Next.js — no custom build command required. This project is built to run
+   comfortably on Vercel's free/hobby serverless tier (no VPS/VPC needed) — no background processes, no
+   heavy dependencies, and the lead email send is a single lightweight HTTPS call.
 4. Point `sportzoo.in` at the Vercel project and confirm HTTPS is issued.
 
 ## 8. Google Search Console setup

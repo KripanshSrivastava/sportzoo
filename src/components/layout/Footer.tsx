@@ -5,140 +5,127 @@ import { siteConfig, targetCities } from "@/config/site";
 import { eventsDropdown, artistDropdown, venueDropdown, rentalsDropdown } from "@/config/nav";
 import { trackEvent } from "@/lib/analytics";
 
+const linkStyle = { color: "var(--color-neutral-400)" };
+const headingStyle = { color: "var(--color-neutral-100)" };
+
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="site-footer" className="bg-[color:var(--color-navy-950)] pb-20 pt-16 text-slate-300 sm:pb-16">
-      <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
+    <footer
+      id="site-footer"
+      className="px-6 pb-24 pt-16 text-sm sm:pb-16"
+      style={{ background: "var(--color-accent-900)", color: "var(--color-neutral-300)" }}
+    >
+      <div className="container-page grid gap-8 sm:grid-cols-2 lg:grid-cols-6">
         <div className="sm:col-span-2 lg:col-span-2">
-          <span className="text-xl font-bold tracking-tight text-white">{siteConfig.brand}</span>
-          <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-400">{siteConfig.description}</p>
-          <div className="mt-5 space-y-2 text-sm">
-            <p>
-              <a href={siteConfig.phoneHref} className="hover:text-white">
-                {siteConfig.phone}
-              </a>
-            </p>
-            <p>
-              <a href={`mailto:${siteConfig.email}`} className="hover:text-white">
-                {siteConfig.email}
-              </a>
-            </p>
-            <p className="text-slate-400">{siteConfig.officeAddress}</p>
+          <p className="m-0 text-xl" style={{ fontFamily: "var(--font-heading)", fontWeight: 600, color: "var(--color-neutral-100)" }}>
+            {siteConfig.brand}
+          </p>
+          <p className="mt-3 max-w-[280px] text-[13px] leading-relaxed" style={{ color: "var(--color-neutral-400)" }}>
+            {siteConfig.description}
+          </p>
+          <div className="mt-4 flex flex-col gap-1.5 text-[13px]" style={{ color: "var(--color-neutral-400)" }}>
+            <a href={siteConfig.phoneHref} className="hover:underline" style={{ color: "inherit" }}>
+              {siteConfig.phone}
+            </a>
+            <a href={`mailto:${siteConfig.email}`} className="hover:underline" style={{ color: "inherit" }}>
+              {siteConfig.email}
+            </a>
           </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Corporate Events</h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <h6 style={headingStyle}>Corporate Events</h6>
+          <div className="mt-3 flex flex-col gap-2 text-[13px]">
             {eventsDropdown.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="text-slate-400 hover:text-white">
-                  {l.label}
-                </Link>
-              </li>
+              <Link key={l.href} href={l.href} style={linkStyle}>
+                {l.label}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Artist Booking</h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <h6 style={headingStyle}>Artist Booking</h6>
+          <div className="mt-3 flex flex-col gap-2 text-[13px]">
             {artistDropdown.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="text-slate-400 hover:text-white">
-                  {l.label}
-                </Link>
-              </li>
+              <Link key={l.href} href={l.href} style={linkStyle}>
+                {l.label}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Venue Booking</h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <h6 style={headingStyle}>Venue &amp; Rentals</h6>
+          <div className="mt-3 flex flex-col gap-2 text-[13px]">
             {venueDropdown.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="text-slate-400 hover:text-white">
-                  {l.label}
-                </Link>
-              </li>
+              <Link key={l.href} href={l.href} style={linkStyle}>
+                {l.label}
+              </Link>
             ))}
-          </ul>
-          <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-white">Event Rentals</h3>
-          <ul className="mt-4 space-y-2 text-sm">
             {rentalsDropdown.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="text-slate-400 hover:text-white">
-                  {l.label}
-                </Link>
-              </li>
+              <Link key={l.href} href={l.href} style={linkStyle}>
+                {l.label}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Company</h3>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>
-              <Link href="/about" className="text-slate-400 hover:text-white">
-                About Sportzoo
-              </Link>
-            </li>
-            <li>
-              <Link href="/case-studies" className="text-slate-400 hover:text-white">
-                Our Work
-              </Link>
-            </li>
-            <li>
-              <Link href="/gallery" className="text-slate-400 hover:text-white">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="text-slate-400 hover:text-white">
-                Blog & Resources
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="text-slate-400 hover:text-white">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/request-a-quote"
-                onClick={() => trackEvent("quote_button_click", { source: "footer" })}
-                className="font-semibold text-[color:var(--color-accent)] hover:text-white"
-              >
-                Request a Quote
-              </Link>
-            </li>
-          </ul>
-          <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-white">Service Locations</h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <h6 style={headingStyle}>Company</h6>
+          <div className="mt-3 flex flex-col gap-2 text-[13px]">
+            <Link href="/about" style={linkStyle}>
+              About
+            </Link>
+            <Link href="/case-studies" style={linkStyle}>
+              Our Work
+            </Link>
+            <Link href="/gallery" style={linkStyle}>
+              Gallery
+            </Link>
+            <Link href="/blog" style={linkStyle}>
+              Blog &amp; Resources
+            </Link>
+            <Link href="/contact" style={linkStyle}>
+              Contact
+            </Link>
+            <Link
+              href="/request-a-quote"
+              onClick={() => trackEvent("quote_button_click", { source: "footer" })}
+              className="font-semibold"
+              style={{ color: "var(--color-accent-300)" }}
+            >
+              Request a Quote
+            </Link>
+          </div>
+          <h6 className="mt-5" style={headingStyle}>
+            Service Locations
+          </h6>
+          <div className="mt-3 flex flex-col gap-2 text-[13px]">
             {targetCities.map((c) => (
-              <li key={c.slug}>
-                <Link href={`/corporate-event-management/${c.slug}`} className="text-slate-400 hover:text-white">
-                  Events in {c.name}
-                </Link>
-              </li>
+              <Link key={c.slug} href={`/corporate-event-management/${c.slug}`} style={linkStyle}>
+                {c.name}
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
 
-      <div className="container-page mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-        <p>
+      <div
+        className="container-page mt-10 flex flex-col gap-3 pt-5 text-xs sm:flex-row sm:items-center sm:justify-between"
+        style={{ borderTop: "1px solid color-mix(in srgb, var(--color-neutral-100) 15%, transparent)", color: "var(--color-neutral-500)" }}
+      >
+        <p className="m-0">
           &copy; {year} {siteConfig.legalName}. All rights reserved.
         </p>
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          <Link href="/privacy-policy" className="hover:text-white">
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <Link href="/privacy-policy" style={{ color: "inherit" }}>
             Privacy Policy
           </Link>
-          <Link href="/terms-and-conditions" className="hover:text-white">
-            Terms and Conditions
+          <Link href="/terms-and-conditions" style={{ color: "inherit" }}>
+            Terms
           </Link>
         </div>
       </div>

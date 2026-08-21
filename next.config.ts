@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    // Temporary placeholder photography source (see src/lib/placeholderImages.ts).
+    // Remove once real event photography replaces these.
+    remotePatterns: [
+      { protocol: "https", hostname: "picsum.photos" },
+      { protocol: "https", hostname: "placehold.co" },
+    ],
+  },
 };
 
 export default nextConfig;

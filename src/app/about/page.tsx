@@ -84,6 +84,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      <Section className="bg-white">
+        <SectionHeading eyebrow="Founder" title={`Led by ${siteConfig.ownerName}`} />
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-700">
+          Sportzoo is run by {siteConfig.ownerName}, who oversees every engagement personally — from the
+          first call through final execution — so clients have one accountable point of contact throughout.
+        </p>
+      </Section>
+
       <LeadFormSection sourcePage="About" />
       <FinalCta />
     </>

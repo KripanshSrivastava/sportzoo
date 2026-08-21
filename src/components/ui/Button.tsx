@@ -4,22 +4,19 @@ import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "outline" | "ghost";
 type Size = "md" | "lg";
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-60 disabled:pointer-events-none";
+const base = "btn disabled:opacity-45 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-[color:var(--color-accent)] text-white hover:bg-[color:var(--color-accent-dark)]",
-  secondary:
-    "bg-emerald-600 text-white hover:bg-emerald-700",
-  outline:
-    "border-2 border-white text-white hover:bg-white hover:text-[color:var(--color-navy-900)]",
-  ghost: "bg-[color:var(--color-navy-800)] text-white hover:bg-[color:var(--color-navy-700)]",
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  // For use on dark (navy) sections — border/text tuned to sit on --color-accent-900.
+  outline: "btn-outline-dark",
+  ghost: "btn-ghost",
 };
 
 const sizes: Record<Size, string> = {
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-3.5 text-base",
+  md: "",
+  lg: "px-7 py-3.5 text-[15px]",
 };
 
 interface CommonProps {

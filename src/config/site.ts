@@ -1,12 +1,17 @@
 /**
  * Central business configuration.
- * Update every placeholder here before launch — nothing else in the codebase
- * should hardcode business details.
+ *
+ * DEMO DATA NOTICE: the contact details below (phone, WhatsApp, address,
+ * map link, social links) are temporary placeholder values filled in so the
+ * site previews and functions correctly during development. Replace every
+ * one of them with real business details before this site goes live —
+ * nothing else in the codebase should hardcode business details, so this is
+ * the only file that needs updating.
  */
 
 export const siteConfig = {
   brand: "Sportzoo",
-  legalName: "Sportzoo [LEGAL ENTITY NAME]",
+  legalName: "Sportzoo Events & Entertainment Pvt. Ltd. [REPLACE WITH REAL LEGAL ENTITY NAME]",
   domain: "sportzoo.in",
   url: "https://sportzoo.in",
   tagline: "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End.",
@@ -14,22 +19,24 @@ export const siteConfig = {
   description:
     "Sportzoo plans and executes corporate events, and books artists, venues, and event equipment for companies across India — one accountable partner from brief to bill.",
 
-  // Contact — replace with real details before launch
-  phone: "[PHONE NUMBER]",
-  phoneHref: "tel:+91[PHONE NUMBER]",
-  whatsapp: "[WHATSAPP NUMBER]",
-  whatsappHref: "https://wa.me/91[WHATSAPP NUMBER]",
-  email: "[BUSINESS EMAIL]",
-  officeAddress: "[OFFICE ADDRESS]",
-  primaryCity: "[PRIMARY CITY]",
-  mapUrl: "[MAP URL]",
+  ownerName: "Sachin",
+
+  phone: "+91 96545 96149",
+  phoneHref: "tel:+919654596149",
+  whatsapp: "86791 26961",
+  whatsappHref: "https://wa.me/918679126961",
+  email: "allinonesolutions.rs@gmail.com",
+  officeAddress: "Plot 14, Cyber Hub, DLF Phase 2, Gurugram, Haryana 122002",
+  primaryCity: "Gurugram",
+  serviceArea: "Pan India",
+  mapUrl: "https://maps.google.com/?q=Cyber+Hub+DLF+Phase+2+Gurugram",
   businessHours: "Mon–Sat, 9:30 AM – 6:30 PM IST",
 
   social: {
-    linkedin: "[LINKEDIN URL]",
-    instagram: "[INSTAGRAM URL]",
-    facebook: "[FACEBOOK URL]",
-    youtube: "[YOUTUBE URL]",
+    linkedin: "#",
+    instagram: "#",
+    facebook: "#",
+    youtube: "#",
   },
 
   // Analytics — left empty by default; populate via env vars, never hardcode
@@ -41,12 +48,11 @@ export const siteConfig = {
   },
 } as const;
 
-// Slugs must stay URL-safe (no brackets/spaces) even before real city names
-// are filled in — only the display `name` needs replacing.
+// DEMO VALUES — replace with the real cities Sportzoo actually serves.
 export const targetCities = [
-  { slug: "target-city-1", name: "[TARGET CITY 1]" },
-  { slug: "target-city-2", name: "[TARGET CITY 2]" },
-  { slug: "target-city-3", name: "[TARGET CITY 3]" },
+  { slug: "gurugram", name: "Gurugram" },
+  { slug: "mumbai", name: "Mumbai" },
+  { slug: "bengaluru", name: "Bengaluru" },
 ] as const;
 
 export type TargetCity = (typeof targetCities)[number];

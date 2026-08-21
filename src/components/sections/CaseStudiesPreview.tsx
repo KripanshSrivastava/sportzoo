@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { caseStudies } from "@/content/caseStudies";
+import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export function CaseStudiesPreview() {
   return (
@@ -18,8 +20,16 @@ export function CaseStudiesPreview() {
             href={`/case-studies/${c.slug}`}
             className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-lg"
           >
-            <div className="flex aspect-[16/10] items-center justify-center bg-[color:var(--color-navy-800)] text-sm text-slate-400">
-              Event photo placeholder
+            {/* DEMO PHOTO — replace with real event photography before launch */}
+            <div className="relative aspect-[16/10]">
+              <Image
+                src={placeholderPhoto(c.slug, 640, 400)}
+                alt={c.title}
+                fill
+                sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover transition-transform group-hover:scale-105"
+                unoptimized
+              />
             </div>
             <div className="p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">

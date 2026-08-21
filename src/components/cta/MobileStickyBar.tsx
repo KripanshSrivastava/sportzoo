@@ -24,18 +24,18 @@ export function MobileStickyBar() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-slate-200 bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.08)] transition-transform duration-200 sm:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 transition-transform duration-200 sm:hidden ${
         hidden ? "translate-y-full" : "translate-y-0"
       }`}
+      style={{ borderTop: "1px solid var(--color-divider)", background: "var(--color-bg)", boxShadow: "var(--shadow-lg)" }}
     >
       <a
         href={siteConfig.phoneHref}
         data-cta="call"
         data-location="sticky-bar"
         onClick={() => trackEvent("call_click", { source: "sticky_bar" })}
-        className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-semibold text-[color:var(--color-navy-800)]"
+        className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-[11px] font-semibold"
       >
-        <span aria-hidden="true">📞</span>
         Call
       </a>
       <a
@@ -45,9 +45,9 @@ export function MobileStickyBar() {
         data-cta="whatsapp"
         data-location="sticky-bar"
         onClick={() => trackEvent("whatsapp_click", { source: "sticky_bar" })}
-        className="flex flex-col items-center justify-center gap-0.5 border-x border-slate-200 py-2.5 text-xs font-semibold text-emerald-700"
+        className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-[11px] font-semibold"
+        style={{ borderLeft: "1px solid var(--color-divider)", borderRight: "1px solid var(--color-divider)" }}
       >
-        <span aria-hidden="true">💬</span>
         WhatsApp
       </a>
       <a
@@ -55,9 +55,9 @@ export function MobileStickyBar() {
         data-cta="quote"
         data-location="sticky-bar"
         onClick={() => trackEvent("quote_button_click", { source: "sticky_bar" })}
-        className="flex flex-col items-center justify-center gap-0.5 bg-[color:var(--color-accent)] py-2.5 text-xs font-semibold text-white"
+        className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-[11px] font-semibold"
+        style={{ background: "var(--color-accent)", color: "var(--color-bg)" }}
       >
-        <span aria-hidden="true">📝</span>
         Get Quote
       </a>
     </div>

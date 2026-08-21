@@ -1,40 +1,49 @@
 import { Section, SectionHeading } from "@/components/ui/Section";
 
+// DEMO DATA — fictional quotes and names for preview purposes.
+// Replace with real client feedback before launch.
 const testimonials = [
   {
-    quote: "[PLACEHOLDER TESTIMONIAL — replace with a genuine client quote before launch.]",
-    name: "[Name]",
-    role: "[Title, Company]",
+    quote:
+      "We had six weeks and a leadership team that couldn't afford a badly run offsite. Sportzoo handled everything we didn't have time for and the whole thing ran itself.",
+    name: "Ritika Sen",
+    role: "Head of People, Nexora Tech",
   },
   {
-    quote: "[PLACEHOLDER TESTIMONIAL — replace with a genuine client quote before launch.]",
-    name: "[Name]",
-    role: "[Title, Company]",
+    quote:
+      "The venue capacity issue would have blindsided us on the day. Sportzoo caught it during shortlisting, not after we'd already booked.",
+    name: "Arjun Malhotra",
+    role: "Admin Manager, Bluewave Systems",
   },
   {
-    quote: "[PLACEHOLDER TESTIMONIAL — replace with a genuine client quote before launch.]",
-    name: "[Name]",
-    role: "[Title, Company]",
+    quote:
+      "One point of contact for the venue, the anchor, and the band meant we weren't juggling three vendor relationships during our launch week.",
+    name: "Priya Nambiar",
+    role: "Marketing Lead, Orbit Retail",
   },
 ];
 
 export function Testimonials() {
   return (
-    <Section className="bg-white">
+    <Section>
       <SectionHeading eyebrow="Client Feedback" title="What clients say" />
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
+      <div className="mt-11 grid gap-5 md:grid-cols-3">
         {testimonials.map((t, i) => (
-          <figure key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-6">
-            <blockquote className="text-sm italic leading-relaxed text-slate-600">&ldquo;{t.quote}&rdquo;</blockquote>
-            <figcaption className="mt-4 text-sm font-semibold text-[color:var(--color-navy-900)]">
+          <figure key={i} className="card m-0">
+            <blockquote className="m-0 text-sm italic" style={{ color: "var(--color-text)", opacity: 0.85 }}>
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <figcaption className="mt-3 text-[13px] font-semibold" style={{ fontSize: "13px" }}>
               {t.name}
-              <span className="block font-normal text-slate-500">{t.role}</span>
+              <span className="block font-normal" style={{ color: "var(--color-neutral-600)" }}>
+                {t.role}
+              </span>
             </figcaption>
           </figure>
         ))}
       </div>
-      <p className="mt-4 text-center text-xs text-slate-400">
-        Placeholder testimonials — replace with real client feedback before launch.
+      <p className="mt-4 text-center text-xs" style={{ color: "var(--color-neutral-500)" }}>
+        Demo testimonials for preview purposes — replace with real client feedback before launch.
       </p>
     </Section>
   );

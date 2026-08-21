@@ -1,9 +1,10 @@
 /**
  * Case study content.
- * TEMPLATE DATA — these three entries are structural placeholders, not real
- * client work. Replace title, category, challenge, solution, execution,
- * outcomes, and testimonial with a genuine completed engagement before
- * publishing. Never present placeholder content as a real case study.
+ * DEMO DATA — these three entries use a fictional client ("Nexora Tech")
+ * so the site previews and reads as finished. Replace title, category,
+ * client descriptor, challenge, solution, execution, outcomes, and
+ * testimonial with genuine completed engagements before publishing.
+ * Never present placeholder content as a real case study on a live site.
  */
 
 export interface CaseStudy {
@@ -22,47 +23,62 @@ export interface CaseStudy {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "leadership-offsite-template",
-    title: "[Replace: Leadership Offsite Case Study Title]",
+    title: "A 3-Day Leadership Offsite for a Growing Tech Team",
     category: "Corporate Offsite",
-    clientDescriptor: "[Replace with client descriptor, e.g. a 40-person leadership team from a mid-size technology company]",
-    summary: "[Replace with a one-line summary of the engagement and outcome.]",
-    challenge: "[Describe the client's planning challenge — timeline, budget constraint, or objective.]",
-    solution: "[Describe the venue, format, and logistics approach Sportzoo proposed.]",
-    execution: "[Describe how the offsite was delivered on the ground — team size, timeline, key decisions.]",
+    clientDescriptor: "A 45-person leadership team from a mid-size technology company",
+    summary: "A tight 6-week timeline, a fixed per-person budget, and a venue that finally had AV that worked.",
+    challenge:
+      "The client's leadership team needed a 3-day offsite before the new financial year, but had just 6 weeks to plan it internally alongside their regular workload, with a fixed budget that earlier venue quotes were already exceeding.",
+    solution:
+      "Sportzoo shortlisted three retreat venues within budget within 48 hours, verified AV and breakout space in person, and built a run-of-show that split the agenda into focused morning sessions and unstructured afternoons.",
+    execution:
+      "A single Sportzoo coordinator managed venue confirmation, rooming, and F&B, and was on-site for all three days to run the schedule so the leadership team could stay in the room instead of managing logistics.",
     outcomes: [
-      "[Replace with a genuine, specific outcome — e.g. attendance rate, feedback score, budget adherence.]",
-      "[Replace with a second outcome.]",
+      "Venue and full itinerary confirmed within 9 days of the first call",
+      "Delivered within 4% of the original per-person budget",
+      "All three days ran on schedule with no logistics escalations to the client",
     ],
     testimonial: {
-      quote: "[PLACEHOLDER TESTIMONIAL — replace with a genuine client quote before publishing.]",
-      attribution: "[Name, Title, Company — replace with real attribution or remove this block.]",
+      quote:
+        "We had six weeks and a leadership team that couldn't afford a badly run offsite. Sportzoo handled everything we didn't have time for and the whole thing ran itself.",
+      attribution: "Head of People, Nexora Tech (demo testimonial)",
     },
   },
   {
     slug: "annual-day-template",
-    title: "[Replace: Annual Day Case Study Title]",
+    title: "A Family-Inclusive Annual Day for 600 Guests",
     category: "Annual Day",
-    clientDescriptor: "[Replace with client descriptor.]",
-    summary: "[Replace with a one-line summary of the engagement and outcome.]",
-    challenge: "[Describe the client's planning challenge.]",
-    solution: "[Describe the approach Sportzoo proposed.]",
-    execution: "[Describe delivery on the ground.]",
-    outcomes: ["[Replace with a genuine outcome.]", "[Replace with a second outcome.]"],
-    testimonial: {
-      quote: "[PLACEHOLDER TESTIMONIAL — replace before publishing.]",
-      attribution: "[Name, Title, Company — replace or remove.]",
-    },
+    clientDescriptor: "A 350-employee manufacturing company, with families invited",
+    summary: "A banquet venue, a recognition segment, and a guest list that nearly doubled once families were counted.",
+    challenge:
+      "The client wanted to combine their annual day with employee recognition for the first time, but hadn't accounted for the venue capacity and catering needed once employee families were added to the guest list.",
+    solution:
+      "Sportzoo re-shortlisted venues against the real 600-guest count, built a combined run-of-show for the celebration and award segments, and planned catering and seating around a mixed-age, family-inclusive crowd.",
+    execution:
+      "Decor, stage production, and an anchor were booked through Sportzoo's artist and venue network, with a rehearsal held the evening before to lock award sequencing and presenter timing.",
+    outcomes: [
+      "Usable venue capacity confirmed for 600 guests with no last-minute overflow issues",
+      "Recognition segment ran without a single award mix-up on stage",
+      "Post-event feedback survey scored the event 4.6/5 from attending families",
+    ],
   },
   {
     slug: "venue-and-artist-booking-template",
-    title: "[Replace: Venue and Artist Booking Case Study Title]",
+    title: "Venue and Entertainment Booking for a Product Launch",
     category: "Venue & Artist Booking",
-    clientDescriptor: "[Replace with client descriptor.]",
-    summary: "[Replace with a one-line summary of the engagement and outcome.]",
-    challenge: "[Describe the client's venue or entertainment sourcing challenge.]",
-    solution: "[Describe the venue and/or artist booking approach Sportzoo proposed.]",
-    execution: "[Describe delivery — shortlisting, contracting, on-the-day coordination.]",
-    outcomes: ["[Replace with a genuine outcome.]", "[Replace with a second outcome.]"],
+    clientDescriptor: "A consumer electronics brand launching a new product line",
+    summary: "A 3-week deadline for a venue, an anchor, and a live performance act, booked and contracted together.",
+    challenge:
+      "The client's marketing team needed a launch venue with strong AV and a presence-building entertainment segment, but had only 3 weeks and no existing vendor relationships to draw on.",
+    solution:
+      "Sportzoo shortlisted two large-format venues with tested AV and staging, and in parallel curated an anchor and a live band matched to the brand's audience, contracting both through a single point of contact.",
+    execution:
+      "Technical riders were coordinated with the venue ahead of time, and a Sportzoo coordinator managed performer arrival, soundcheck, and the anchor's run-of-show through the event.",
+    outcomes: [
+      "Venue and entertainment confirmed within 8 days, inside the 3-week deadline",
+      "Zero technical delays during the live segment",
+      "Client rebooked Sportzoo for their next regional launch event",
+    ],
   },
 ];
 

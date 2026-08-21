@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { Header } from "@/components/layout/Header";
@@ -7,16 +7,19 @@ import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { WhatsAppFloat } from "@/components/cta/WhatsAppFloat";
 import { MobileStickyBar } from "@/components/cta/MobileStickyBar";
+import { LeadPopup } from "@/components/forms/LeadPopup";
 import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/components/seo/JsonLd";
 import { AnalyticsScripts } from "@/components/seo/AnalyticsScripts";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const barlow = Barlow({
+  variable: "--font-barlow",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -37,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <JsonLd data={organizationJsonLd()} />
@@ -49,6 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <WhatsAppFloat />
         <MobileStickyBar />
+        <LeadPopup />
       </body>
     </html>
   );

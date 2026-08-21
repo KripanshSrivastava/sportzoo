@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { caseStudies, getCaseStudyBySlug } from "@/content/caseStudies";
+import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -33,6 +35,18 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
           <p className="mt-4 max-w-2xl text-slate-300">{c.clientDescriptor}</p>
         </div>
       </section>
+
+      {/* DEMO PHOTO — replace with real event photography before launch */}
+      <div className="relative aspect-[21/9] w-full">
+        <Image
+          src={placeholderPhoto(`${c.slug}-hero`, 1400, 600)}
+          alt={c.title}
+          fill
+          sizes="100vw"
+          className="object-cover"
+          unoptimized
+        />
+      </div>
 
       <Section className="bg-white">
         <div className="grid gap-10 lg:grid-cols-2">

@@ -38,10 +38,7 @@ export const mainNav = [
   { href: "/artist-booking", label: "Artist Booking", dropdown: artistDropdown },
   { href: "/venue-booking", label: "Venue Booking", dropdown: venueDropdown },
   { href: "/event-rentals", label: "Event Rentals", dropdown: rentalsDropdown },
-  { href: "/about", label: "About" },
-  { href: "/case-studies", label: "Our Work" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 

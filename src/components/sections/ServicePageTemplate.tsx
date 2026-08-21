@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -14,6 +15,7 @@ import {
   eventRentalServices,
 } from "@/config/services";
 import { serviceOptions } from "@/lib/leadSchema";
+import { placeholderPhoto } from "@/lib/placeholderImages";
 
 // Nav labels are kept short; the lead form needs the exact enum value.
 const formServiceNameBySlug: Record<string, (typeof serviceOptions)[number]> = {
@@ -153,13 +155,18 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
 
       <Section className="bg-slate-50">
         <SectionHeading eyebrow="Gallery" title="Project examples" />
+        {/* DEMO PHOTOS — replace with real project photography before launch */}
         <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex aspect-square items-center justify-center rounded-lg bg-[color:var(--color-navy-800)] text-xs text-slate-400"
-            >
-              Photo placeholder
+            <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
+              <Image
+                src={placeholderPhoto(`${service.slug}-${i}`, 500, 500)}
+                alt={`${service.name} example ${i + 1}`}
+                fill
+                sizes="(min-width: 640px) 25vw, 50vw"
+                className="object-cover"
+                unoptimized
+              />
             </div>
           ))}
         </div>

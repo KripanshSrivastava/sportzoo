@@ -1,4 +1,10 @@
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
+import { placeholderLogo } from "@/lib/placeholderImages";
+
+// DEMO DATA — these are placeholder company names, not real clients.
+// Replace with real client logos (and remove this list) once permission is confirmed.
+const mockClients = ["Nexora Tech", "Bluewave Systems", "Orbit Retail", "Vantage Capital", "Northfield Labs", "Kestrel Pharma"];
 
 export function ClientLogos() {
   return (
@@ -7,17 +13,24 @@ export function ClientLogos() {
         Trusted by growing companies across industries
       </p>
       <div className="mt-6 grid grid-cols-3 gap-6 sm:grid-cols-6">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {mockClients.map((name) => (
           <div
-            key={i}
-            className="flex h-14 items-center justify-center rounded-md border border-dashed border-slate-300 bg-white text-xs text-slate-400"
+            key={name}
+            className="flex h-14 items-center justify-center overflow-hidden rounded-md border border-slate-200 bg-white"
           >
-            Client logo
+            <Image
+              src={placeholderLogo(name)}
+              alt={`${name} logo`}
+              width={200}
+              height={72}
+              className="h-full w-full object-contain"
+              unoptimized
+            />
           </div>
         ))}
       </div>
       <p className="mt-3 text-center text-xs text-slate-400">
-        Placeholder logo slots — replace with real client logos once permission is confirmed.
+        Demo client names for preview purposes — replace with real client logos once permission is confirmed.
       </p>
     </Section>
   );

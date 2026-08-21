@@ -11,27 +11,35 @@ export function Header() {
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between sm:h-20">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-[color:var(--color-navy-900)] text-lg font-bold text-white sm:h-10 sm:w-10">
+    <header
+      className="sticky top-0 z-50 backdrop-blur"
+      style={{
+        background: "color-mix(in srgb, var(--color-bg) 92%, transparent)",
+        borderBottom: "1px solid var(--color-divider)",
+      }}
+    >
+      <div className="container-page flex h-16 items-center gap-4 sm:h-20">
+        <Link
+          href="/"
+          className="mr-auto flex items-center gap-2 text-lg font-semibold"
+          style={{ color: "var(--color-text)", fontFamily: "var(--font-heading)" }}
+        >
+          <span
+            className="flex h-7 w-7 items-center justify-center text-lg font-semibold"
+            style={{ border: "1px solid var(--color-accent)", color: "var(--color-accent)" }}
+          >
             S
           </span>
-          <span className="text-xl font-bold tracking-tight text-[color:var(--color-navy-900)] sm:text-2xl">
-            {siteConfig.brand}
-          </span>
+          {siteConfig.brand}
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden items-stretch gap-4 self-stretch xl:flex" aria-label="Primary">
           {mainNav.map((item) => (
-            <div key={item.href} className="group relative">
-              <Link
-                href={item.href}
-                className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-[color:var(--color-navy-900)]"
-              >
+            <div key={item.href} className="group relative flex shrink-0 items-center">
+              <Link href={item.href} className="flex items-center gap-1 py-2 whitespace-nowrap">
                 {item.label}
                 {item.dropdown && (
-                  <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5 opacity-60" aria-hidden="true">
                     <path
                       fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -41,13 +49,14 @@ export function Header() {
                 )}
               </Link>
               {item.dropdown && (
-                <div className="invisible absolute left-0 top-full z-50 w-72 rounded-lg border border-slate-200 bg-white p-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                // display:none (not visibility/opacity) so the closed panel can't
+                // inflate this flex item's intrinsic width — see header overflow fix.
+                <div
+                  className="blueprint absolute left-0 top-full z-50 hidden w-72 group-hover:block group-focus-within:block"
+                  style={{ background: "var(--color-bg)", boxShadow: "var(--shadow-md)", padding: "8px" }}
+                >
                   {item.dropdown.map((d) => (
-                    <Link
-                      key={d.href}
-                      href={d.href}
-                      className="block rounded-md px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[color:var(--color-navy-900)]"
-                    >
+                    <Link key={d.href} href={d.href} className="block px-3 py-2 text-sm" style={{ color: "var(--color-neutral-700)" }}>
                       {d.label}
                     </Link>
                   ))}
@@ -57,22 +66,23 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3.5 xl:flex" style={{ marginLeft: "16px" }}>
           <a
             href={siteConfig.phoneHref}
             data-cta="call"
             data-location="header"
             onClick={() => trackEvent("call_click", { source: "header" })}
-            className="text-sm font-semibold text-slate-700 hover:text-[color:var(--color-navy-900)]"
+            className="text-sm font-medium"
+            style={{ color: "var(--color-text)" }}
           >
-            {siteConfig.phone}
+            Call Us
           </a>
           <Link
             href="/request-a-quote"
             data-cta="quote"
             data-location="header"
             onClick={() => trackEvent("quote_button_click", { source: "header" })}
-            className="rounded-md bg-[color:var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[color:var(--color-accent-dark)]"
+            className="btn btn-primary"
           >
             Request a Quote
           </Link>
@@ -80,10 +90,11 @@ export function Header() {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-md text-slate-700 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center xl:hidden"
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
+          style={{ color: "var(--color-text)" }}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-6 w-6">
             {open ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
@@ -92,40 +103,29 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
+        <div className="xl:hidden" style={{ borderTop: "1px solid var(--color-divider)", background: "var(--color-bg)" }}>
           <nav className="container-page flex flex-col gap-1 py-3" aria-label="Mobile primary">
             {mainNav.map((item) => (
               <div key={item.href}>
                 <div className="flex items-center justify-between">
-                  <Link
-                    href={item.href}
-                    className="flex-1 rounded-md px-2 py-2.5 text-sm font-semibold text-slate-700"
-                    onClick={() => setOpen(false)}
-                  >
+                  <Link href={item.href} className="flex-1 py-2.5 text-sm font-medium" onClick={() => setOpen(false)}>
                     {item.label}
                   </Link>
                   {item.dropdown && (
                     <button
                       type="button"
                       aria-label={`Toggle ${item.label} submenu`}
-                      className="px-3 py-2.5 text-slate-500"
-                      onClick={() =>
-                        setMobileDropdown((cur) => (cur === item.href ? null : item.href))
-                      }
+                      className="px-3 py-2.5 text-muted"
+                      onClick={() => setMobileDropdown((cur) => (cur === item.href ? null : item.href))}
                     >
                       {mobileDropdown === item.href ? "−" : "+"}
                     </button>
                   )}
                 </div>
                 {item.dropdown && mobileDropdown === item.href && (
-                  <div className="ml-3 flex flex-col gap-0.5 border-l border-slate-200 pl-3">
+                  <div className="ml-3 flex flex-col gap-0.5 pl-3" style={{ borderLeft: "1px solid var(--color-divider)" }}>
                     {item.dropdown.map((d) => (
-                      <Link
-                        key={d.href}
-                        href={d.href}
-                        className="rounded-md px-2 py-2 text-sm text-slate-600"
-                        onClick={() => setOpen(false)}
-                      >
+                      <Link key={d.href} href={d.href} className="py-2 text-sm text-muted" onClick={() => setOpen(false)}>
                         {d.label}
                       </Link>
                     ))}
@@ -133,11 +133,7 @@ export function Header() {
                 )}
               </div>
             ))}
-            <Link
-              href="/request-a-quote"
-              className="mt-2 rounded-md bg-[color:var(--color-accent)] px-4 py-3 text-center text-sm font-semibold text-white"
-              onClick={() => setOpen(false)}
-            >
+            <Link href="/request-a-quote" className="btn btn-primary btn-block text-center" onClick={() => setOpen(false)}>
               Request a Quote
             </Link>
           </nav>
