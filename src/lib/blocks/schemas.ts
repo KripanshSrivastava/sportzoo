@@ -161,6 +161,38 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
     fields: [{ key: "sourceLabel", label: "Source label (for lead tracking)", type: "text" }],
     defaultProps: { sourceLabel: "" },
   },
+  googleReviews: {
+    label: "Google reviews",
+    description:
+      "A ratings badge plus \"Read reviews\" / \"Leave a review\" links to your real Google Business Profile (set the URLs in src/config/site.ts). Only add real quotes copied from actual Google reviews — never invented ones.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "description", label: "Description", type: "textarea" },
+      { key: "rating", label: "Rating (e.g. 4.8)", type: "text", hint: "Leave blank to hide the rating badge" },
+      { key: "reviewCount", label: "Number of reviews (e.g. 42)", type: "text" },
+      {
+        key: "items",
+        label: "Featured reviews (optional, real quotes only)",
+        type: "triples",
+        parts: ["quote", "name", "role"],
+        hint: "One per line, format: Quote :: Reviewer name :: Role/company (optional)",
+      },
+    ],
+    defaultProps: { eyebrow: "Google Reviews", title: "What clients say on Google", description: "", rating: "", reviewCount: "", items: [] },
+  },
+  socialFeed: {
+    label: "Instagram & YouTube posts",
+    description: "A row of embedded Instagram posts and YouTube videos — paste in real post/video URLs.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "description", label: "Description", type: "textarea" },
+      { key: "instagramUrls", label: "Instagram post URLs", type: "lines", hint: "One per line, e.g. https://www.instagram.com/p/XXXXXXXXX/" },
+      { key: "youtubeUrls", label: "YouTube video URLs", type: "lines", hint: "One per line, e.g. https://www.youtube.com/watch?v=XXXXXXXXXXX" },
+    ],
+    defaultProps: { eyebrow: "Follow Along", title: "Recent posts", description: "", instagramUrls: [], youtubeUrls: [] },
+  },
 };
 
 export function linesToList(value: string): string[] {
