@@ -30,7 +30,9 @@ export function organizationJsonLd(settings: BusinessSettings) {
       areaServed: "IN",
       availableLanguage: ["en", "hi"],
     },
-    sameAs: Object.values(siteConfig.social).filter((v) => v && !v.startsWith("[") && v !== "#"),
+    sameAs: [...Object.values(siteConfig.social), siteConfig.google.profileUrl].filter(
+      (v) => v && !v.startsWith("[") && v !== "#"
+    ),
   };
 }
 

@@ -14,6 +14,8 @@ export const BLOCK_TYPES = [
   "contactSplit",
   "ctaBand",
   "leadForm",
+  "googleReviews",
+  "socialFeed",
 ] as const;
 
 export type BlockType = (typeof BLOCK_TYPES)[number];
