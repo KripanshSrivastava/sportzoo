@@ -2,6 +2,7 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { getBusinessSettings } from "@/lib/businessSettings";
 import { getPublishedCities } from "@/lib/citiesData";
+import { mapEmbedSrc } from "@/config/site";
 
 export async function ContactSplitBlock() {
   const settings = await getBusinessSettings();
@@ -65,6 +66,18 @@ export async function ContactSplitBlock() {
           <QuoteForm sourcePage="Contact" />
         </div>
       </div>
+
+      {settings.officeAddress && !settings.officeAddress.startsWith("[") && (
+        <div className="mt-10 overflow-hidden rounded-2xl border border-slate-200">
+          <iframe
+            src={mapEmbedSrc(settings.officeAddress)}
+            title={`${settings.brand ?? "Office"} location on Google Maps`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-[320px] w-full border-0"
+          />
+        </div>
+      )}
     </Section>
   );
 }

@@ -16,7 +16,8 @@ export type ConversionEvent =
   | "call_click"
   | "whatsapp_click"
   | "email_click"
-  | "download_click";
+  | "download_click"
+  | "social_click";
 
 export function trackEvent(event: ConversionEvent, params: Record<string, string> = {}) {
   if (typeof window === "undefined") return;

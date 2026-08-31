@@ -2,11 +2,11 @@
  * Central business configuration.
  *
  * DEMO DATA NOTICE: the contact details below (phone, WhatsApp, address,
- * map link, social links) are temporary placeholder values filled in so the
- * site previews and functions correctly during development. Replace every
- * one of them with real business details before this site goes live —
- * nothing else in the codebase should hardcode business details, so this is
- * the only file that needs updating.
+ * map link, social links, Google review links) are temporary placeholder
+ * values filled in so the site previews and functions correctly during
+ * development. Replace every one of them with real business details before
+ * this site goes live — nothing else in the codebase should hardcode
+ * business details, so this is the only file that needs updating.
  */
 
 export const siteConfig = {
@@ -39,13 +39,6 @@ export const siteConfig = {
     youtube: "#",
   },
 
-  // Google Business Profile — used for the footer "Reviews" link, the
-  // Google Reviews section, and the Organization schema. Left blank until
-  // a real profile URL is set in /admin → Business Info.
-  googleBusinessUrl: "",
-  googleRating: "",
-  googleReviewCount: "",
-
   // Analytics — left empty by default; populate via env vars, never hardcode
   analytics: {
     ga4Id: process.env.NEXT_PUBLIC_GA4_ID ?? "",
@@ -67,4 +60,18 @@ export type TargetCity = (typeof targetCities)[number];
 export function whatsappLinkForPage(pageLabel: string) {
   const message = `Hi Elephant Corporate, I'm looking into ${pageLabel} and would like a quote.`;
   return `${siteConfig.whatsappHref}?text=${encodeURIComponent(message)}`;
+}
+
+/** True for a real, fillable URL — false for unset placeholders ("", "#", or a "[…]" note). */
+export function isLiveLink(url: string | null | undefined): url is string {
+  return Boolean(url) && url !== "#" && !url!.startsWith("[");
+}
+
+/**
+ * A Google Maps "embed" iframe src built from a plain address, with no API
+ * key required (the `output=embed` param on the normal maps.google.com URL
+ * renders an embeddable map — this is the documented key-free method).
+ */
+export function mapEmbedSrc(address: string) {
+  return `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 }
