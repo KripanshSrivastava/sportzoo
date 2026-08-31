@@ -71,6 +71,37 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
     ],
     defaultProps: { eyebrow: "", title: "", items: [] },
   },
+  googleReviews: {
+    label: "Google reviews",
+    description: "A rating badge, a link to your Google Business Profile, and optional real review quotes.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "rating", label: "Rating (e.g. 4.9)", type: "text" },
+      { key: "reviewCount", label: "Number of reviews (e.g. 127)", type: "text" },
+      { key: "profileUrl", label: "Google Business Profile URL", type: "text", hint: "Leave blank to use the one from Business Info" },
+      {
+        key: "items",
+        label: "Review quotes (optional — use real ones only)",
+        type: "triples",
+        parts: ["quote", "name", "date"],
+        hint: "One per line, format: Quote :: Reviewer name :: Date",
+      },
+    ],
+    defaultProps: { eyebrow: "", title: "What clients say on Google", rating: "", reviewCount: "", profileUrl: "", items: [] },
+  },
+  socialFeed: {
+    label: "Instagram & YouTube feed",
+    description: "Embeds specific Instagram posts and YouTube videos. No API key needed — just paste the links.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Title", type: "text" },
+      { key: "description", label: "Description", type: "textarea" },
+      { key: "instagramUrls", label: "Instagram post links", type: "lines", hint: "One per line, e.g. https://www.instagram.com/p/ABC123/" },
+      { key: "youtubeUrls", label: "YouTube video links", type: "lines", hint: "One per line, e.g. https://www.youtube.com/watch?v=ABC123" },
+    ],
+    defaultProps: { eyebrow: "Follow along", title: "From our socials", description: "", instagramUrls: [], youtubeUrls: [] },
+  },
   statsBand: {
     label: "Stats band",
     description: "A row of highlighted numbers/labels.",

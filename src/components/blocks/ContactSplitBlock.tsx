@@ -24,6 +24,19 @@ export async function ContactSplitBlock() {
                 Get directions →
               </a>
             )}
+            {settings.officeAddress && !settings.officeAddress.startsWith("[") && (
+              <div className="mt-4 overflow-hidden border border-slate-200">
+                <iframe
+                  title={`Map to ${settings.brand}`}
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(settings.officeAddress)}&output=embed`}
+                  width="100%"
+                  height="220"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            )}
           </div>
           <div>
             <h3 className="text-sm font-semibold text-[color:var(--color-navy-900)]">Phone</h3>

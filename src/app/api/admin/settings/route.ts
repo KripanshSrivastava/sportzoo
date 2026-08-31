@@ -37,6 +37,13 @@ export async function PUT(req: NextRequest) {
     map_url: String(body.mapUrl ?? "").slice(0, 500) || null,
     business_hours: String(body.businessHours ?? "").slice(0, 200) || null,
     logo_url: body.logoUrl ? String(body.logoUrl).slice(0, 500) : null,
+    linkedin_url: String(body.linkedinUrl ?? "").slice(0, 500) || null,
+    instagram_url: String(body.instagramUrl ?? "").slice(0, 500) || null,
+    facebook_url: String(body.facebookUrl ?? "").slice(0, 500) || null,
+    youtube_url: String(body.youtubeUrl ?? "").slice(0, 500) || null,
+    google_business_url: String(body.googleBusinessUrl ?? "").slice(0, 500) || null,
+    google_rating: String(body.googleRating ?? "").slice(0, 10) || null,
+    google_review_count: String(body.googleReviewCount ?? "").slice(0, 20) || null,
     updated_at: new Date().toISOString(),
   };
 

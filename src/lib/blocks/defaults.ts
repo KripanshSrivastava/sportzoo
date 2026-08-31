@@ -84,6 +84,21 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
         { quote: "One point of contact for the venue, the anchor, and the band meant we weren't juggling three vendor relationships during our launch week.", name: "Priya Nambiar", role: "Marketing Lead, Orbit Retail" },
       ],
     }),
+    b("home-google-reviews", "googleReviews", {
+      eyebrow: "Client Feedback",
+      title: "What clients say on Google",
+      rating: "",
+      reviewCount: "",
+      profileUrl: "",
+      items: [],
+    }),
+    b("home-social", "socialFeed", {
+      eyebrow: "Follow along",
+      title: "From our socials",
+      description: "",
+      instagramUrls: [],
+      youtubeUrls: [],
+    }),
     b("home-stats", "statsBand", {
       items: [
         { value: "24–48 hrs", label: "Proposal turnaround" },

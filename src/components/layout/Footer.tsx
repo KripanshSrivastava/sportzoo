@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { siteConfig, targetCities } from "@/config/site";
 import { eventsDropdown, artistDropdown, venueDropdown, rentalsDropdown } from "@/config/nav";
@@ -9,9 +10,48 @@ import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 const linkStyle = { color: "var(--color-neutral-400)" };
 const headingStyle = { color: "var(--color-neutral-100)" };
 
+const SOCIAL_ICONS: Record<string, ReactNode> = {
+  linkedin: (
+    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C21.4 8.65 22 11.1 22 14.3V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21h-4V9Z" />
+  ),
+  instagram: (
+    <path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2Zm0 1.8c-3.15 0-3.5.01-4.74.07-.9.04-1.38.2-1.7.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.12.32-.28.8-.32 1.7C3.43 8.5 3.42 8.85 3.42 12s.01 3.5.07 4.74c.04.9.2 1.38.32 1.7.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.12.8.28 1.7.32 1.24.06 1.59.07 4.74.07s3.5-.01 4.74-.07c.9-.04 1.38-.2 1.7-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.12-.32.28-.8.32-1.7.06-1.24.07-1.59.07-4.74s-.01-3.5-.07-4.74c-.04-.9-.2-1.38-.32-1.7a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.32-.12-.8-.28-1.7-.32C15.5 4.01 15.15 4 12 4Zm0 3.06A4.94 4.94 0 1 1 12 17a4.94 4.94 0 0 1 0-9.88Zm0 1.8a3.14 3.14 0 1 0 0 6.28 3.14 3.14 0 0 0 0-6.28Zm5.03-.9a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z" />
+  ),
+  facebook: (
+    <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z" />
+  ),
+  youtube: (
+    <path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 0 0 .5 6.5C0 8.4 0 12 0 12s0 3.6.5 5.5a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.6 24 12 24 12s0-3.6-.5-5.5ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z" />
+  ),
+};
+
+function SocialIcon({ href, label, path }: { href: string; label: string; path: ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="transition-opacity hover:opacity-70"
+      style={{ color: "var(--color-neutral-400)" }}
+    >
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+        {path}
+      </svg>
+    </a>
+  );
+}
+
 export function Footer() {
   const settings = useSiteConfig();
   const year = new Date().getFullYear();
+
+  const socialLinks = [
+    { key: "linkedin", label: "LinkedIn", href: settings.linkedinUrl },
+    { key: "instagram", label: "Instagram", href: settings.instagramUrl },
+    { key: "facebook", label: "Facebook", href: settings.facebookUrl },
+    { key: "youtube", label: "YouTube", href: settings.youtubeUrl },
+  ].filter((s) => s.href);
 
   return (
     <footer
@@ -35,6 +75,25 @@ export function Footer() {
               {settings.email}
             </a>
           </div>
+          {(socialLinks.length > 0 || settings.googleBusinessUrl) && (
+            <div className="mt-4 flex items-center gap-4">
+              {socialLinks.map((s) => (
+                <SocialIcon key={s.key} href={s.href} label={s.label} path={SOCIAL_ICONS[s.key]} />
+              ))}
+              {settings.googleBusinessUrl && (
+                <a
+                  href={settings.googleBusinessUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[13px] hover:underline"
+                  style={{ color: "var(--color-accent-300)" }}
+                >
+                  Google Reviews
+                  {settings.googleRating ? ` ★ ${settings.googleRating}` : ""}
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div>

@@ -4,6 +4,8 @@ import { RichTextBlock } from "./RichTextBlock";
 import { CardsGridBlock } from "./CardsGridBlock";
 import { NumberedStepsBlock } from "./NumberedStepsBlock";
 import { TestimonialsBlock } from "./TestimonialsBlock";
+import { GoogleReviewsBlock } from "./GoogleReviewsBlock";
+import { SocialFeedBlock } from "./SocialFeedBlock";
 import { StatsBandBlock } from "./StatsBandBlock";
 import { TagGridBlock } from "./TagGridBlock";
 import { FaqBlock } from "./FaqBlock";
@@ -33,6 +35,10 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
             return <NumberedStepsBlock key={block.id} {...p} />;
           case "testimonials":
             return <TestimonialsBlock key={block.id} {...p} />;
+          case "googleReviews":
+            return <GoogleReviewsBlock key={block.id} {...p} />;
+          case "socialFeed":
+            return <SocialFeedBlock key={block.id} {...p} />;
           case "statsBand":
             return <StatsBandBlock key={block.id} {...p} />;
           case "tagGrid":

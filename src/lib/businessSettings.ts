@@ -24,6 +24,20 @@ export interface BusinessSettings {
   mapUrl: string;
   businessHours: string;
   logoUrl: string | null;
+  linkedinUrl: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  youtubeUrl: string;
+  googleBusinessUrl: string;
+  googleRating: string;
+  googleReviewCount: string;
+}
+
+/** Treat "#", empty, and "[PLACEHOLDER]" values as "not set". */
+function cleanUrl(value: string | null | undefined): string {
+  const v = (value ?? "").trim();
+  if (!v || v === "#" || v.startsWith("[")) return "";
+  return v;
 }
 
 function toPhoneHref(phone: string) {
@@ -51,6 +65,13 @@ const defaults: BusinessSettings = {
   mapUrl: siteConfig.mapUrl,
   businessHours: siteConfig.businessHours,
   logoUrl: siteImages.logo,
+  linkedinUrl: cleanUrl(siteConfig.social.linkedin),
+  instagramUrl: cleanUrl(siteConfig.social.instagram),
+  facebookUrl: cleanUrl(siteConfig.social.facebook),
+  youtubeUrl: cleanUrl(siteConfig.social.youtube),
+  googleBusinessUrl: cleanUrl(siteConfig.googleBusinessUrl),
+  googleRating: siteConfig.googleRating,
+  googleReviewCount: siteConfig.googleReviewCount,
 };
 
 /**
@@ -87,6 +108,13 @@ export const getBusinessSettings = cache(async (): Promise<BusinessSettings> => 
       mapUrl: data.map_url || defaults.mapUrl,
       businessHours: data.business_hours || defaults.businessHours,
       logoUrl: data.logo_url || defaults.logoUrl,
+      linkedinUrl: cleanUrl(data.linkedin_url) || defaults.linkedinUrl,
+      instagramUrl: cleanUrl(data.instagram_url) || defaults.instagramUrl,
+      facebookUrl: cleanUrl(data.facebook_url) || defaults.facebookUrl,
+      youtubeUrl: cleanUrl(data.youtube_url) || defaults.youtubeUrl,
+      googleBusinessUrl: cleanUrl(data.google_business_url) || defaults.googleBusinessUrl,
+      googleRating: data.google_rating || defaults.googleRating,
+      googleReviewCount: data.google_review_count || defaults.googleReviewCount,
     };
   } catch {
     return defaults;

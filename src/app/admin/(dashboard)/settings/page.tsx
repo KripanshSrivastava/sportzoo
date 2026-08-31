@@ -20,6 +20,13 @@ const FIELDS: { key: Exclude<keyof FormState, "logoUrl">; label: string; type?: 
   { key: "serviceArea", label: "Service area (e.g. \"Pan India\")" },
   { key: "mapUrl", label: "Google Maps link" },
   { key: "businessHours", label: "Business hours" },
+  { key: "googleBusinessUrl", label: "Google Business Profile / reviews URL (leave blank to hide the link)" },
+  { key: "googleRating", label: "Google rating (e.g. 4.9)" },
+  { key: "googleReviewCount", label: "Number of Google reviews (e.g. 127)" },
+  { key: "linkedinUrl", label: "LinkedIn page URL (leave blank to hide the icon)" },
+  { key: "instagramUrl", label: "Instagram profile URL (leave blank to hide the icon)" },
+  { key: "facebookUrl", label: "Facebook page URL (leave blank to hide the icon)" },
+  { key: "youtubeUrl", label: "YouTube channel URL (leave blank to hide the icon)" },
 ];
 
 export default function AdminSettingsPage() {

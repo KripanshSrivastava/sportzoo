@@ -30,6 +30,16 @@ create table if not exists business_settings (
 -- before this column was introduced. No-op on a fresh install.
 alter table business_settings add column if not exists logo_url text;
 
+-- Social links, Google Business Profile URL and review counts. Added after
+-- the footer social icons / Google Reviews section were introduced.
+alter table business_settings add column if not exists linkedin_url text;
+alter table business_settings add column if not exists instagram_url text;
+alter table business_settings add column if not exists facebook_url text;
+alter table business_settings add column if not exists youtube_url text;
+alter table business_settings add column if not exists google_business_url text;
+alter table business_settings add column if not exists google_rating text;
+alter table business_settings add column if not exists google_review_count text;
+
 insert into business_settings (id)
 values (1)
 on conflict (id) do nothing;

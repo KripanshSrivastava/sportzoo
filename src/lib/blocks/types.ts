@@ -4,6 +4,8 @@ export const BLOCK_TYPES = [
   "cardsGrid",
   "numberedSteps",
   "testimonials",
+  "googleReviews",
+  "socialFeed",
   "statsBand",
   "tagGrid",
   "faq",
