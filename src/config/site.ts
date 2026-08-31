@@ -39,6 +39,13 @@ export const siteConfig = {
     youtube: "#",
   },
 
+  // Google Business Profile — fallback values for the footer "Reviews" link,
+  // the Google Reviews section, and the Organization schema. These are just
+  // defaults; the live values are edited in /admin → Business Info.
+  googleBusinessUrl: "",
+  googleRating: "",
+  googleReviewCount: "",
+
   // Analytics — left empty by default; populate via env vars, never hardcode
   analytics: {
     ga4Id: process.env.NEXT_PUBLIC_GA4_ID ?? "",

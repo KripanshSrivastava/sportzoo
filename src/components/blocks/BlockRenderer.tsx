@@ -16,8 +16,6 @@ import { ServiceLocationsBlock } from "./ServiceLocationsBlock";
 import { ContactSplitBlock } from "./ContactSplitBlock";
 import { CtaBandBlock } from "./CtaBandBlock";
 import { LeadFormBlock } from "./LeadFormBlock";
-import { GoogleReviewsBlock } from "./GoogleReviewsBlock";
-import { SocialFeedBlock } from "./SocialFeedBlock";
 
 export function BlockRenderer({ blocks }: { blocks: Block[] }) {
   return (
@@ -61,10 +59,6 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
             return <CtaBandBlock key={block.id} {...p} />;
           case "leadForm":
             return <LeadFormBlock key={block.id} {...p} />;
-          case "googleReviews":
-            return <GoogleReviewsBlock key={block.id} {...p} />;
-          case "socialFeed":
-            return <SocialFeedBlock key={block.id} {...p} />;
           default:
             return null;
         }
