@@ -1,8 +1,9 @@
 "use client";
 
-import type { FieldSchema } from "@/lib/blocks/schemas";
+import type { FieldSchema, ImageItem } from "@/lib/blocks/schemas";
 import { linesToList, linesToObjects, listToLines, objectsToLines } from "@/lib/blocks/schemas";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 
 function propToLineValue(field: FieldSchema, raw: unknown): string {
   if (field.type === "text" || field.type === "textarea" || field.type === "image") return typeof raw === "string" ? raw : "";
@@ -32,7 +33,15 @@ export function BlockFieldsEditor({
   return (
     <div className="flex flex-col gap-3">
       {fields.map((field) =>
-        field.type === "image" ? (
+        field.type === "images" ? (
+          <ImageListField
+            key={field.key}
+            label={field.label}
+            captionLabel={field.captionLabel}
+            value={(Array.isArray(props[field.key]) ? props[field.key] : []) as ImageItem[]}
+            onChange={(next) => onChange({ ...props, [field.key]: next })}
+          />
+        ) : field.type === "image" ? (
           <ImageUploadField
             key={field.key}
             label={field.label}

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { siteConfig, targetCities } from "@/config/site";
+import { siteConfig, targetCities, mapEmbedSrc } from "@/config/site";
 import { eventsDropdown, artistDropdown, venueDropdown, rentalsDropdown } from "@/config/nav";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
@@ -175,6 +175,61 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {(settings.officeAddress || settings.googleBusinessUrl) && (
+        <div
+          className="container-page mt-12 grid gap-8 pt-8 sm:grid-cols-2"
+          style={{ borderTop: "1px solid color-mix(in srgb, var(--color-neutral-100) 15%, transparent)" }}
+        >
+          {settings.officeAddress && !settings.officeAddress.startsWith("[") && (
+            <div>
+              <h6 style={headingStyle}>Locate us</h6>
+              <div
+                className="mt-3 overflow-hidden"
+                style={{ border: "1px solid color-mix(in srgb, var(--color-neutral-100) 15%, transparent)" }}
+              >
+                <iframe
+                  title={`${settings.brand} location on Google Maps`}
+                  src={mapEmbedSrc(settings.officeAddress)}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="block h-[200px] w-full border-0"
+                />
+              </div>
+              <p className="mt-2 max-w-[320px] text-[13px]" style={{ color: "var(--color-neutral-400)" }}>
+                {settings.officeAddress}
+              </p>
+            </div>
+          )}
+
+          {settings.googleBusinessUrl && (
+            <div>
+              <h6 style={headingStyle}>Reviews</h6>
+              <a
+                href={settings.googleBusinessUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("social_click", { network: "google", source: "footer-reviews" })}
+                className="mt-3 inline-flex flex-col gap-1"
+                style={{ color: "var(--color-neutral-300)" }}
+              >
+                <span className="text-lg font-bold tracking-wide" style={{ fontFamily: "var(--font-heading)" }}>
+                  {settings.googleRating ? `${settings.googleRating} ` : ""}
+                  <span style={{ color: "#fbbc04" }}>★★★★★</span>
+                </span>
+                {settings.googleReviewCount && (
+                  <span className="text-[13px]" style={{ color: "var(--color-neutral-400)" }}>
+                    Based on {settings.googleReviewCount} Google reviews
+                  </span>
+                )}
+                <span className="mt-1 text-[13px] font-semibold" style={{ color: "var(--color-accent-300)" }}>
+                  Read our Google reviews →
+                </span>
+              </a>
+            </div>
+          )}
+        </div>
+      )}
 
       <div
         className="container-page mt-10 flex flex-col gap-3 pt-5 text-xs sm:flex-row sm:items-center sm:justify-between"

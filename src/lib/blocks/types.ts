@@ -6,6 +6,8 @@ export const BLOCK_TYPES = [
   "testimonials",
   "googleReviews",
   "socialFeed",
+  "image",
+  "clientLogos",
   "statsBand",
   "tagGrid",
   "faq",

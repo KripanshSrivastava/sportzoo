@@ -1,6 +1,12 @@
 import type { BlockType } from "./types";
 
-export type FieldType = "text" | "textarea" | "lines" | "pairs" | "triples" | "image";
+export type FieldType = "text" | "textarea" | "lines" | "pairs" | "triples" | "image" | "images";
+
+/** One entry in an "images" field: an uploaded image plus an optional label/caption. */
+export interface ImageItem {
+  url: string;
+  caption?: string;
+}
 
 export interface FieldSchema {
   key: string;
@@ -8,6 +14,8 @@ export interface FieldSchema {
   type: FieldType;
   parts?: string[];
   hint?: string;
+  /** For "images" fields: what the per-row text box means (e.g. "Company name", "Caption"). */
+  captionLabel?: string;
 }
 
 export interface BlockDef {
@@ -73,22 +81,43 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
   },
   googleReviews: {
     label: "Google reviews",
-    description: "A rating badge, a link to your Google Business Profile, and optional real review quotes.",
+    description: "A Google-style rating summary next to a row of real review cards.",
     fields: [
       { key: "eyebrow", label: "Eyebrow", type: "text" },
       { key: "title", label: "Title", type: "text" },
       { key: "rating", label: "Rating (e.g. 4.9)", type: "text" },
-      { key: "reviewCount", label: "Number of reviews (e.g. 127)", type: "text" },
+      { key: "reviewCount", label: "Number of reviews (e.g. 326)", type: "text" },
       { key: "profileUrl", label: "Google Business Profile URL", type: "text", hint: "Leave blank to use the one from Business Info" },
       {
         key: "items",
-        label: "Review quotes (optional — use real ones only)",
+        label: "Review quotes (use real ones only)",
         type: "triples",
         parts: ["quote", "name", "date"],
-        hint: "One per line, format: Quote :: Reviewer name :: Date",
+        hint: "One per line, format: Quote :: Reviewer name :: Date (e.g. 1 year ago)",
       },
     ],
     defaultProps: { eyebrow: "", title: "What clients say on Google", rating: "", reviewCount: "", profileUrl: "", items: [] },
+  },
+  image: {
+    label: "Image / photo",
+    description: "A single photo with an optional heading and caption.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Heading (optional)", type: "text" },
+      { key: "imageUrl", label: "Photo", type: "image" },
+      { key: "caption", label: "Caption (optional)", type: "text" },
+    ],
+    defaultProps: { eyebrow: "", title: "", imageUrl: "", caption: "" },
+  },
+  clientLogos: {
+    label: "Client logos",
+    description: "A wall of company logos — \"Companies that trust our work\".",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Heading", type: "text" },
+      { key: "logos", label: "Logos", type: "images", captionLabel: "Company name", hint: "Upload each logo. The company name shows if no logo is uploaded yet." },
+    ],
+    defaultProps: { eyebrow: "", title: "Companies that trust our work", logos: [] },
   },
   socialFeed: {
     label: "Instagram & YouTube feed",
