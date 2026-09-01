@@ -2,10 +2,18 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import type { ImageItem } from "@/lib/blocks/schemas";
+import { getClientLogos } from "@/lib/clientLogosData";
 
-const MIN_PER_COPY = 6;
+const MIN_FOR_MARQUEE = 6;
+const MIN_PER_COPY = 8;
 
-function LogoTile({ logo }: { logo: ImageItem }) {
+interface Logo {
+  key: string;
+  url: string | null;
+  name: string;
+}
+
+function LogoTile({ logo }: { logo: Logo }) {
   return (
     <div
       className="flex h-20 w-[150px] shrink-0 items-center justify-center bg-white p-3.5"
@@ -13,20 +21,20 @@ function LogoTile({ logo }: { logo: ImageItem }) {
     >
       {logo.url ? (
         <div className="relative h-full w-full">
-          <Image src={logo.url} alt={logo.caption || "Client logo"} fill sizes="150px" className="object-contain" unoptimized />
+          <Image src={logo.url} alt={logo.name || "Client logo"} fill sizes="150px" className="object-contain" unoptimized />
         </div>
       ) : (
         <span className="text-center text-[13px] font-semibold leading-tight" style={{ color: "var(--color-neutral-700)" }}>
-          {logo.caption}
+          {logo.name}
         </span>
       )}
     </div>
   );
 }
 
-function MarqueeRow({ logos, reverse }: { logos: ImageItem[]; reverse: boolean }) {
-  // Pad the row so a single copy is wide enough to fill the viewport, then
-  // duplicate it once — the track animates 0 → -50% for a seamless loop.
+function MarqueeRow({ logos, reverse }: { logos: Logo[]; reverse: boolean }) {
+  // Pad a single copy wide enough to fill the viewport by repeating the whole
+  // set (A B C A B C …), then duplicate it once — the track animates 0 → -50%.
   let seq = logos;
   while (seq.length < MIN_PER_COPY) seq = seq.concat(logos);
   const duration = Math.min(80, Math.max(22, seq.length * 4));
@@ -45,30 +53,50 @@ function MarqueeRow({ logos, reverse }: { logos: ImageItem[]; reverse: boolean }
   );
 }
 
-export function ClientLogosBlock({
+export async function ClientLogosBlock({
   eyebrow,
   title,
-  logos = [],
+  logos: blockLogos,
 }: {
   eyebrow?: string;
   title?: string;
+  /** Per-section override. When empty, the shared Admin → Client Logos list is used. */
   logos?: ImageItem[];
 }) {
-  const items = logos.filter((l) => l.url || l.caption);
-  if (items.length === 0) return null;
+  // Section-level logos win if any were added on this block (keeps existing
+  // content working); otherwise fall back to the shared managed list.
+  const override = (blockLogos ?? []).filter((l) => l.url || l.caption);
+  const logos: Logo[] =
+    override.length > 0
+      ? override.map((l, i) => ({ key: `b${i}`, url: l.url || null, name: l.caption || "" }))
+      : (await getClientLogos())
+          .filter((l) => l.logoUrl || l.name)
+          .map((l) => ({ key: l.id, url: l.logoUrl, name: l.name }));
 
-  const rowCount = items.length > 16 ? 3 : items.length > 6 ? 2 : 1;
-  const rows: ImageItem[][] = Array.from({ length: rowCount }, () => []);
-  items.forEach((item, i) => rows[i % rowCount].push(item));
+  if (logos.length === 0) return null;
 
   return (
     <Section style={{ background: "var(--color-surface)" }}>
       {(eyebrow || title) && <SectionHeading eyebrow={eyebrow} title={title ?? ""} />}
-      <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-col gap-3.5`}>
-        {rows.map((row, i) => (
-          <MarqueeRow key={i} logos={row} reverse={i % 2 === 1} />
-        ))}
-      </div>
+
+      {logos.length < MIN_FOR_MARQUEE ? (
+        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-wrap justify-center gap-3.5`}>
+          {logos.map((logo) => (
+            <LogoTile key={logo.key} logo={logo} />
+          ))}
+        </div>
+      ) : (
+        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-col gap-3.5`}>
+          {logos.length >= 14 ? (
+            <>
+              <MarqueeRow logos={logos.filter((_, i) => i % 2 === 0)} reverse={false} />
+              <MarqueeRow logos={logos.filter((_, i) => i % 2 === 1)} reverse />
+            </>
+          ) : (
+            <MarqueeRow logos={logos} reverse={false} />
+          )}
+        </div>
+      )}
     </Section>
   );
 }

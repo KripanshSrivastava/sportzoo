@@ -213,6 +213,35 @@ create policy "public read page_blocks" on page_blocks for select using (true);
 -- previous version of this schema — superseded entirely by page_blocks.
 drop table if exists page_content;
 
+-- Client / partner company logos shown in the "Companies that trust our work"
+-- banner. Managed in one place at /admin/logos; the homepage "Client logos"
+-- section just picks where the banner appears and its heading.
+create table if not exists client_logos (
+  id uuid primary key default gen_random_uuid(),
+  name text not null default '',
+  logo_url text,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists client_logos_sort_idx on client_logos (sort_order);
+
+alter table client_logos enable row level security;
+
+drop policy if exists "public read client_logos" on client_logos;
+create policy "public read client_logos" on client_logos for select using (true);
+
+-- Seed the companies the business has worked with (names only — upload the
+-- actual logo images from /admin/logos). Skipped if any rows already exist.
+insert into client_logos (name, sort_order)
+select v.name, v.ord
+from (values
+  ('Khelomore', 0), ('Genpact', 1), ('Bain & Company', 2), ('SMS Group', 3),
+  ('Samsung', 4), ('Siemens', 5), ('PayU', 6), ('Fidelity', 7),
+  ('FIS', 8), ('HDFC', 9), ('Cognizant', 10)
+) as v(name, ord)
+where not exists (select 1 from client_logos);
+
 -- ---------------------------------------------------------------------
 -- After running this file, also create a public Storage bucket named
 -- "media" (Project → Storage → New bucket → name it "media", toggle

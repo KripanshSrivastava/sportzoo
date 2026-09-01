@@ -64,19 +64,6 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
     b("home-clients", "clientLogos", {
       eyebrow: "Our Clients",
       title: "Companies that trust our work",
-      logos: [
-        { url: "", caption: "Khelomore" },
-        { url: "", caption: "Genpact" },
-        { url: "", caption: "Bain & Company" },
-        { url: "", caption: "SMS Group" },
-        { url: "", caption: "Samsung" },
-        { url: "", caption: "Siemens" },
-        { url: "", caption: "PayU" },
-        { url: "", caption: "Fidelity" },
-        { url: "", caption: "FIS" },
-        { url: "", caption: "HDFC" },
-        { url: "", caption: "Cognizant" },
-      ],
     }),
     b("home-industries", "tagGrid", {
       eyebrow: "Who We Work With",
