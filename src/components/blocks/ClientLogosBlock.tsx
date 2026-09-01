@@ -15,15 +15,15 @@ interface Logo {
 function LogoTile({ logo }: { logo: Logo }) {
   return (
     <div
-      className="flex h-20 w-[150px] shrink-0 items-center justify-center bg-white p-3.5"
+      className="flex h-28 w-[210px] shrink-0 items-center justify-center bg-white p-4 sm:h-32 sm:w-[240px]"
       style={{ border: "1px solid var(--color-divider)" }}
     >
       {logo.url ? (
         <div className="relative h-full w-full">
-          <Image src={logo.url} alt={logo.name || "Client logo"} fill sizes="150px" className="object-contain" unoptimized />
+          <Image src={logo.url} alt={logo.name || "Client logo"} fill sizes="240px" className="object-contain" unoptimized />
         </div>
       ) : (
-        <span className="text-center text-[13px] font-semibold leading-tight" style={{ color: "var(--color-neutral-700)" }}>
+        <span className="text-center text-sm font-semibold leading-tight" style={{ color: "var(--color-neutral-700)" }}>
           {logo.name}
         </span>
       )}
@@ -69,13 +69,13 @@ export async function ClientLogosBlock({ eyebrow, title }: { eyebrow?: string; t
       {(eyebrow || title) && <SectionHeading eyebrow={eyebrow} title={title ?? ""} />}
 
       {logos.length < MIN_FOR_MARQUEE ? (
-        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-wrap justify-center gap-3.5`}>
+        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-wrap justify-center gap-4`}>
           {logos.map((logo) => (
             <LogoTile key={logo.key} logo={logo} />
           ))}
         </div>
       ) : (
-        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-col gap-3.5`}>
+        <div className={`${eyebrow || title ? "mt-9" : ""} flex flex-col gap-4`}>
           {logos.length >= 14 ? (
             <>
               <MarqueeRow logos={logos.filter((_, i) => i % 2 === 0)} reverse={false} />

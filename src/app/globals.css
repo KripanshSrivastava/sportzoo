@@ -534,13 +534,13 @@ textarea.input {
 .marquee {
   position: relative;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
 }
 .marquee-track {
   display: flex;
   width: max-content;
-  gap: 14px;
+  gap: 18px;
   animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
   will-change: transform;
 }
