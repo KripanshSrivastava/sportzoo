@@ -8,6 +8,7 @@ type FormState = BusinessSettings;
 
 const FIELDS: { key: Exclude<keyof FormState, "logoUrl">; label: string; type?: "text" | "textarea" | "email" }[] = [
   { key: "brand", label: "Brand name" },
+  { key: "legalName", label: "Legal entity name (footer copyright, privacy & terms)" },
   { key: "tagline", label: "Tagline" },
   { key: "shortTagline", label: "Short tagline (used in page titles)" },
   { key: "description", label: "Description", type: "textarea" },

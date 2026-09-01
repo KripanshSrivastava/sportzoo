@@ -9,6 +9,7 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
  */
 export interface BusinessSettings {
   brand: string;
+  legalName: string;
   tagline: string;
   shortTagline: string;
   description: string;
@@ -50,6 +51,7 @@ function toWhatsAppHref(whatsapp: string) {
 
 const defaults: BusinessSettings = {
   brand: siteConfig.brand,
+  legalName: siteConfig.legalName,
   tagline: siteConfig.tagline,
   shortTagline: siteConfig.shortTagline,
   description: siteConfig.description,
@@ -93,6 +95,7 @@ export const getBusinessSettings = cache(async (): Promise<BusinessSettings> => 
 
     return {
       brand: data.brand || defaults.brand,
+      legalName: data.legal_name || defaults.legalName,
       tagline: data.tagline || defaults.tagline,
       shortTagline: data.short_tagline || defaults.shortTagline,
       description: data.description || defaults.description,

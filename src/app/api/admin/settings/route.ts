@@ -24,6 +24,7 @@ export async function PUT(req: NextRequest) {
   const row = {
     id: 1,
     brand: String(body.brand ?? "").slice(0, 200) || null,
+    legal_name: String(body.legalName ?? "").slice(0, 300) || null,
     tagline: String(body.tagline ?? "").slice(0, 300) || null,
     short_tagline: String(body.shortTagline ?? "").slice(0, 200) || null,
     description: String(body.description ?? "").slice(0, 1000) || null,

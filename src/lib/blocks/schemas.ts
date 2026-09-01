@@ -114,20 +114,12 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
   },
   clientLogos: {
     label: "Client logos",
-    description: "The \"Companies that trust our work\" logo banner.",
+    description: "The \"Companies that trust our work\" logo banner. Add / edit the logos in Admin → Client Logos.",
     fields: [
       { key: "eyebrow", label: "Eyebrow", type: "text" },
       { key: "title", label: "Heading", type: "text" },
-      {
-        key: "logos",
-        label: "Logos",
-        type: "images",
-        captionLabel: "Company name",
-        spec: "logo",
-        hint: "Leave this empty to use the shared list from Admin → Client Logos. Any logos added here override that list for this section only.",
-      },
     ],
-    defaultProps: { eyebrow: "", title: "Companies that trust our work", logos: [] },
+    defaultProps: { eyebrow: "", title: "Companies that trust our work" },
   },
   socialFeed: {
     label: "Instagram & YouTube feed",

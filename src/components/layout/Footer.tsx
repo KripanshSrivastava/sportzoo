@@ -236,7 +236,7 @@ export function Footer() {
         style={{ borderTop: "1px solid color-mix(in srgb, var(--color-neutral-100) 15%, transparent)", color: "var(--color-neutral-500)" }}
       >
         <p className="m-0">
-          &copy; {year} {siteConfig.legalName}. All rights reserved.
+          &copy; {year} {settings.legalName || siteConfig.legalName}. All rights reserved.
         </p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <Link href="/privacy-policy" style={{ color: "inherit" }}>

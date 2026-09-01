@@ -13,7 +13,7 @@ export function organizationJsonLd(settings: BusinessSettings) {
     "@type": "ProfessionalService",
     "@id": `${siteConfig.url}/#organization`,
     name: settings.brand,
-    legalName: siteConfig.legalName,
+    legalName: settings.legalName || siteConfig.legalName,
     url: siteConfig.url,
     description: settings.description,
     address: {

@@ -32,6 +32,7 @@ alter table business_settings add column if not exists logo_url text;
 
 -- Social links, Google Business Profile URL and review counts. Added after
 -- the footer social icons / Google Reviews section were introduced.
+alter table business_settings add column if not exists legal_name text;
 alter table business_settings add column if not exists linkedin_url text;
 alter table business_settings add column if not exists instagram_url text;
 alter table business_settings add column if not exists facebook_url text;

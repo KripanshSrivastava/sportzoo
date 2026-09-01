@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/Section";
-import type { ImageItem } from "@/lib/blocks/schemas";
 import { getClientLogos } from "@/lib/clientLogosData";
 
 const MIN_FOR_MARQUEE = 6;
@@ -53,25 +52,15 @@ function MarqueeRow({ logos, reverse }: { logos: Logo[]; reverse: boolean }) {
   );
 }
 
-export async function ClientLogosBlock({
-  eyebrow,
-  title,
-  logos: blockLogos,
-}: {
-  eyebrow?: string;
-  title?: string;
-  /** Per-section override. When empty, the shared Admin → Client Logos list is used. */
-  logos?: ImageItem[];
-}) {
-  // Section-level logos win if any were added on this block (keeps existing
-  // content working); otherwise fall back to the shared managed list.
-  const override = (blockLogos ?? []).filter((l) => l.url || l.caption);
-  const logos: Logo[] =
-    override.length > 0
-      ? override.map((l, i) => ({ key: `b${i}`, url: l.url || null, name: l.caption || "" }))
-      : (await getClientLogos())
-          .filter((l) => l.logoUrl || l.name)
-          .map((l) => ({ key: l.id, url: l.logoUrl, name: l.name }));
+/**
+ * The "Companies that trust our work" banner. The logos themselves are managed
+ * in one place at Admin → Client Logos; this block only controls where the
+ * banner sits and its heading.
+ */
+export async function ClientLogosBlock({ eyebrow, title }: { eyebrow?: string; title?: string }) {
+  const logos: Logo[] = (await getClientLogos())
+    .filter((l) => l.logoUrl || l.name)
+    .map((l) => ({ key: l.id, url: l.logoUrl, name: l.name }));
 
   if (logos.length === 0) return null;
 

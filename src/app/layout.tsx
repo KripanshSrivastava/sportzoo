@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
     verification: siteConfig.analytics.gscVerification
       ? { google: siteConfig.analytics.gscVerification }
       : undefined,
-    icons: { icon: "/favicon.ico" },
+    // Favicon comes from src/app/icon.png + src/app/apple-icon.png (Next.js file convention).
   };
 }
 

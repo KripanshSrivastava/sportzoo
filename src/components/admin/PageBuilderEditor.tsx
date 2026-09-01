@@ -82,18 +82,34 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
   const [addType, setAddType] = useState<BlockType>("richText");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
+  const [dirty, setDirty] = useState(false);
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   useEffect(() => {
     fetch(`/api/admin/page-blocks/${pageKey}`)
       .then((r) => r.json())
-      .then((data) => setBlocks(Array.isArray(data.blocks) ? data.blocks : []));
+      .then((data) => {
+        setBlocks(Array.isArray(data.blocks) ? data.blocks : []);
+        setDirty(false);
+      });
   }, [pageKey]);
+
+  // Warn before leaving with unsaved changes.
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
+    setDirty(true);
     setBlocks((bs) => {
       if (!bs) return bs;
       const oldIndex = bs.findIndex((b) => b.id === active.id);
@@ -103,21 +119,25 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
   }
 
   function updateBlockProps(id: string, next: Record<string, unknown>) {
+    setDirty(true);
     setBlocks((bs) => bs && bs.map((b) => (b.id === id ? { ...b, props: next } : b)));
   }
 
   function toggleHidden(id: string) {
+    setDirty(true);
     setBlocks((bs) => bs && bs.map((b) => (b.id === id ? { ...b, hidden: !b.hidden } : b)));
   }
 
   function deleteBlock(id: string) {
-    if (!confirm("Remove this section from the page?")) return;
+    if (!confirm("Remove this section from the page? Click “Save Changes” afterwards to make it stick.")) return;
+    setDirty(true);
     setBlocks((bs) => bs && bs.filter((b) => b.id !== id));
   }
 
   function addBlock() {
     const def = BLOCK_DEFS[addType];
     const newBlock: Block = { id: `${addType}-${Date.now()}`, type: addType, props: { ...def.defaultProps } };
+    setDirty(true);
     setBlocks((bs) => [...(bs ?? []), newBlock]);
     setOpenId(newBlock.id);
   }
@@ -145,6 +165,7 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
       }
       setStatus("saved");
       setMessage("Saved. Changes are live on the site now.");
+      setDirty(false);
       router.refresh();
     } catch {
       setStatus("error");
@@ -155,7 +176,7 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
   if (!blocks) return <p className="text-muted text-sm">Loading…</p>;
 
   return (
-    <div>
+    <div className="pb-24">
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
           <div className="flex flex-col gap-3">
@@ -198,9 +219,20 @@ export function PageBuilderEditor({ pageKey }: { pageKey: string }) {
         </p>
       )}
 
-      <button type="button" className="btn btn-primary mt-4" onClick={handleSave} disabled={status === "saving"}>
-        {status === "saving" ? "Saving…" : "Save Changes"}
-      </button>
+      {/* Sticky action bar so Save is always reachable, no matter how long the page is. */}
+      <div
+        className="sticky bottom-0 z-10 -mx-1 mt-6 flex items-center gap-3 border-t px-1 py-3"
+        style={{ background: "var(--color-bg)", borderColor: "var(--color-divider)" }}
+      >
+        <button type="button" className="btn btn-primary" onClick={handleSave} disabled={status === "saving" || !dirty}>
+          {status === "saving" ? "Saving…" : dirty ? "Save Changes" : "Saved"}
+        </button>
+        {dirty && (
+          <span className="text-xs font-medium" style={{ color: "#b3261e" }}>
+            You have unsaved changes
+          </span>
+        )}
+      </div>
     </div>
   );
 }
