@@ -66,6 +66,50 @@ create table if not exists case_studies (
   updated_at timestamptz not null default now()
 );
 
+-- Seed editable starter case studies so "Our Work" isn't empty in the admin.
+-- Skipped once any row exists. Replace the copy with real engagements and add
+-- cover photos from /admin/case-studies.
+insert into case_studies (slug, title, category, client_descriptor, summary, challenge, solution, execution, outcomes, sort_order)
+select * from (values
+  (
+    'leadership-offsite-template',
+    'A 3-Day Leadership Offsite for a Growing Tech Team',
+    'Corporate Offsite',
+    'A 45-person leadership team from a mid-size technology company',
+    'A tight 6-week timeline, a fixed per-person budget, and a venue that finally had AV that worked.',
+    'The client''s leadership team needed a 3-day offsite before the new financial year, but had just 6 weeks to plan it internally alongside their regular workload, with a fixed budget that earlier venue quotes were already exceeding.',
+    'Elephant Corporate shortlisted three retreat venues within budget within 48 hours, verified AV and breakout space in person, and built a run-of-show that split the agenda into focused morning sessions and unstructured afternoons.',
+    'A single Elephant Corporate coordinator managed venue confirmation, rooming, and F&B, and was on-site for all three days to run the schedule so the leadership team could stay in the room instead of managing logistics.',
+    array['Venue and full itinerary confirmed within 9 days of the first call','Delivered within 4% of the original per-person budget','All three days ran on schedule with no logistics escalations to the client'],
+    0
+  ),
+  (
+    'annual-day-template',
+    'A Family-Inclusive Annual Day for 600 Guests',
+    'Annual Day',
+    'A 350-employee manufacturing company, with families invited',
+    'A banquet venue, a recognition segment, and a guest list that nearly doubled once families were counted.',
+    'The client wanted to combine their annual day with employee recognition for the first time, but hadn''t accounted for the venue capacity and catering needed once employee families were added to the guest list.',
+    'Elephant Corporate re-shortlisted venues against the real 600-guest count, built a combined run-of-show for the celebration and award segments, and planned catering and seating around a mixed-age, family-inclusive crowd.',
+    'Decor, stage production, and an anchor were booked through Elephant Corporate''s artist and venue network, with a rehearsal held the evening before to lock award sequencing and presenter timing.',
+    array['Usable venue capacity confirmed for 600 guests with no last-minute overflow issues','Recognition segment ran without a single award mix-up on stage','Post-event feedback survey scored the event 4.6/5 from attending families'],
+    1
+  ),
+  (
+    'venue-and-artist-booking-template',
+    'Venue and Entertainment Booking for a Product Launch',
+    'Venue & Artist Booking',
+    'A consumer electronics brand launching a new product line',
+    'A 3-week deadline for a venue, an anchor, and a live performance act, booked and contracted together.',
+    'The client''s marketing team needed a launch venue with strong AV and a presence-building entertainment segment, but had only 3 weeks and no existing vendor relationships to draw on.',
+    'Elephant Corporate shortlisted two large-format venues with tested AV and staging, and in parallel curated an anchor and a live band matched to the brand''s audience, contracting both through a single point of contact.',
+    'Technical riders were coordinated with the venue ahead of time, and a Elephant Corporate coordinator managed performer arrival, soundcheck, and the anchor''s run-of-show through the event.',
+    array['Venue and entertainment confirmed within 8 days, inside the 3-week deadline','Zero technical delays during the live segment','Client rebooked Elephant Corporate for their next regional launch event'],
+    2
+  )
+) as v(slug, title, category, client_descriptor, summary, challenge, solution, execution, outcomes, sort_order)
+where not exists (select 1 from case_studies);
+
 -- Gallery photos, grouped by category.
 create table if not exists gallery_images (
   id uuid primary key default gen_random_uuid(),
