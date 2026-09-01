@@ -1,4 +1,5 @@
 import type { BlockType } from "./types";
+import type { ImageSpecKey } from "@/lib/imageSpecs";
 
 export type FieldType = "text" | "textarea" | "lines" | "pairs" | "triples" | "image" | "images";
 
@@ -16,6 +17,8 @@ export interface FieldSchema {
   hint?: string;
   /** For "images" fields: what the per-row text box means (e.g. "Company name", "Caption"). */
   captionLabel?: string;
+  /** For "image" / "images" fields: which IMAGE_SPECS preset applies (size + format guidance). */
+  spec?: ImageSpecKey;
 }
 
 export interface BlockDef {
@@ -33,7 +36,7 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
       { key: "eyebrow", label: "Eyebrow tag", type: "text" },
       { key: "title", label: "Heading", type: "textarea" },
       { key: "description", label: "Description", type: "textarea" },
-      { key: "imageUrl", label: "Photo (optional — dark banner if left blank)", type: "image" },
+      { key: "imageUrl", label: "Photo (optional — dark banner if left blank)", type: "image", spec: "heroBanner" },
     ],
     defaultProps: { eyebrow: "", title: "", description: "", imageUrl: "" },
   },
@@ -104,7 +107,7 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
     fields: [
       { key: "eyebrow", label: "Eyebrow", type: "text" },
       { key: "title", label: "Heading (optional)", type: "text" },
-      { key: "imageUrl", label: "Photo", type: "image" },
+      { key: "imageUrl", label: "Photo", type: "image", spec: "pageImage" },
       { key: "caption", label: "Caption (optional)", type: "text" },
     ],
     defaultProps: { eyebrow: "", title: "", imageUrl: "", caption: "" },
@@ -120,6 +123,7 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
         label: "Logos",
         type: "images",
         captionLabel: "Company name",
+        spec: "logo",
         hint: "Leave this empty to use the shared list from Admin → Client Logos. Any logos added here override that list for this section only.",
       },
     ],

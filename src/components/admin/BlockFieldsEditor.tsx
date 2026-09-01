@@ -38,6 +38,7 @@ export function BlockFieldsEditor({
             key={field.key}
             label={field.label}
             captionLabel={field.captionLabel}
+            spec={field.spec}
             value={(Array.isArray(props[field.key]) ? props[field.key] : []) as ImageItem[]}
             onChange={(next) => onChange({ ...props, [field.key]: next })}
           />
@@ -46,6 +47,7 @@ export function BlockFieldsEditor({
             key={field.key}
             label={field.label}
             folder="pages"
+            spec={field.spec}
             value={propToLineValue(field, props[field.key])}
             onChange={(url) => onChange({ ...props, [field.key]: url })}
           />

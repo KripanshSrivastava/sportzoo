@@ -136,7 +136,7 @@ export function EventForm({ initial }: { initial: EventFormValues }) {
         </div>
       </div>
 
-      <ImageUploadField label="Cover photo" folder="events" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
+      <ImageUploadField label="Cover photo" folder="events" spec="eventCover" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
 
       <div className="field">
         <label htmlFor="description">Description</label>

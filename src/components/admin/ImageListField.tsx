@@ -1,6 +1,7 @@
 "use client";
 
 import type { ImageItem } from "@/lib/blocks/schemas";
+import type { ImageSpecKey } from "@/lib/imageSpecs";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 /**
@@ -12,12 +13,14 @@ export function ImageListField({
   label,
   captionLabel = "Caption",
   folder = "pages",
+  spec,
   value,
   onChange,
 }: {
   label: string;
   captionLabel?: string;
   folder?: string;
+  spec?: ImageSpecKey;
   value: ImageItem[];
   onChange: (next: ImageItem[]) => void;
 }) {
@@ -60,6 +63,7 @@ export function ImageListField({
             <ImageUploadField
               label="Image"
               folder={folder}
+              spec={spec}
               value={item.url ?? ""}
               onChange={(url) => update(i, { url })}
             />

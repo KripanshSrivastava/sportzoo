@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { GalleryImageRow } from "@/lib/galleryData";
+import { IMAGE_SPECS, specSummary } from "@/lib/imageSpecs";
 
 const CATEGORIES = ["Corporate Offsites", "Recognition Ceremonies", "Annual Day", "Sports Days", "Team Building", "Conferences"];
 
@@ -72,7 +73,10 @@ export default function AdminGalleryPage() {
   return (
     <div>
       <h1>Gallery</h1>
-      <p className="text-muted mb-6 text-sm">Photos shown on the public Gallery page, grouped by category.</p>
+      <p className="text-muted mb-1 text-sm">Photos shown on the public Gallery page, grouped by category.</p>
+      <p className="text-muted mb-6 text-xs">
+        {specSummary(IMAGE_SPECS.galleryPhoto)} — {IMAGE_SPECS.galleryPhoto.note}
+      </p>
 
       <div className="card mb-8 flex flex-wrap items-end gap-3 p-4">
         <div className="field" style={{ minWidth: 220 }}>
@@ -87,7 +91,7 @@ export default function AdminGalleryPage() {
         </div>
         <div className="field" style={{ minWidth: 220 }}>
           <label>Upload photo</label>
-          <input ref={inputRef} type="file" accept="image/*" className="input" onChange={handleUpload} disabled={uploading} />
+          <input ref={inputRef} type="file" accept={IMAGE_SPECS.galleryPhoto.accept} className="input" onChange={handleUpload} disabled={uploading} />
         </div>
         {uploading && <p className="text-muted text-xs">Uploading…</p>}
       </div>

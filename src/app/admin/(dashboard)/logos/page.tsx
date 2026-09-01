@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ClientLogo } from "@/lib/clientLogosData";
+import { IMAGE_SPECS, specSummary } from "@/lib/imageSpecs";
+
+const LOGO_SPEC = IMAGE_SPECS.logo;
 
 export default function AdminClientLogosPage() {
   const [logos, setLogos] = useState<ClientLogo[] | null>(null);
@@ -19,6 +22,10 @@ export default function AdminClientLogosPage() {
   useEffect(load, []);
 
   async function upload(file: File): Promise<string | null> {
+    if (!LOGO_SPEC.accept.split(",").includes(file.type)) {
+      setError(`Use a ${LOGO_SPEC.formats.map((f) => f.toUpperCase()).join(" or ")} file for logos.`);
+      return null;
+    }
     const fd = new FormData();
     fd.append("file", file);
     fd.append("folder", "logos");
@@ -98,11 +105,14 @@ export default function AdminClientLogosPage() {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div>
       <h1>Client Logos</h1>
-      <p className="text-muted mb-6 text-sm">
-        The companies shown in the &quot;Companies that trust our work&quot; banner. Manage every logo here in one place —
-        the banner appears on the homepage wherever the <strong>Client logos</strong> section is placed (Pages → Home).
+      <p className="text-muted mb-1 text-sm">
+        The companies in the &quot;Companies that trust our work&quot; banner. Manage every logo here in one place — the
+        banner shows this list wherever the <strong>Client logos</strong> section sits on the homepage.
+      </p>
+      <p className="text-muted mb-6 text-xs">
+        {specSummary(LOGO_SPEC)} — {LOGO_SPEC.note}
       </p>
 
       {error && (
@@ -117,8 +127,8 @@ export default function AdminClientLogosPage() {
           <input id="name" className="input" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g. Genpact" />
         </div>
         <div className="field m-0" style={{ minWidth: 200 }}>
-          <label htmlFor="logo">Logo image (optional)</label>
-          <input ref={fileRef} id="logo" type="file" accept="image/*" className="input" />
+          <label htmlFor="logo">Logo image</label>
+          <input ref={fileRef} id="logo" type="file" accept={LOGO_SPEC.accept} className="input" />
         </div>
         <button type="submit" className="btn btn-primary" disabled={busy}>
           {busy ? "Saving…" : "+ Add"}
@@ -132,49 +142,48 @@ export default function AdminClientLogosPage() {
           No logos saved yet — the homepage banner is showing the built-in company names. Add your first one above.
         </p>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {logos.map((logo, i) => (
-            <div key={logo.id} className="card flex flex-wrap items-center gap-4 p-3">
-              <div className="flex gap-1">
+            <div key={logo.id} className="card flex flex-col gap-2 p-3">
+              <div
+                className="flex h-24 items-center justify-center bg-white"
+                style={{ border: "1px solid var(--color-divider)" }}
+              >
+                {logo.logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={logo.logoUrl} alt={logo.name} className="max-h-full max-w-full object-contain p-2" />
+                ) : (
+                  <span className="text-xs font-semibold text-slate-500">No image uploaded</span>
+                )}
+              </div>
+
+              <input
+                className="input"
+                defaultValue={logo.name}
+                placeholder="Company name"
+                onBlur={(e) => e.target.value !== logo.name && patch(logo.id, { name: e.target.value })}
+              />
+
+              <div className="flex flex-wrap gap-1.5">
                 <button type="button" className="btn btn-secondary" onClick={() => reorder(i, -1)} disabled={i === 0}>
                   ↑
                 </button>
                 <button type="button" className="btn btn-secondary" onClick={() => reorder(i, 1)} disabled={i === logos.length - 1}>
                   ↓
                 </button>
+                <label className="btn btn-secondary" style={{ cursor: "pointer" }}>
+                  {logo.logoUrl ? "Replace" : "Upload"}
+                  <input
+                    type="file"
+                    accept={LOGO_SPEC.accept}
+                    hidden
+                    onChange={(e) => e.target.files?.[0] && replaceImage(logo.id, e.target.files[0])}
+                  />
+                </label>
+                <button type="button" className="btn btn-secondary" onClick={() => remove(logo.id, logo.name)}>
+                  Delete
+                </button>
               </div>
-
-              <div
-                className="flex h-14 w-24 shrink-0 items-center justify-center bg-white"
-                style={{ border: "1px solid var(--color-divider)" }}
-              >
-                {logo.logoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={logo.logoUrl} alt={logo.name} className="max-h-full max-w-full object-contain p-1.5" />
-                ) : (
-                  <span className="text-[11px] font-semibold text-slate-500">No image</span>
-                )}
-              </div>
-
-              <input
-                className="input"
-                style={{ flex: 1, minWidth: 160 }}
-                defaultValue={logo.name}
-                onBlur={(e) => e.target.value !== logo.name && patch(logo.id, { name: e.target.value })}
-              />
-
-              <label className="btn btn-secondary" style={{ cursor: "pointer" }}>
-                {logo.logoUrl ? "Replace image" : "Upload image"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={(e) => e.target.files?.[0] && replaceImage(logo.id, e.target.files[0])}
-                />
-              </label>
-              <button type="button" className="btn btn-secondary" onClick={() => remove(logo.id, logo.name)}>
-                Delete
-              </button>
             </div>
           ))}
         </div>

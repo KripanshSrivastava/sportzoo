@@ -107,7 +107,7 @@ export function CaseStudyForm({ initial }: { initial: CaseStudyFormValues }) {
         />
       </div>
 
-      <ImageUploadField label="Cover photo" folder="case-studies" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
+      <ImageUploadField label="Cover photo" folder="case-studies" spec="caseCover" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
 
       <div className="field">
         <label htmlFor="summary">One-line summary</label>

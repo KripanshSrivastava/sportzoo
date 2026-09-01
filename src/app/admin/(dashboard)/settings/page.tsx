@@ -95,6 +95,7 @@ export default function AdminSettingsPage() {
         <ImageUploadField
           label="Logo (shown in the header)"
           folder="branding"
+          spec="logo"
           value={form.logoUrl ?? ""}
           onChange={(url) => setForm({ ...form, logoUrl: url })}
         />
