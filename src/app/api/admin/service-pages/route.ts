@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
       benefits: Array.isArray(body.benefits) ? body.benefits : [],
       use_cases: Array.isArray(body.useCases) ? body.useCases : [],
       faqs: Array.isArray(body.faqs) ? body.faqs : [],
+      hero_image_url: body.heroImageUrl || null,
+      gallery_image_urls: Array.isArray(body.galleryImageUrls) ? body.galleryImageUrls : [],
       published: body.published !== false,
       sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
     })

@@ -6,6 +6,8 @@ export interface CityRecord {
   id: string;
   slug: string;
   name: string;
+  heroImageUrl: string;
+  galleryMediaUrls: string[];
   published: boolean;
   sortOrder: number;
 }
@@ -15,13 +17,15 @@ function fromRow(row: Record<string, unknown>): CityRecord {
     id: row.id as string,
     slug: row.slug as string,
     name: row.name as string,
+    heroImageUrl: (row.hero_image_url as string) ?? "",
+    galleryMediaUrls: (row.gallery_media_urls as string[]) ?? [],
     published: Boolean(row.published),
     sortOrder: (row.sort_order as number) ?? 0,
   };
 }
 
 function fromStatic(c: { slug: string; name: string }, i: number): CityRecord {
-  return { id: c.slug, slug: c.slug, name: c.name, published: true, sortOrder: i };
+  return { id: c.slug, slug: c.slug, name: c.name, heroImageUrl: "", galleryMediaUrls: [], published: true, sortOrder: i };
 }
 
 /** Public list — DB rows override their static counterpart (including publish state); DB-only cities included too. */

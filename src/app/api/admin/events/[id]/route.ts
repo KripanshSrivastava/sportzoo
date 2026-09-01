@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { resilientUpdate } from "@/lib/resilientUpsert";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -19,9 +20,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ ok: false, message: "Invalid request body." }, { status: 400 });
 
-  const { error } = await supabase
-    .from("events")
-    .update({
+  const { error, skipped } = await resilientUpdate(
+    supabase,
+    "events",
+    {
       title: body.title,
       city: body.city ?? "",
       venue: body.venue ?? "",
@@ -29,6 +31,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       event_time: body.eventTime ?? "",
       description: body.description ?? "",
       cover_image_url: body.coverImageUrl || null,
+      gallery_media_urls: Array.isArray(body.galleryMediaUrls) ? body.galleryMediaUrls : [],
       price: typeof body.price === "number" ? body.price : Number(body.price) || 0,
       currency: body.currency || "INR",
       capacity: body.capacity === "" || body.capacity == null ? null : Number(body.capacity),
@@ -36,14 +39,20 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       published: body.published !== false,
       sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
       updated_at: new Date().toISOString(),
-    })
-    .eq("id", id);
+    },
+    { id }
+  );
 
   if (error) {
     console.error("[elephant-corporate] Updating event failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    message: skipped.includes("gallery_media_urls")
+      ? "Saved — but the photo/video gallery wasn't stored because the database is on an older version. Run supabase/schema.sql."
+      : undefined,
+  });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

@@ -32,6 +32,7 @@ export default function EditCaseStudyPage() {
           testimonialQuote: c.testimonial_quote ?? "",
           testimonialAttribution: c.testimonial_attribution ?? "",
           coverImageUrl: c.cover_image_url ?? "",
+          galleryMediaUrls: Array.isArray(c.gallery_media_urls) ? c.gallery_media_urls : [],
           published: c.published,
         });
       })

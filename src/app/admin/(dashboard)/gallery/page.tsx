@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { GalleryImageRow } from "@/lib/galleryData";
 import { IMAGE_SPECS, specSummary } from "@/lib/imageSpecs";
+import { isVideoUrl } from "@/lib/media";
 
 const CATEGORIES = ["Corporate Offsites", "Recognition Ceremonies", "Annual Day", "Sports Days", "Team Building", "Conferences"];
 
@@ -11,7 +12,35 @@ export default function AdminGalleryPage() {
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [videoUrl, setVideoUrl] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
+  async function addToGallery(url: string) {
+    const res = await fetch("/api/admin/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ category, imageUrl: url }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) {
+      setError(data.message ?? "Failed to save.");
+      return false;
+    }
+    load();
+    return true;
+  }
+
+  async function handleAddVideo() {
+    const v = videoUrl.trim();
+    if (!v) return;
+    setUploading(true);
+    setError(null);
+    try {
+      if (await addToGallery(v)) setVideoUrl("");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   function load() {
     fetch("/api/admin/gallery")
@@ -39,17 +68,7 @@ export default function AdminGalleryPage() {
         return;
       }
 
-      const createRes = await fetch("/api/admin/gallery", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ category, imageUrl: uploadData.url }),
-      });
-      const createData = await createRes.json();
-      if (!createRes.ok || !createData.ok) {
-        setError(createData.message ?? "Failed to save image.");
-        return;
-      }
-      load();
+      await addToGallery(uploadData.url);
     } catch {
       setError("Couldn't reach the server.");
     } finally {
@@ -93,7 +112,23 @@ export default function AdminGalleryPage() {
           <label>Upload photo</label>
           <input ref={inputRef} type="file" accept={IMAGE_SPECS.galleryPhoto.accept} className="input" onChange={handleUpload} disabled={uploading} />
         </div>
-        {uploading && <p className="text-muted text-xs">Uploading…</p>}
+        <div className="field" style={{ minWidth: 260, flex: 1 }}>
+          <label htmlFor="videoUrl">…or add a video (YouTube / Vimeo / MP4 link)</label>
+          <div className="flex gap-2">
+            <input
+              id="videoUrl"
+              type="url"
+              className="input"
+              placeholder="https://youtube.com/watch?v=…"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+            />
+            <button type="button" className="btn btn-secondary" onClick={handleAddVideo} disabled={uploading || !videoUrl.trim()}>
+              Add
+            </button>
+          </div>
+        </div>
+        {uploading && <p className="text-muted text-xs">Saving…</p>}
       </div>
 
       {error && (
@@ -116,8 +151,18 @@ export default function AdminGalleryPage() {
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {imgs.map((img) => (
                 <div key={img.id} className="relative">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img.imageUrl} alt="" className="aspect-square w-full object-cover" style={{ border: "1px solid var(--color-divider)" }} />
+                  {isVideoUrl(img.imageUrl) ? (
+                    <div
+                      className="flex aspect-square w-full items-center justify-center bg-slate-100 p-2 text-center text-[11px] font-medium text-slate-600"
+                      style={{ border: "1px solid var(--color-divider)" }}
+                    >
+                      🎬 Video<br />
+                      <span className="block break-all">{img.imageUrl}</span>
+                    </div>
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={img.imageUrl} alt="" className="aspect-square w-full object-cover" style={{ border: "1px solid var(--color-divider)" }} />
+                  )}
                   <button
                     type="button"
                     className="btn btn-secondary mt-1 w-full"

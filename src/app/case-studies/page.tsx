@@ -6,7 +6,6 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export const dynamic = "force-dynamic";
 
@@ -49,15 +48,17 @@ export default async function CaseStudiesPage() {
               href={`/case-studies/${c.slug}`}
               className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-md"
             >
-              <div className="relative aspect-[16/10]">
-                <Image
-                  src={c.coverImageUrl || placeholderPhoto(c.slug, 640, 400)}
-                  alt={c.title}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover"
-                  unoptimized
-                />
+              <div className="relative aspect-[16/10] bg-slate-100">
+                {c.coverImageUrl && (
+                  <Image
+                    src={c.coverImageUrl}
+                    alt={c.title}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                    unoptimized
+                  />
+                )}
               </div>
               <div className="p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">

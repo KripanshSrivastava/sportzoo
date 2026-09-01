@@ -28,6 +28,7 @@ export default function EditEventPage() {
           eventTime: ev.event_time ?? "",
           description: ev.description ?? "",
           coverImageUrl: ev.cover_image_url ?? "",
+          galleryMediaUrls: Array.isArray(ev.gallery_media_urls) ? ev.gallery_media_urls : [],
           price: Number(ev.price ?? 0),
           capacity: ev.capacity == null ? "" : String(ev.capacity),
           registrationOpen: ev.registration_open,

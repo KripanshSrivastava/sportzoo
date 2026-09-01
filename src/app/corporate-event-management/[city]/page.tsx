@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { MediaFrame } from "@/components/ui/MediaFrame";
+import { isVideoUrl } from "@/lib/media";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -53,8 +56,14 @@ export default async function CityEventPage({ params }: { params: Promise<{ city
         ]}
       />
 
-      <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
+        {cityData.heroImageUrl && !isVideoUrl(cityData.heroImageUrl) && (
+          <>
+            <Image src={cityData.heroImageUrl} alt="" fill sizes="100vw" className="object-cover opacity-30" priority unoptimized />
+            <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--color-navy-950)] via-[color:var(--color-navy-950)]/85 to-transparent" />
+          </>
+        )}
+        <div className="container-page relative">
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             Corporate Event Organisers in {cityData.name}
           </h1>
@@ -105,6 +114,25 @@ export default async function CityEventPage({ params }: { params: Promise<{ city
           <li>Backup and contingency options for weather-dependent outdoor formats.</li>
         </ul>
       </Section>
+
+      {cityData.heroImageUrl && isVideoUrl(cityData.heroImageUrl) && (
+        <div className="relative aspect-video w-full bg-black">
+          <MediaFrame url={cityData.heroImageUrl} alt={cityData.name} sizes="100vw" />
+        </div>
+      )}
+
+      {cityData.galleryMediaUrls.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="Gallery" title={`Our work in ${cityData.name}`} />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {cityData.galleryMediaUrls.map((url, i) => (
+              <div key={i} className="relative aspect-video overflow-hidden rounded-lg bg-slate-200">
+                <MediaFrame url={url} alt={`${cityData.name} — ${i + 1}`} sizes="(min-width: 640px) 33vw, 100vw" />
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       <FAQSection faqs={faqs} title={`FAQs about corporate events in ${cityData.name}`} />
       <LeadFormSection sourcePage={`Corporate Events – ${cityData.name}`} />

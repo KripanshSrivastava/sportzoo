@@ -33,6 +33,8 @@ export default function EditServicePagePage() {
           benefits: listToLines(s.benefits),
           useCases: listToLines(s.useCases),
           faqs: pairsToLines(s.faqs, ["q", "a"]),
+          heroImageUrl: s.heroImageUrl ?? "",
+          galleryImageUrls: Array.isArray(s.galleryImageUrls) ? s.galleryImageUrls : [],
           published: s.published,
         });
       })

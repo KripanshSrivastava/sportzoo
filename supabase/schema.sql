@@ -66,6 +66,10 @@ create table if not exists case_studies (
   updated_at timestamptz not null default now()
 );
 
+-- Photo + video gallery for each case study (uploaded photos or pasted
+-- YouTube / Vimeo / MP4 links). No-op if the column already exists.
+alter table case_studies add column if not exists gallery_media_urls text[] not null default '{}';
+
 -- Seed editable starter case studies so "Our Work" isn't empty in the admin.
 -- Skipped once any row exists. Replace the copy with real engagements and add
 -- cover photos from /admin/case-studies.
@@ -159,6 +163,9 @@ create table if not exists events (
   updated_at timestamptz not null default now()
 );
 
+-- Photo + video gallery for each event.
+alter table events add column if not exists gallery_media_urls text[] not null default '{}';
+
 -- One row per person who registers for an event. Payments are handled by
 -- src/lib/paymentGateway.ts — until a gateway is wired in, paid events are
 -- recorded as "pending" and the owner follows up to collect payment, which
@@ -217,6 +224,11 @@ create table if not exists service_pages (
   updated_at timestamptz not null default now()
 );
 
+-- Header photo + project-photo gallery for each service page (uploaded from
+-- /admin/service-pages). The gallery holds photos or pasted video links.
+alter table service_pages add column if not exists hero_image_url text;
+alter table service_pages add column if not exists gallery_image_urls text[] not null default '{}';
+
 -- Cities for /corporate-event-management/[city]. Seeded from
 -- src/config/site.ts's targetCities on first read.
 create table if not exists cities (
@@ -227,6 +239,10 @@ create table if not exists cities (
   sort_order int not null default 0,
   created_at timestamptz not null default now()
 );
+
+-- Header image + photo/video gallery for each city landing page.
+alter table cities add column if not exists hero_image_url text;
+alter table cities add column if not exists gallery_media_urls text[] not null default '{}';
 
 alter table service_pages enable row level security;
 alter table cities enable row level security;

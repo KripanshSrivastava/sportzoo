@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 
 export interface EventFormValues {
   id?: string;
@@ -14,6 +15,7 @@ export interface EventFormValues {
   eventTime: string;
   description: string;
   coverImageUrl: string;
+  galleryMediaUrls: string[];
   price: number;
   capacity: string;
   registrationOpen: boolean;
@@ -29,6 +31,7 @@ export const emptyEvent: EventFormValues = {
   eventTime: "",
   description: "",
   coverImageUrl: "",
+  galleryMediaUrls: [],
   price: 0,
   capacity: "",
   registrationOpen: true,
@@ -137,6 +140,16 @@ export function EventForm({ initial }: { initial: EventFormValues }) {
       </div>
 
       <ImageUploadField label="Cover photo" folder="events" spec="eventCover" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
+
+      <ImageListField
+        label="Photo &amp; video gallery (optional)"
+        folder="events"
+        spec="galleryMedia"
+        allowVideo
+        showCaption={false}
+        value={form.galleryMediaUrls.map((url) => ({ url }))}
+        onChange={(items) => update("galleryMediaUrls", items.map((i) => i.url).filter(Boolean))}
+      />
 
       <div className="field">
         <label htmlFor="description">Description</label>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { resilientUpsert } from "@/lib/resilientUpsert";
 
 /** Upsert keyed by slug — a static city (id === slug) gets its first DB row created here. */
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -10,18 +11,30 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const body = await req.json().catch(() => null);
   if (!body?.slug || !body?.name) return NextResponse.json({ ok: false, message: "Invalid request body." }, { status: 400 });
 
-  const { error } = await supabase
-    .from("cities")
-    .upsert(
-      { slug: body.slug, name: body.name, published: body.published !== false, sort_order: body.sortOrder ?? 0 },
-      { onConflict: "slug" }
-    );
+  const { error, skipped } = await resilientUpsert(
+    supabase,
+    "cities",
+    {
+      slug: body.slug,
+      name: body.name,
+      hero_image_url: body.heroImageUrl || null,
+      gallery_media_urls: Array.isArray(body.galleryMediaUrls) ? body.galleryMediaUrls : [],
+      published: body.published !== false,
+      sort_order: body.sortOrder ?? 0,
+    },
+    { onConflict: "slug" }
+  );
 
   if (error) {
     console.error("[elephant-corporate] Saving city failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    message: skipped.length
+      ? "Saved — images weren't stored because the database is on an older version. Run supabase/schema.sql."
+      : undefined,
+  });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

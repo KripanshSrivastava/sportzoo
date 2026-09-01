@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { MediaFrame } from "@/components/ui/MediaFrame";
+import { isVideoUrl } from "@/lib/media";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -15,7 +17,6 @@ import {
   eventRentalServices,
 } from "@/config/services";
 import { serviceOptions } from "@/lib/leadSchema";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 // Nav labels are kept short; the lead form needs the exact enum value.
 const formServiceNameBySlug: Record<string, (typeof serviceOptions)[number]> = {
@@ -68,8 +69,22 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
         ]}
       />
 
-      <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
-        <div className="container-page">
+      <section className="relative overflow-hidden bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
+        {service.heroImageUrl && !isVideoUrl(service.heroImageUrl) && (
+          <>
+            <Image
+              src={service.heroImageUrl}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover opacity-30"
+              priority
+              unoptimized
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--color-navy-950)] via-[color:var(--color-navy-950)]/85 to-transparent" />
+          </>
+        )}
+        <div className="container-page relative">
           <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">{parentLabel}</p>
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             {service.h1}
@@ -81,6 +96,12 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
           </div>
         </div>
       </section>
+
+      {service.heroImageUrl && isVideoUrl(service.heroImageUrl) && (
+        <div className="relative aspect-video w-full bg-black">
+          <MediaFrame url={service.heroImageUrl} alt={service.name} sizes="100vw" />
+        </div>
+      )}
 
       <Section className="bg-white">
         <div className="prose-none max-w-3xl space-y-4 text-base leading-relaxed text-slate-700">
@@ -153,24 +174,18 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
         </div>
       </Section>
 
-      <Section className="bg-slate-50">
-        <SectionHeading eyebrow="Gallery" title="Project examples" />
-        {/* DEMO PHOTOS — replace with real project photography before launch */}
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-              <Image
-                src={placeholderPhoto(`${service.slug}-${i}`, 500, 500)}
-                alt={`${service.name} example ${i + 1}`}
-                fill
-                sizes="(min-width: 640px) 25vw, 50vw"
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-          ))}
-        </div>
-      </Section>
+      {service.galleryImageUrls && service.galleryImageUrls.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="Gallery" title="Project photos &amp; video" />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {service.galleryImageUrls.map((src, i) => (
+              <div key={i} className="relative aspect-video overflow-hidden rounded-lg bg-slate-200">
+                <MediaFrame url={src} alt={`${service.name} — ${i + 1}`} sizes="(min-width: 640px) 33vw, 100vw" />
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       <FAQSection faqs={service.faqs} title={`FAQs about ${service.name.toLowerCase()}`} />
 

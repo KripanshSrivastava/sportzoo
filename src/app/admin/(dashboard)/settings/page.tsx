@@ -66,7 +66,7 @@ export default function AdminSettingsPage() {
         return;
       }
       setStatus("saved");
-      setMessage("Saved. Changes are live on the site now.");
+      setMessage(data.message ?? "Saved. Changes are live on the site now.");
     } catch {
       setStatus("error");
       setMessage("Couldn't reach the server.");

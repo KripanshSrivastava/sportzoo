@@ -5,6 +5,7 @@ import { caseStudies as staticCaseStudies, type CaseStudy } from "@/content/case
 export interface AdminCaseStudy extends CaseStudy {
   id: string;
   coverImageUrl: string | null;
+  galleryMediaUrls: string[];
   published: boolean;
   sortOrder: number;
 }
@@ -25,6 +26,7 @@ function fromRow(row: Record<string, unknown>): AdminCaseStudy {
       ? { quote: row.testimonial_quote as string, attribution: (row.testimonial_attribution as string) ?? "" }
       : undefined,
     coverImageUrl: (row.cover_image_url as string) ?? null,
+    galleryMediaUrls: (row.gallery_media_urls as string[]) ?? [],
     published: Boolean(row.published),
     sortOrder: (row.sort_order as number) ?? 0,
   };
@@ -43,7 +45,14 @@ export const getPublishedCaseStudies = cache(async (): Promise<AdminCaseStudy[]>
       return data.map(fromRow);
     }
   }
-  return staticCaseStudies.map((c, i) => ({ ...c, id: c.slug, coverImageUrl: null, published: true, sortOrder: i }));
+  return staticCaseStudies.map((c, i) => ({
+    ...c,
+    id: c.slug,
+    coverImageUrl: null,
+    galleryMediaUrls: [],
+    published: true,
+    sortOrder: i,
+  }));
 });
 
 export async function getPublishedCaseStudyBySlug(slug: string): Promise<AdminCaseStudy | undefined> {

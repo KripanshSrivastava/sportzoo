@@ -12,15 +12,19 @@ import { ImageUploadField } from "@/components/admin/ImageUploadField";
 export function ImageListField({
   label,
   captionLabel = "Caption",
+  showCaption = true,
   folder = "pages",
   spec,
+  allowVideo = false,
   value,
   onChange,
 }: {
   label: string;
   captionLabel?: string;
+  showCaption?: boolean;
   folder?: string;
   spec?: ImageSpecKey;
+  allowVideo?: boolean;
   value: ImageItem[];
   onChange: (next: ImageItem[]) => void;
 }) {
@@ -61,20 +65,23 @@ export function ImageListField({
               </div>
             </div>
             <ImageUploadField
-              label="Image"
+              label={allowVideo ? "Photo or video" : "Image"}
               folder={folder}
               spec={spec}
+              allowVideo={allowVideo}
               value={item.url ?? ""}
               onChange={(url) => update(i, { url })}
             />
-            <div className="field m-0">
-              <label>{captionLabel}</label>
-              <input
-                className="input"
-                value={item.caption ?? ""}
-                onChange={(e) => update(i, { caption: e.target.value })}
-              />
-            </div>
+            {showCaption && (
+              <div className="field m-0">
+                <label>{captionLabel}</label>
+                <input
+                  className="input"
+                  value={item.caption ?? ""}
+                  onChange={(e) => update(i, { caption: e.target.value })}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -84,7 +91,7 @@ export function ImageListField({
         onClick={() => onChange([...items, { url: "", caption: "" }])}
         style={{ width: "fit-content" }}
       >
-        + Add image
+        {allowVideo ? "+ Add photo or video" : "+ Add image"}
       </button>
     </div>
   );

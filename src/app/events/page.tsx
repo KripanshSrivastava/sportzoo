@@ -5,7 +5,6 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getPublishedEvents } from "@/lib/eventsData";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export const dynamic = "force-dynamic";
 
@@ -46,15 +45,17 @@ export default async function EventsPage() {
                   href={`/events/${ev.slug}`}
                   className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-md"
                 >
-                  <div className="relative aspect-[16/10]">
-                    <Image
-                      src={ev.coverImageUrl || placeholderPhoto(ev.slug, 640, 400)}
-                      alt={ev.title}
-                      fill
-                      sizes="(min-width: 768px) 33vw, 100vw"
-                      className="object-cover"
-                      unoptimized
-                    />
+                  <div className="relative aspect-[16/10] bg-slate-100">
+                    {ev.coverImageUrl && (
+                      <Image
+                        src={ev.coverImageUrl}
+                        alt={ev.title}
+                        fill
+                        sizes="(min-width: 768px) 33vw, 100vw"
+                        className="object-cover"
+                        unoptimized
+                      />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <p className="text-muted m-0 text-xs font-semibold uppercase tracking-wide">

@@ -7,6 +7,7 @@ import { TestimonialsBlock } from "./TestimonialsBlock";
 import { GoogleReviewsBlock } from "./GoogleReviewsBlock";
 import { SocialFeedBlock } from "./SocialFeedBlock";
 import { ImageBlock } from "./ImageBlock";
+import { MediaGalleryBlock } from "./MediaGalleryBlock";
 import { ClientLogosBlock } from "./ClientLogosBlock";
 import { StatsBandBlock } from "./StatsBandBlock";
 import { TagGridBlock } from "./TagGridBlock";
@@ -43,6 +44,8 @@ export function BlockRenderer({ blocks }: { blocks: Block[] }) {
             return <SocialFeedBlock key={block.id} {...p} />;
           case "image":
             return <ImageBlock key={block.id} {...p} />;
+          case "mediaGallery":
+            return <MediaGalleryBlock key={block.id} {...p} />;
           case "clientLogos":
             return <ClientLogosBlock key={block.id} {...p} />;
           case "statsBand":

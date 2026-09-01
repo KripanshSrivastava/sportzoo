@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabaseAdmin";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { resilientUpsert } from "@/lib/resilientUpsert";
 
 export async function GET() {
   const settings = await getBusinessSettings();
@@ -48,11 +49,16 @@ export async function PUT(req: NextRequest) {
     updated_at: new Date().toISOString(),
   };
 
-  const { error } = await supabase.from("business_settings").upsert(row);
+  const { error, skipped } = await resilientUpsert(supabase, "business_settings", row);
   if (error) {
     console.error("[elephant-corporate] Saving business_settings failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    message: skipped.length
+      ? `Saved. Note: ${skipped.length} newer field(s) weren't stored because the database is on an older version — run supabase/schema.sql to enable them.`
+      : undefined,
+  });
 }

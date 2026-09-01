@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 
 export interface CaseStudyFormValues {
   id?: string;
@@ -18,6 +19,7 @@ export interface CaseStudyFormValues {
   testimonialQuote: string;
   testimonialAttribution: string;
   coverImageUrl: string;
+  galleryMediaUrls: string[];
   published: boolean;
 }
 
@@ -34,6 +36,7 @@ export const emptyCaseStudy: CaseStudyFormValues = {
   testimonialQuote: "",
   testimonialAttribution: "",
   coverImageUrl: "",
+  galleryMediaUrls: [],
   published: true,
 };
 
@@ -108,6 +111,16 @@ export function CaseStudyForm({ initial }: { initial: CaseStudyFormValues }) {
       </div>
 
       <ImageUploadField label="Cover photo" folder="case-studies" spec="caseCover" value={form.coverImageUrl} onChange={(url) => update("coverImageUrl", url)} />
+
+      <ImageListField
+        label="Photo &amp; video gallery (optional)"
+        folder="case-studies"
+        spec="galleryMedia"
+        allowVideo
+        showCaption={false}
+        value={form.galleryMediaUrls.map((url) => ({ url }))}
+        onChange={(items) => update("galleryMediaUrls", items.map((i) => i.url).filter(Boolean))}
+      />
 
       <div className="field">
         <label htmlFor="summary">One-line summary</label>

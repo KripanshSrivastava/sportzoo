@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 
 const CATEGORIES = [
   { value: "corporate-events", label: "Corporate Events" },
@@ -25,6 +27,8 @@ export interface ServicePageFormValues {
   benefits: string; // one per line
   useCases: string; // one per line
   faqs: string; // "Question :: Answer" one per line
+  heroImageUrl: string;
+  galleryImageUrls: string[];
   published: boolean;
 }
 
@@ -42,6 +46,8 @@ export const emptyServicePage: ServicePageFormValues = {
   benefits: "",
   useCases: "",
   faqs: "",
+  heroImageUrl: "",
+  galleryImageUrls: [],
   published: true,
 };
 
@@ -168,6 +174,25 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
           <input id="metaDescription" className="input" value={form.metaDescription} onChange={(e) => update("metaDescription", e.target.value)} />
         </div>
       </div>
+
+      <ImageUploadField
+        label="Header image or video (optional)"
+        folder="service-pages"
+        spec="serviceHero"
+        allowVideo
+        value={form.heroImageUrl}
+        onChange={(url) => update("heroImageUrl", url)}
+      />
+
+      <ImageListField
+        label="Project photo &amp; video gallery (optional)"
+        folder="service-pages"
+        spec="serviceGallery"
+        allowVideo
+        showCaption={false}
+        value={form.galleryImageUrls.map((url) => ({ url }))}
+        onChange={(items) => update("galleryImageUrls", items.map((i) => i.url).filter(Boolean))}
+      />
 
       <div className="field">
         <label htmlFor="intro">Intro paragraphs (one per line)</label>

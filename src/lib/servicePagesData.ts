@@ -41,6 +41,8 @@ function fromRow(row: Record<string, unknown>): AdminServicePage {
     benefits: (row.benefits as string[]) ?? [],
     useCases: (row.use_cases as string[]) ?? [],
     faqs: (row.faqs as { q: string; a: string }[]) ?? [],
+    heroImageUrl: (row.hero_image_url as string) ?? "",
+    galleryImageUrls: (row.gallery_image_urls as string[]) ?? [],
     published: Boolean(row.published),
     sortOrder: (row.sort_order as number) ?? 0,
   };

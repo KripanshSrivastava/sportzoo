@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllEventsForAdmin } from "@/lib/eventsData";
+import { resilientInsert } from "@/lib/resilientUpsert";
 
 export async function GET() {
   const rows = await getAllEventsForAdmin();
@@ -28,26 +29,23 @@ export async function POST(req: NextRequest) {
 
   const slug = body.slug ? slugify(String(body.slug)) : slugify(body.title);
 
-  const { data, error } = await supabase
-    .from("events")
-    .insert({
-      slug,
-      title: body.title,
-      city: body.city || "",
-      venue: body.venue || "",
-      event_date: body.eventDate || null,
-      event_time: body.eventTime || "",
-      description: body.description || "",
-      cover_image_url: body.coverImageUrl || null,
-      price: typeof body.price === "number" ? body.price : Number(body.price) || 0,
-      currency: body.currency || "INR",
-      capacity: body.capacity === "" || body.capacity == null ? null : Number(body.capacity),
-      registration_open: body.registrationOpen !== false,
-      published: body.published !== false,
-      sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
-    })
-    .select()
-    .single();
+  const { data, error } = await resilientInsert(supabase, "events", {
+    slug,
+    title: body.title,
+    city: body.city || "",
+    venue: body.venue || "",
+    event_date: body.eventDate || null,
+    event_time: body.eventTime || "",
+    description: body.description || "",
+    cover_image_url: body.coverImageUrl || null,
+    gallery_media_urls: Array.isArray(body.galleryMediaUrls) ? body.galleryMediaUrls : [],
+    price: typeof body.price === "number" ? body.price : Number(body.price) || 0,
+    currency: body.currency || "INR",
+    capacity: body.capacity === "" || body.capacity == null ? null : Number(body.capacity),
+    registration_open: body.registrationOpen !== false,
+    published: body.published !== false,
+    sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
+  });
 
   if (error) {
     console.error("[elephant-corporate] Creating event failed:", error.message);

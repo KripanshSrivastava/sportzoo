@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getServicePageForAdminById } from "@/lib/servicePagesData";
+import { resilientUpsert } from "@/lib/resilientUpsert";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -37,18 +38,25 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     benefits: Array.isArray(body.benefits) ? body.benefits : [],
     use_cases: Array.isArray(body.useCases) ? body.useCases : [],
     faqs: Array.isArray(body.faqs) ? body.faqs : [],
+    hero_image_url: body.heroImageUrl || null,
+    gallery_image_urls: Array.isArray(body.galleryImageUrls) ? body.galleryImageUrls : [],
     published: body.published !== false,
     sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
     updated_at: new Date().toISOString(),
   };
 
-  const { error } = await supabase.from("service_pages").upsert(payload, { onConflict: "slug" });
+  const { error, skipped } = await resilientUpsert(supabase, "service_pages", payload, { onConflict: "slug" });
 
   if (error) {
     console.error("[elephant-corporate] Saving service page failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    message: skipped.includes("hero_image_url") || skipped.includes("gallery_image_urls")
+      ? "Saved — but images weren't stored because the database is on an older version. Run supabase/schema.sql, then save again."
+      : undefined,
+  });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

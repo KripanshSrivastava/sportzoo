@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export async function CaseStudiesPreviewBlock({ eyebrow, title }: { eyebrow?: string; title?: string }) {
   const caseStudies = await getPublishedCaseStudies();
@@ -23,15 +22,17 @@ export async function CaseStudiesPreviewBlock({ eyebrow, title }: { eyebrow?: st
             href={`/case-studies/${c.slug}`}
             className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-lg"
           >
-            <div className="relative aspect-[16/10]">
-              <Image
-                src={c.coverImageUrl || placeholderPhoto(c.slug, 640, 400)}
-                alt={c.title}
-                fill
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover transition-transform group-hover:scale-105"
-                unoptimized
-              />
+            <div className="relative aspect-[16/10] bg-slate-100">
+              {c.coverImageUrl && (
+                <Image
+                  src={c.coverImageUrl}
+                  alt={c.title}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform group-hover:scale-105"
+                  unoptimized
+                />
+              )}
             </div>
             <div className="p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">{c.category}</p>

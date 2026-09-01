@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import type { CityRecord } from "@/lib/citiesData";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 
 export default function AdminCitiesPage() {
   const [items, setItems] = useState<CityRecord[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [newName, setNewName] = useState("");
   const [adding, setAdding] = useState(false);
+  const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   function load() {
     fetch("/api/admin/cities")
@@ -37,22 +40,28 @@ export default function AdminCitiesPage() {
     }
   }
 
-  async function handleRename(city: CityRecord, name: string) {
+  async function saveCity(city: CityRecord, patch: Partial<CityRecord>) {
+    const next = { ...city, ...patch };
     await fetch(`/api/admin/cities/${city.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug: city.slug, name, published: city.published, sortOrder: city.sortOrder }),
+      body: JSON.stringify({
+        slug: next.slug,
+        name: next.name,
+        heroImageUrl: next.heroImageUrl,
+        galleryMediaUrls: next.galleryMediaUrls,
+        published: next.published,
+        sortOrder: next.sortOrder,
+      }),
     });
     load();
   }
 
-  async function handleTogglePublished(city: CityRecord) {
-    await fetch(`/api/admin/cities/${city.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug: city.slug, name: city.name, published: !city.published, sortOrder: city.sortOrder }),
-    });
-    load();
+  function handleRename(city: CityRecord, name: string) {
+    return saveCity(city, { name });
+  }
+  function handleTogglePublished(city: CityRecord) {
+    return saveCity(city, { published: !city.published });
   }
 
   async function handleDelete(city: CityRecord) {
@@ -95,26 +104,58 @@ export default function AdminCitiesPage() {
           {items.map((city) => {
             const hasOverride = city.id !== city.slug;
             return (
-              <div key={city.slug} className="card flex items-center justify-between gap-4 p-4">
-                <div className="flex-1">
-                  <input
-                    className="input"
-                    defaultValue={city.name}
-                    onBlur={(e) => e.target.value !== city.name && handleRename(city, e.target.value)}
-                  />
-                  <p className="text-muted m-0 mt-1 text-xs">
-                    /corporate-event-management/{city.slug} {!city.published && "· unpublished"}
-                    {!hasOverride && " · built-in"}
-                  </p>
+              <div key={city.slug} className="card p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <input
+                      className="input"
+                      defaultValue={city.name}
+                      onBlur={(e) => e.target.value !== city.name && handleRename(city, e.target.value)}
+                    />
+                    <p className="text-muted m-0 mt-1 text-xs">
+                      /corporate-event-management/{city.slug} {!city.published && "· unpublished"}
+                      {!hasOverride && " · built-in"}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setOpenSlug(openSlug === city.slug ? null : city.slug)}
+                    >
+                      {openSlug === city.slug ? "Close" : "Photos & video"}
+                    </button>
+                    <button type="button" className="btn btn-secondary" onClick={() => handleTogglePublished(city)}>
+                      {city.published ? "Unpublish" : "Publish"}
+                    </button>
+                    <button type="button" className="btn btn-secondary" onClick={() => handleDelete(city)}>
+                      Delete
+                    </button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <button type="button" className="btn btn-secondary" onClick={() => handleTogglePublished(city)}>
-                    {city.published ? "Unpublish" : "Publish"}
-                  </button>
-                  <button type="button" className="btn btn-secondary" onClick={() => handleDelete(city)}>
-                    Delete
-                  </button>
-                </div>
+
+                {openSlug === city.slug && (
+                  <div className="mt-4 border-t pt-4" style={{ borderColor: "var(--color-divider)" }}>
+                    <ImageUploadField
+                      label="Header image or video"
+                      folder="cities"
+                      spec="serviceHero"
+                      allowVideo
+                      value={city.heroImageUrl}
+                      onChange={(url) => saveCity(city, { heroImageUrl: url })}
+                    />
+                    <ImageListField
+                      label="Photo &amp; video gallery"
+                      folder="cities"
+                      spec="galleryMedia"
+                      allowVideo
+                      showCaption={false}
+                      value={city.galleryMediaUrls.map((url) => ({ url }))}
+                      onChange={(list) => saveCity(city, { galleryMediaUrls: list.map((i) => i.url).filter(Boolean) })}
+                    />
+                    <p className="text-muted mt-1 text-xs">Changes save automatically.</p>
+                  </div>
+                )}
               </div>
             );
           })}

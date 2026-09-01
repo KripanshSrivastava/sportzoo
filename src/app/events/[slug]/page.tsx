@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { JsonLd, serviceJsonLd } from "@/components/seo/JsonLd";
 import { EventRegistrationForm } from "@/components/forms/EventRegistrationForm";
 import { getPublishedEventBySlug } from "@/lib/eventsData";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export const dynamic = "force-dynamic";
 
@@ -53,16 +52,11 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      <div className="relative aspect-[21/9] w-full">
-        <Image
-          src={ev.coverImageUrl || placeholderPhoto(`${ev.slug}-hero`, 1400, 600)}
-          alt={ev.title}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          unoptimized
-        />
-      </div>
+      {ev.coverImageUrl && (
+        <div className="relative aspect-[21/9] w-full">
+          <MediaFrame url={ev.coverImageUrl} alt={ev.title} sizes="100vw" priority />
+        </div>
+      )}
 
       <Section className="bg-white">
         <div className="grid gap-10 lg:grid-cols-2">
@@ -89,6 +83,19 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
           </div>
         </div>
       </Section>
+
+      {ev.galleryMediaUrls.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="Gallery" title="Photos &amp; video" />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {ev.galleryMediaUrls.map((url, i) => (
+              <div key={i} className="relative aspect-video overflow-hidden rounded-lg bg-slate-200">
+                <MediaFrame url={url} alt={`${ev.title} — ${i + 1}`} sizes="(min-width: 640px) 33vw, 100vw" />
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
     </>
   );
 }

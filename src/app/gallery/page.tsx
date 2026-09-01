@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
@@ -35,18 +35,11 @@ export default async function GalleryPage() {
       {categories.map((cat) => (
         <Section key={cat} className="border-b border-slate-100 bg-white">
           <SectionHeading title={cat} />
-          {/* Manage these photos at /admin/gallery */}
+          {/* Manage these photos and videos at /admin/gallery */}
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {gallery[cat].map((src, i) => (
-              <div key={i} className="relative aspect-square overflow-hidden rounded-lg">
-                <Image
-                  src={src}
-                  alt={`${cat} example ${i + 1}`}
-                  fill
-                  sizes="(min-width: 640px) 25vw, 50vw"
-                  className="object-cover"
-                  unoptimized
-                />
+              <div key={i} className="relative aspect-square overflow-hidden rounded-lg bg-slate-100">
+                <MediaFrame url={src} alt={`${cat} ${i + 1}`} sizes="(min-width: 640px) 25vw, 50vw" />
               </div>
             ))}
           </div>

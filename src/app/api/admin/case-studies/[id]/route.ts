@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { resilientUpdate } from "@/lib/resilientUpsert";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -19,9 +20,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ ok: false, message: "Invalid request body." }, { status: 400 });
 
-  const { error } = await supabase
-    .from("case_studies")
-    .update({
+  const { error, skipped } = await resilientUpdate(
+    supabase,
+    "case_studies",
+    {
       title: body.title,
       category: body.category,
       client_descriptor: body.clientDescriptor ?? "",
@@ -33,17 +35,24 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       testimonial_quote: body.testimonialQuote || null,
       testimonial_attribution: body.testimonialAttribution || null,
       cover_image_url: body.coverImageUrl || null,
+      gallery_media_urls: Array.isArray(body.galleryMediaUrls) ? body.galleryMediaUrls : [],
       published: body.published !== false,
       sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
       updated_at: new Date().toISOString(),
-    })
-    .eq("id", id);
+    },
+    { id }
+  );
 
   if (error) {
     console.error("[elephant-corporate] Updating case study failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({
+    ok: true,
+    message: skipped.includes("gallery_media_urls")
+      ? "Saved — but the photo/video gallery wasn't stored because the database is on an older version. Run supabase/schema.sql, then save again."
+      : undefined,
+  });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

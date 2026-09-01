@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllCaseStudiesForAdmin } from "@/lib/caseStudiesData";
+import { resilientInsert } from "@/lib/resilientUpsert";
 
 export async function GET() {
   const rows = await getAllCaseStudiesForAdmin();
@@ -28,26 +29,23 @@ export async function POST(req: NextRequest) {
 
   const slug = body.slug ? slugify(String(body.slug)) : slugify(body.title);
 
-  const { data, error } = await supabase
-    .from("case_studies")
-    .insert({
-      slug,
-      title: body.title,
-      category: body.category || "Corporate Event",
-      client_descriptor: body.clientDescriptor || "",
-      summary: body.summary || "",
-      challenge: body.challenge || "",
-      solution: body.solution || "",
-      execution: body.execution || "",
-      outcomes: Array.isArray(body.outcomes) ? body.outcomes : [],
-      testimonial_quote: body.testimonialQuote || null,
-      testimonial_attribution: body.testimonialAttribution || null,
-      cover_image_url: body.coverImageUrl || null,
-      published: body.published !== false,
-      sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
-    })
-    .select()
-    .single();
+  const { data, error } = await resilientInsert(supabase, "case_studies", {
+    slug,
+    title: body.title,
+    category: body.category || "Corporate Event",
+    client_descriptor: body.clientDescriptor || "",
+    summary: body.summary || "",
+    challenge: body.challenge || "",
+    solution: body.solution || "",
+    execution: body.execution || "",
+    outcomes: Array.isArray(body.outcomes) ? body.outcomes : [],
+    testimonial_quote: body.testimonialQuote || null,
+    testimonial_attribution: body.testimonialAttribution || null,
+    cover_image_url: body.coverImageUrl || null,
+    gallery_media_urls: Array.isArray(body.galleryMediaUrls) ? body.galleryMediaUrls : [],
+    published: body.published !== false,
+    sort_order: typeof body.sortOrder === "number" ? body.sortOrder : 0,
+  });
 
   if (error) {
     console.error("[elephant-corporate] Creating case study failed:", error.message);

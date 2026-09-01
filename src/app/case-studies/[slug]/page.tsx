@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { MediaFrame } from "@/components/ui/MediaFrame";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getPublishedCaseStudyBySlug } from "@/lib/caseStudiesData";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export const dynamic = "force-dynamic";
 
@@ -34,17 +33,11 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </div>
       </section>
 
-      {/* Cover photo — set in /admin/case-studies, or falls back to a stock placeholder */}
-      <div className="relative aspect-[21/9] w-full">
-        <Image
-          src={c.coverImageUrl || placeholderPhoto(`${c.slug}-hero`, 1400, 600)}
-          alt={c.title}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          unoptimized
-        />
-      </div>
+      {c.coverImageUrl && (
+        <div className="relative aspect-[21/9] w-full">
+          <MediaFrame url={c.coverImageUrl} alt={c.title} sizes="100vw" priority />
+        </div>
+      )}
 
       <Section className="bg-white">
         <div className="grid gap-10 lg:grid-cols-2">
@@ -83,6 +76,19 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
           </figure>
         )}
       </Section>
+
+      {c.galleryMediaUrls.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="Gallery" title="From the event" />
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {c.galleryMediaUrls.map((url, i) => (
+              <div key={i} className="relative aspect-video overflow-hidden rounded-lg bg-slate-200">
+                <MediaFrame url={url} alt={`${c.title} — ${i + 1}`} sizes="(min-width: 640px) 50vw, 100vw" />
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       <LeadFormSection sourcePage={c.title} />
       <FinalCta />

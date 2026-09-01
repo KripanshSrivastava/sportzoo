@@ -22,6 +22,8 @@ export interface ServicePage {
   benefits: string[];
   useCases: string[];
   faqs: FaqItem[];
+  heroImageUrl?: string;
+  galleryImageUrls?: string[];
 }
 
 export const corporateEventServices: ServicePage[] = [

@@ -19,6 +19,8 @@ export interface FieldSchema {
   captionLabel?: string;
   /** For "image" / "images" fields: which IMAGE_SPECS preset applies (size + format guidance). */
   spec?: ImageSpecKey;
+  /** For "image" / "images" fields: also accept a pasted YouTube / Vimeo / MP4 link. */
+  allowVideo?: boolean;
 }
 
 export interface BlockDef {
@@ -102,15 +104,25 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
     defaultProps: { eyebrow: "", title: "What clients say on Google", rating: "", reviewCount: "", profileUrl: "", items: [] },
   },
   image: {
-    label: "Image / photo",
-    description: "A single photo with an optional heading and caption.",
+    label: "Image or video",
+    description: "A single photo or video with an optional heading and caption.",
     fields: [
       { key: "eyebrow", label: "Eyebrow", type: "text" },
       { key: "title", label: "Heading (optional)", type: "text" },
-      { key: "imageUrl", label: "Photo", type: "image", spec: "pageImage" },
+      { key: "imageUrl", label: "Photo or video", type: "image", spec: "pageImage", allowVideo: true },
       { key: "caption", label: "Caption (optional)", type: "text" },
     ],
     defaultProps: { eyebrow: "", title: "", imageUrl: "", caption: "" },
+  },
+  mediaGallery: {
+    label: "Photo & video gallery",
+    description: "A grid of photos and videos.",
+    fields: [
+      { key: "eyebrow", label: "Eyebrow", type: "text" },
+      { key: "title", label: "Heading", type: "text" },
+      { key: "items", label: "Photos & videos", type: "images", spec: "galleryMedia", allowVideo: true, captionLabel: "Caption" },
+    ],
+    defaultProps: { eyebrow: "", title: "", items: [] },
   },
   clientLogos: {
     label: "Client logos",

@@ -11,6 +11,7 @@ export interface EventRecord {
   eventTime: string;
   description: string;
   coverImageUrl: string | null;
+  galleryMediaUrls: string[];
   price: number;
   currency: string;
   capacity: number | null;
@@ -47,6 +48,7 @@ function fromEventRow(row: Record<string, unknown>): EventRecord {
     eventTime: (row.event_time as string) ?? "",
     description: (row.description as string) ?? "",
     coverImageUrl: (row.cover_image_url as string) ?? null,
+    galleryMediaUrls: (row.gallery_media_urls as string[]) ?? [],
     price: Number(row.price ?? 0),
     currency: (row.currency as string) ?? "INR",
     capacity: row.capacity == null ? null : Number(row.capacity),
