@@ -27,7 +27,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     <>
       <AnnouncementBar />
       <Header />
-      <main className="flex-1 pb-16 sm:pb-0">{children}</main>
+      <main className="flex-1 pb-24 sm:pb-0">{children}</main>
       <Footer />
       <WhatsAppFloat />
       <MobileStickyBar />

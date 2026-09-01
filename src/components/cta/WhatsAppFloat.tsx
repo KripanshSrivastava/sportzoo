@@ -19,7 +19,7 @@ export function WhatsAppFloat() {
       data-cta="whatsapp"
       data-location="float"
       aria-label={`Chat with ${settings.brand} on WhatsApp`}
-      className="fixed bottom-24 right-4 z-40 flex h-[52px] w-[52px] items-center justify-center transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 sm:bottom-6 sm:right-5"
+      className="fixed bottom-28 right-4 z-40 flex h-[52px] w-[52px] items-center justify-center transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 sm:bottom-6 sm:right-5"
       style={{ background: "var(--color-accent)", color: "var(--color-bg)", boxShadow: "var(--shadow-lg)" }}
     >
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden="true">
