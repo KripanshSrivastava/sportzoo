@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import { isProduction } from "@/lib/env";
 
 interface PageMetaInput {
   title: string;
@@ -9,7 +10,7 @@ interface PageMetaInput {
   ogImage?: string;
 }
 
-const isProd = process.env.NEXT_PUBLIC_SITE_ENV === "production";
+const isProd = isProduction;
 
 export function buildMetadata({ title, description, path, noIndex, ogImage }: PageMetaInput): Metadata {
   const url = `${siteConfig.url}${path}`;

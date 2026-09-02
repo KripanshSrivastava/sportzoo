@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-
-const isProd = process.env.NEXT_PUBLIC_SITE_ENV === "production";
+import { isProduction } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
-  if (!isProd) {
+  if (!isProduction) {
+    // Preview / development deployments: keep the whole thing out of search.
     return {
       rules: { userAgent: "*", disallow: "/" },
     };
