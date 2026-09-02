@@ -4,6 +4,7 @@ import { getPublishedBlogPosts } from "@/lib/blogData";
 import { getPublishedEvents } from "@/lib/eventsData";
 import { getServicePagesForCategory } from "@/lib/servicePagesData";
 import { getPublishedCities } from "@/lib/citiesData";
+import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
@@ -15,6 +16,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/events",
     "/about",
     "/blog",
+    "/case-studies",
+    "/gallery",
     "/request-a-quote",
     "/contact",
     "/privacy-policy",
@@ -31,8 +34,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogPaths = (await getPublishedBlogPosts()).map((p) => `/blog/${p.slug}`);
   const events = await getPublishedEvents();
   const eventPaths = events.map((ev) => `/events/${ev.slug}`);
+  const caseStudyPaths = (await getPublishedCaseStudies()).map((c) => `/case-studies/${c.slug}`);
 
-  const allPaths = [...staticPaths, ...servicePaths, ...cityPaths, ...blogPaths, ...eventPaths];
+  const allPaths = [
+    ...staticPaths,
+    ...servicePaths,
+    ...cityPaths,
+    ...blogPaths,
+    ...eventPaths,
+    ...caseStudyPaths,
+  ];
 
   return allPaths.map((path) => ({
     url: `${siteConfig.url}${path}`,
