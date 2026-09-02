@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { leadFormDefaults, leadFormSchema, serviceOptions, budgetOptions, LeadFormValues } from "@/lib/leadSchema";
 import { captureAttribution } from "@/lib/utm";
 import { trackEvent } from "@/lib/analytics";
+import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
 
 type FieldErrors = Partial<Record<keyof LeadFormValues, string>>;
 
@@ -13,6 +14,7 @@ const errorStyle = { color: "#b3261e" };
 
 export function QuoteForm({ defaultService, sourcePage }: { defaultService?: string; sourcePage: string }) {
   const router = useRouter();
+  const { responsePromise } = useSiteConfig();
   const [values, setValues] = useState<LeadFormValues>({
     ...leadFormDefaults,
     service: (defaultService as LeadFormValues["service"]) ?? leadFormDefaults.service,
@@ -289,7 +291,8 @@ export function QuoteForm({ defaultService, sourcePage }: { defaultService?: str
         {status === "submitting" ? "Sending your enquiry…" : "Get My Custom Quote"}
       </button>
       <p className="m-0 text-center text-xs" style={{ color: "var(--color-neutral-600)" }}>
-        We typically respond within 24 business hours. No spam, ever.
+        Your details are used only to respond to this enquiry
+        {responsePromise ? `, and we typically respond ${responsePromise}` : ""}.
       </p>
     </form>
   );

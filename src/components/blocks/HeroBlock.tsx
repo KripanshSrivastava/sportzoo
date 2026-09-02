@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { BlueprintCorners } from "@/components/ui/Blueprint";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 export function HeroBlock({ eyebrow, title, description, imageUrl }: { eyebrow?: string; title: string; description?: string; imageUrl?: string }) {
   if (!imageUrl) {
@@ -52,7 +51,7 @@ export function HeroBlock({ eyebrow, title, description, imageUrl }: { eyebrow?:
         <div className="blueprint relative aspect-[4/3] w-full overflow-hidden" style={{ borderColor: "color-mix(in srgb, var(--color-neutral-100) 30%, transparent)" }}>
           <BlueprintCorners color="var(--color-neutral-300)" />
           <Image
-            src={imageUrl || placeholderPhoto("hero", 900, 675)}
+            src={imageUrl}
             alt={title}
             fill
             sizes="(min-width: 1024px) 40vw, 90vw"

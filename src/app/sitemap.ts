@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { blogPosts } from "@/content/blog";
+import { getPublishedBlogPosts } from "@/lib/blogData";
 import { getPublishedEvents } from "@/lib/eventsData";
 import { getServicePagesForCategory } from "@/lib/servicePagesData";
 import { getPublishedCities } from "@/lib/citiesData";
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const cities = await getPublishedCities();
   const cityPaths = cities.map((c) => `/corporate-event-management/${c.slug}`);
 
-  const blogPaths = blogPosts.map((p) => `/blog/${p.slug}`);
+  const blogPaths = (await getPublishedBlogPosts()).map((p) => `/blog/${p.slug}`);
   const events = await getPublishedEvents();
   const eventPaths = events.map((ev) => `/events/${ev.slug}`);
 

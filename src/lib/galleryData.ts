@@ -1,6 +1,5 @@
 import { cache } from "react";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
-import { siteImages } from "@/config/images";
 
 export interface GalleryImageRow {
   id: string;
@@ -9,25 +8,19 @@ export interface GalleryImageRow {
   sortOrder: number;
 }
 
-/** Public-facing, grouped by category — Supabase rows if configured and non-empty, else the static fallback. */
+/** Public-facing, grouped by category — real uploaded assets only, never stock. */
 export const getGalleryByCategory = cache(async (): Promise<Record<string, string[]>> => {
   const supabase = getSupabaseAdmin();
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("gallery_images")
-      .select("*")
-      .order("sort_order", { ascending: true });
-    if (!error && data && data.length > 0) {
-      const grouped: Record<string, string[]> = {};
-      for (const row of data) {
-        const category = row.category as string;
-        grouped[category] = grouped[category] || [];
-        grouped[category].push(row.image_url as string);
-      }
-      return grouped;
-    }
+  if (!supabase) return {};
+  const { data, error } = await supabase.from("gallery_images").select("*").order("sort_order", { ascending: true });
+  if (error || !data) return {};
+  const grouped: Record<string, string[]> = {};
+  for (const row of data) {
+    const category = row.category as string;
+    grouped[category] = grouped[category] || [];
+    grouped[category].push(row.image_url as string);
   }
-  return siteImages.gallery;
+  return grouped;
 });
 
 export async function getAllGalleryImagesForAdmin(): Promise<GalleryImageRow[]> {

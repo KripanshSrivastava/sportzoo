@@ -70,7 +70,7 @@ export function LeadPopup() {
         <h2 id="lead-popup-title" className="dialog-title m-0">
           Plan your event or booking
         </h2>
-        <p className="dialog-body m-0">Tell us what you need and we&apos;ll come back with a costed proposal within 24–48 hours.</p>
+        <p className="dialog-body m-0">Tell us what you need and we&apos;ll come back with a costed proposal.</p>
         <QuoteForm sourcePage="Entry Popup" />
       </div>
     </div>

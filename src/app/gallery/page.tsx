@@ -32,6 +32,15 @@ export default async function GalleryPage() {
         </div>
       </section>
 
+      {categories.length === 0 && (
+        <Section className="bg-white">
+          <p className="text-muted max-w-2xl text-[15px]">
+            Photos and videos from our engagements will appear here once they&apos;re completed and cleared for
+            publication.
+          </p>
+        </Section>
+      )}
+
       {categories.map((cat) => (
         <Section key={cat} className="border-b border-slate-100 bg-white">
           <SectionHeading title={cat} />

@@ -12,8 +12,8 @@
 export const siteConfig = {
   brand: "Elephant Corporate",
   legalName: "Elephant Corporate Events & Entertainment Pvt. Ltd.",
-  domain: "elephantcorporate.app",
-  url: "https://elephantcorporate.app",
+  domain: "www.elephantcorporate.app",
+  url: "https://www.elephantcorporate.app",
   tagline: "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End.",
   shortTagline: "Corporate Event Management, Artist Booking, Venues & Rentals",
   description:
@@ -26,11 +26,14 @@ export const siteConfig = {
   whatsapp: "86791 26961",
   whatsappHref: "https://wa.me/918679126961",
   email: "allinonesolutions.rs@gmail.com",
-  officeAddress: "Plot 14, Cyber Hub, DLF Phase 2, Gurugram, Haryana 122002",
-  primaryCity: "Gurugram",
+  officeAddress: "C5c, 11-b, Block C5C, Janakpuri, New Delhi, Delhi 110058",
+  primaryCity: "Delhi",
   serviceArea: "Pan India",
-  mapUrl: "https://maps.google.com/?q=Cyber+Hub+DLF+Phase+2+Gurugram",
+  mapUrl: "https://maps.google.com/?q=Block+C5C+Janakpuri+New+Delhi+110058",
   businessHours: "Mon–Sat, 9:30 AM – 6:30 PM IST",
+  // Blank by default — no response-time promise is shown anywhere until the
+  // owner enables and populates this in Business Info (see the spec, §3).
+  responsePromise: "",
 
   social: {
     linkedin: "#",

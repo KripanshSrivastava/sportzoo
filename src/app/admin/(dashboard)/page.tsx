@@ -10,6 +10,11 @@ const GROUPS: { heading: string; items: { href: string; title: string; desc: str
         desc: "Name, phone, WhatsApp, email, address, hours, logo, social links, Google rating — used everywhere on the site.",
       },
       {
+        href: "/admin/reviews",
+        title: "Google Reviews",
+        desc: "The rating, review count and review quotes shown on the homepage and in the footer.",
+      },
+      {
         href: "/admin/logos",
         title: "Client Logos",
         desc: "The company logos in the “Companies that trust our work” banner. Upload each logo + name in one place.",
@@ -36,6 +41,7 @@ const GROUPS: { heading: string; items: { href: string; title: string; desc: str
     heading: "Content",
     items: [
       { href: "/admin/case-studies", title: "Our Work", desc: "Case studies shown on the Our Work page and the homepage." },
+      { href: "/admin/blog", title: "Blog", desc: "Articles at /blog — create, edit, publish, and add cover photos." },
       { href: "/admin/events", title: "Events", desc: "Event listings with optional paid registration, plus the sign-up list for each." },
       { href: "/admin/gallery", title: "Gallery", desc: "Photos on the public Gallery page, grouped by category." },
     ],

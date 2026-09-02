@@ -13,21 +13,20 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   async headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async redirects() {
     return [
+      // Canonical host: everything served from https://www.elephantcorporate.app
       {
         source: "/:path*",
-        headers: securityHeaders,
+        has: [{ type: "host", value: "elephantcorporate.app" }],
+        destination: "https://www.elephantcorporate.app/:path*",
+        permanent: true,
       },
     ];
   },
-  images: {
-    // Temporary placeholder photography source (see src/lib/placeholderImages.ts).
-    // Remove once real event photography replaces these.
-    remotePatterns: [
-      { protocol: "https", hostname: "picsum.photos" },
-      { protocol: "https", hostname: "placehold.co" },
-    ],
-  },
+  // No remote image hosts — every image is an uploaded asset or an admin-set URL.
 };
 
 export default nextConfig;

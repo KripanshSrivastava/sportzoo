@@ -1,9 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
-import { blogPosts } from "@/content/blog";
+import { getPublishedBlogPosts } from "@/lib/blogData";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = buildMetadata({
   title: "Blog & Resources | Elephant Corporate",
@@ -12,7 +15,8 @@ export const metadata = buildMetadata({
   path: "/blog",
 });
 
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const blogPosts = await getPublishedBlogPosts();
   return (
     <>
       <Breadcrumbs items={[{ name: "Blog", path: "/blog" }]} />
@@ -30,25 +34,40 @@ export default function BlogIndexPage() {
       </section>
 
       <Section className="bg-white">
-        <SectionHeading eyebrow="Latest" title="All articles" />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {blogPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="flex flex-col rounded-xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-lg"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">
-                {post.cluster}
-              </p>
-              <h2 className="mt-2 text-lg font-semibold text-[color:var(--color-navy-900)]">{post.title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{post.description}</p>
-              <time dateTime={post.datePublished} className="mt-4 text-xs text-slate-400">
-                {new Date(post.datePublished).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })}
-              </time>
-            </Link>
-          ))}
-        </div>
+        {blogPosts.length === 0 ? (
+          <p className="text-muted max-w-2xl text-[15px]">Articles are on the way — check back soon.</p>
+        ) : (
+          <>
+            <SectionHeading eyebrow="Latest" title="All articles" />
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {blogPosts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-shadow hover:shadow-lg"
+                >
+                  {post.coverImageUrl && (
+                    <div className="relative aspect-[16/10] bg-slate-100">
+                      <Image src={post.coverImageUrl} alt={post.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" unoptimized />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-6">
+                    {post.cluster && (
+                      <p className="text-xs font-semibold uppercase tracking-wide text-[color:var(--color-accent-dark)]">{post.cluster}</p>
+                    )}
+                    <h2 className="mt-2 text-lg font-semibold text-[color:var(--color-navy-900)]">{post.title}</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{post.description}</p>
+                    {post.datePublished && (
+                      <time dateTime={post.datePublished} className="mt-4 text-xs text-slate-400">
+                        {new Date(post.datePublished).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })}
+                      </time>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </Section>
 
       <LeadFormSection sourcePage="Blog" />

@@ -24,6 +24,8 @@ export interface BusinessSettings {
   serviceArea: string;
   mapUrl: string;
   businessHours: string;
+  /** Optional response-time promise (e.g. "within 24–48 hours"). Blank = shown nowhere. */
+  responsePromise: string;
   logoUrl: string | null;
   linkedinUrl: string;
   instagramUrl: string;
@@ -66,6 +68,7 @@ const defaults: BusinessSettings = {
   serviceArea: siteConfig.serviceArea,
   mapUrl: siteConfig.mapUrl,
   businessHours: siteConfig.businessHours,
+  responsePromise: siteConfig.responsePromise,
   logoUrl: siteImages.logo,
   linkedinUrl: cleanUrl(siteConfig.social.linkedin),
   instagramUrl: cleanUrl(siteConfig.social.instagram),
@@ -110,6 +113,7 @@ export const getBusinessSettings = cache(async (): Promise<BusinessSettings> => 
       serviceArea: data.service_area || defaults.serviceArea,
       mapUrl: data.map_url || defaults.mapUrl,
       businessHours: data.business_hours || defaults.businessHours,
+      responsePromise: data.response_promise ?? defaults.responsePromise,
       logoUrl: data.logo_url || defaults.logoUrl,
       linkedinUrl: cleanUrl(data.linkedin_url) || defaults.linkedinUrl,
       instagramUrl: cleanUrl(data.instagram_url) || defaults.instagramUrl,

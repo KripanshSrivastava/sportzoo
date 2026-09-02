@@ -36,13 +36,17 @@ export default async function CaseStudiesPage() {
       </section>
 
       <Section className="bg-white">
-        <SectionHeading
-          eyebrow="Note"
-          title="Demo case studies for preview"
-          description="The entries below use a fictional client so the page previews as finished. Replace them with real, permissioned client engagements through /admin/case-studies before this site goes live — never publish placeholder content as a genuine case study."
-        />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {caseStudies.map((c) => (
+        {caseStudies.length === 0 ? (
+          <div className="max-w-2xl">
+            <SectionHeading eyebrow="Our Work" title="Case studies are on the way" />
+            <p className="text-muted mt-3 text-[15px]">
+              We&apos;re preparing a set of recent engagements to share here. In the meantime, tell us about your
+              requirement and we&apos;ll walk you through comparable work on a call.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-2 grid gap-6 md:grid-cols-3">
+            {caseStudies.map((c) => (
             <Link
               key={c.slug}
               href={`/case-studies/${c.slug}`}
@@ -68,8 +72,9 @@ export default async function CaseStudiesPage() {
                 <p className="mt-2 text-sm text-slate-600">{c.summary}</p>
               </div>
             </Link>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </Section>
 
       <LeadFormSection sourcePage="Our Work" />

@@ -1,5 +1,7 @@
-import { blogPosts } from "@/content/blog";
+import { getPublishedBlogPosts } from "@/lib/blogData";
 import { siteConfig } from "@/config/site";
+
+export const dynamic = "force-dynamic";
 
 function escapeXml(input: string) {
   return input
@@ -11,7 +13,8 @@ function escapeXml(input: string) {
 }
 
 export async function GET() {
-  const items = blogPosts
+  const posts = await getPublishedBlogPosts();
+  const items = posts
     .map(
       (post) => `
     <item>
@@ -19,7 +22,7 @@ export async function GET() {
       <link>${siteConfig.url}/blog/${post.slug}</link>
       <guid>${siteConfig.url}/blog/${post.slug}</guid>
       <description>${escapeXml(post.description)}</description>
-      <pubDate>${new Date(post.datePublished).toUTCString()}</pubDate>
+      ${post.datePublished ? `<pubDate>${new Date(post.datePublished).toUTCString()}</pubDate>` : ""}
     </item>`
     )
     .join("");

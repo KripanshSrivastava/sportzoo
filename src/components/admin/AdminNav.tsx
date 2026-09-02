@@ -6,11 +6,13 @@ import { usePathname } from "next/navigation";
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", exact: true },
   { href: "/admin/settings", label: "Business Info" },
+  { href: "/admin/reviews", label: "Google Reviews" },
   { href: "/admin/logos", label: "Client Logos" },
   { href: "/admin/pages", label: "Pages" },
   { href: "/admin/service-pages", label: "Service Pages" },
   { href: "/admin/cities", label: "Cities" },
   { href: "/admin/case-studies", label: "Our Work" },
+  { href: "/admin/blog", label: "Blog" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/gallery", label: "Gallery" },
 ];

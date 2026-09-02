@@ -38,6 +38,7 @@ export async function PUT(req: NextRequest) {
     service_area: String(body.serviceArea ?? "").slice(0, 100) || null,
     map_url: String(body.mapUrl ?? "").slice(0, 500) || null,
     business_hours: String(body.businessHours ?? "").slice(0, 200) || null,
+    response_promise: String(body.responsePromise ?? "").slice(0, 120) || null,
     logo_url: body.logoUrl ? String(body.logoUrl).slice(0, 500) : null,
     linkedin_url: String(body.linkedinUrl ?? "").slice(0, 500) || null,
     instagram_url: String(body.instagramUrl ?? "").slice(0, 500) || null,

@@ -33,6 +33,7 @@ alter table business_settings add column if not exists logo_url text;
 -- Social links, Google Business Profile URL and review counts. Added after
 -- the footer social icons / Google Reviews section were introduced.
 alter table business_settings add column if not exists legal_name text;
+alter table business_settings add column if not exists response_promise text;
 alter table business_settings add column if not exists linkedin_url text;
 alter table business_settings add column if not exists instagram_url text;
 alter table business_settings add column if not exists facebook_url text;
@@ -70,49 +71,9 @@ create table if not exists case_studies (
 -- YouTube / Vimeo / MP4 links). No-op if the column already exists.
 alter table case_studies add column if not exists gallery_media_urls text[] not null default '{}';
 
--- Seed editable starter case studies so "Our Work" isn't empty in the admin.
--- Skipped once any row exists. Replace the copy with real engagements and add
--- cover photos from /admin/case-studies.
-insert into case_studies (slug, title, category, client_descriptor, summary, challenge, solution, execution, outcomes, sort_order)
-select * from (values
-  (
-    'leadership-offsite-template',
-    'A 3-Day Leadership Offsite for a Growing Tech Team',
-    'Corporate Offsite',
-    'A 45-person leadership team from a mid-size technology company',
-    'A tight 6-week timeline, a fixed per-person budget, and a venue that finally had AV that worked.',
-    'The client''s leadership team needed a 3-day offsite before the new financial year, but had just 6 weeks to plan it internally alongside their regular workload, with a fixed budget that earlier venue quotes were already exceeding.',
-    'Elephant Corporate shortlisted three retreat venues within budget within 48 hours, verified AV and breakout space in person, and built a run-of-show that split the agenda into focused morning sessions and unstructured afternoons.',
-    'A single Elephant Corporate coordinator managed venue confirmation, rooming, and F&B, and was on-site for all three days to run the schedule so the leadership team could stay in the room instead of managing logistics.',
-    array['Venue and full itinerary confirmed within 9 days of the first call','Delivered within 4% of the original per-person budget','All three days ran on schedule with no logistics escalations to the client'],
-    0
-  ),
-  (
-    'annual-day-template',
-    'A Family-Inclusive Annual Day for 600 Guests',
-    'Annual Day',
-    'A 350-employee manufacturing company, with families invited',
-    'A banquet venue, a recognition segment, and a guest list that nearly doubled once families were counted.',
-    'The client wanted to combine their annual day with employee recognition for the first time, but hadn''t accounted for the venue capacity and catering needed once employee families were added to the guest list.',
-    'Elephant Corporate re-shortlisted venues against the real 600-guest count, built a combined run-of-show for the celebration and award segments, and planned catering and seating around a mixed-age, family-inclusive crowd.',
-    'Decor, stage production, and an anchor were booked through Elephant Corporate''s artist and venue network, with a rehearsal held the evening before to lock award sequencing and presenter timing.',
-    array['Usable venue capacity confirmed for 600 guests with no last-minute overflow issues','Recognition segment ran without a single award mix-up on stage','Post-event feedback survey scored the event 4.6/5 from attending families'],
-    1
-  ),
-  (
-    'venue-and-artist-booking-template',
-    'Venue and Entertainment Booking for a Product Launch',
-    'Venue & Artist Booking',
-    'A consumer electronics brand launching a new product line',
-    'A 3-week deadline for a venue, an anchor, and a live performance act, booked and contracted together.',
-    'The client''s marketing team needed a launch venue with strong AV and a presence-building entertainment segment, but had only 3 weeks and no existing vendor relationships to draw on.',
-    'Elephant Corporate shortlisted two large-format venues with tested AV and staging, and in parallel curated an anchor and a live band matched to the brand''s audience, contracting both through a single point of contact.',
-    'Technical riders were coordinated with the venue ahead of time, and a Elephant Corporate coordinator managed performer arrival, soundcheck, and the anchor''s run-of-show through the event.',
-    array['Venue and entertainment confirmed within 8 days, inside the 3-week deadline','Zero technical delays during the live segment','Client rebooked Elephant Corporate for their next regional launch event'],
-    2
-  )
-) as v(slug, title, category, client_descriptor, summary, challenge, solution, execution, outcomes, sort_order)
-where not exists (select 1 from case_studies);
+-- No seed data: "Our Work" stays empty until the owner adds real, permissioned
+-- case studies. The site shows a neutral empty state rather than demo records
+-- (developer spec §9).
 
 -- Gallery photos, grouped by category.
 create table if not exists gallery_images (
@@ -273,6 +234,48 @@ create policy "public read page_blocks" on page_blocks for select using (true);
 -- Drop the earlier flat-form page-content table if it exists from a
 -- previous version of this schema — superseded entirely by page_blocks.
 drop table if exists page_content;
+
+-- Google review quotes shown on the homepage "Google reviews" section.
+-- Managed in one place at /admin/reviews. The rating / total count / profile
+-- URL stay on business_settings.
+create table if not exists google_reviews (
+  id uuid primary key default gen_random_uuid(),
+  author text not null default '',
+  rating int not null default 5,
+  text text not null default '',
+  when_label text not null default '',
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists google_reviews_sort_idx on google_reviews (sort_order);
+alter table google_reviews enable row level security;
+drop policy if exists "public read google_reviews" on google_reviews;
+create policy "public read google_reviews" on google_reviews for select using (true);
+
+-- Blog posts. Editing a built-in post (src/content/blog.ts) creates its first
+-- row here; new posts are created directly. Only published rows are public.
+create table if not exists blog_posts (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  title text not null,
+  description text not null default '',
+  cluster text not null default '',
+  cover_image_url text,
+  body jsonb not null default '[]',
+  related_service_path text not null default '',
+  related_service_label text not null default '',
+  date_published date,
+  date_modified date,
+  published boolean not null default true,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table blog_posts enable row level security;
+drop policy if exists "public read published blog_posts" on blog_posts;
+create policy "public read published blog_posts" on blog_posts for select using (published = true);
 
 -- Client / partner company logos shown in the "Companies that trust our work"
 -- banner. Managed in one place at /admin/logos; the homepage "Client logos"

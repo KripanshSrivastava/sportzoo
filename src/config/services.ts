@@ -35,7 +35,7 @@ export const corporateEventServices: ServicePage[] = [
     h1: "Corporate Offsite Planning for Teams That Need to Actually Get Something Done",
     metaTitle: "Corporate Offsite Planning Company | Elephant Corporate",
     metaDescription:
-      "Elephant Corporate plans corporate offsites end to end — venue selection, agenda design, logistics, and on-ground execution. Get a custom offsite quote in 24 hours.",
+      "Elephant Corporate plans corporate offsites end to end — venue selection, agenda design, logistics, and on-ground execution. Get a custom offsite quote.",
     primaryKeyword: "corporate offsite planning company",
     secondaryKeywords: [
       "corporate offsite planners",
@@ -633,7 +633,7 @@ export const venueBookingServices: ServicePage[] = [
     ],
     process: [
       { title: "Requirement brief", desc: "Capacity, format, dates, and budget shared with us." },
-      { title: "Shortlist", desc: "Verified venue options with costing delivered within 24–48 hours." },
+      { title: "Shortlist", desc: "Verified venue options with costing." },
       { title: "Site visit or walkthrough", desc: "In-person or virtual walkthrough of shortlisted venues." },
       { title: "Booking", desc: "Rate negotiation, contracting, and confirmation." },
       { title: "Event-day coordination", desc: "On-site support managing the venue relationship through your event." },

@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
-import { caseStudies as staticCaseStudies, type CaseStudy } from "@/content/caseStudies";
+import type { CaseStudy } from "@/content/caseStudies";
 
 export interface AdminCaseStudy extends CaseStudy {
   id: string;
@@ -32,27 +32,21 @@ function fromRow(row: Record<string, unknown>): AdminCaseStudy {
   };
 }
 
-/** Public-facing list — Supabase rows if configured and non-empty, else the static fallback content. */
+/**
+ * Public-facing list — published Supabase rows only. There is NO demo/template
+ * fallback: if the owner hasn't added real, permissioned case studies, "Our
+ * Work" shows a neutral empty state rather than manufacturing proof (spec §9).
+ */
 export const getPublishedCaseStudies = cache(async (): Promise<AdminCaseStudy[]> => {
   const supabase = getSupabaseAdmin();
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("case_studies")
-      .select("*")
-      .eq("published", true)
-      .order("sort_order", { ascending: true });
-    if (!error && data && data.length > 0) {
-      return data.map(fromRow);
-    }
-  }
-  return staticCaseStudies.map((c, i) => ({
-    ...c,
-    id: c.slug,
-    coverImageUrl: null,
-    galleryMediaUrls: [],
-    published: true,
-    sortOrder: i,
-  }));
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("case_studies")
+    .select("*")
+    .eq("published", true)
+    .order("sort_order", { ascending: true });
+  if (error || !data) return [];
+  return data.map(fromRow);
 });
 
 export async function getPublishedCaseStudyBySlug(slug: string): Promise<AdminCaseStudy | undefined> {

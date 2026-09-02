@@ -86,22 +86,12 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
   },
   googleReviews: {
     label: "Google reviews",
-    description: "A Google-style rating summary next to a row of real review cards.",
+    description: "A Google-style rating summary next to review cards. Edit the rating and quotes in Admin → Google Reviews.",
     fields: [
       { key: "eyebrow", label: "Eyebrow", type: "text" },
       { key: "title", label: "Title", type: "text" },
-      { key: "rating", label: "Rating (e.g. 4.9)", type: "text" },
-      { key: "reviewCount", label: "Number of reviews (e.g. 326)", type: "text" },
-      { key: "profileUrl", label: "Google Business Profile URL", type: "text", hint: "Leave blank to use the one from Business Info" },
-      {
-        key: "items",
-        label: "Review quotes (use real ones only)",
-        type: "triples",
-        parts: ["quote", "name", "date"],
-        hint: "One per line, format: Quote :: Reviewer name :: Date (e.g. 1 year ago)",
-      },
     ],
-    defaultProps: { eyebrow: "", title: "What clients say on Google", rating: "", reviewCount: "", profileUrl: "", items: [] },
+    defaultProps: { eyebrow: "", title: "What clients say on Google" },
   },
   image: {
     label: "Image or video",

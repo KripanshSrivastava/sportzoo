@@ -9,11 +9,13 @@ export function TestimonialsBlock({
   title: string;
   items: { quote: string; name: string; role: string }[];
 }) {
+  const real = (items ?? []).filter((t) => t.quote?.trim());
+  if (real.length === 0) return null;
   return (
     <Section>
       <SectionHeading eyebrow={eyebrow} title={title} />
       <div className="mt-11 grid gap-5 md:grid-cols-3">
-        {items.map((t, i) => (
+        {real.map((t, i) => (
           <figure key={i} className="card m-0">
             <blockquote className="m-0 text-sm italic" style={{ color: "var(--color-text)", opacity: 0.85 }}>
               &ldquo;{t.quote}&rdquo;

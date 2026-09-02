@@ -1,5 +1,6 @@
 import { Section } from "@/components/ui/Section";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { getGoogleReviews } from "@/lib/googleReviewsData";
 
 const GOLD = "#fbbc04";
 
@@ -42,27 +43,19 @@ function VerifiedTick() {
   );
 }
 
-export async function GoogleReviewsBlock({
-  eyebrow,
-  title,
-  rating,
-  reviewCount,
-  profileUrl,
-  items = [],
-}: {
-  eyebrow?: string;
-  title?: string;
-  rating?: string;
-  reviewCount?: string;
-  profileUrl?: string;
-  items?: { quote: string; name: string; date: string }[];
-}) {
-  const settings = await getBusinessSettings();
-  const url = (profileUrl || settings.googleBusinessUrl || "").trim();
-  const score = Number((rating || settings.googleRating || "").trim());
-  const hasRating = !Number.isNaN(score) && score > 0;
-  const count = (reviewCount || settings.googleReviewCount || "").trim();
-  const reviews = items.filter((i) => i.quote?.trim());
+/**
+ * The homepage "Google reviews" section. Rating / review count / profile URL
+ * come from Business Info; the review cards come from Admin → Google Reviews.
+ * The block itself only carries the eyebrow + heading.
+ */
+export async function GoogleReviewsBlock({ eyebrow, title }: { eyebrow?: string; title?: string }) {
+  const [settings, reviews] = await Promise.all([getBusinessSettings(), getGoogleReviews()]);
+
+  const url = settings.googleBusinessUrl || "";
+  const score = Number(settings.googleRating) || 0;
+  const hasRating = score > 0;
+  const countNum = Number(settings.googleReviewCount) || 0;
+  const count = countNum > 0 ? String(countNum) : "";
 
   if (!hasRating && reviews.length === 0 && !url) return null;
 
@@ -76,14 +69,18 @@ export async function GoogleReviewsBlock({
       )}
 
       <div className="grid gap-8 lg:grid-cols-[220px_1fr] lg:items-start">
-        {hasRating && (
+        {(hasRating || url) && (
           <div className="text-center lg:text-left">
-            <p className="m-0 text-lg font-bold tracking-wide" style={{ fontFamily: "var(--font-heading)" }}>
-              {ratingWord(score)}
-            </p>
-            <div className="mt-1 flex justify-center lg:justify-start">
-              <Stars filled={Math.round(score)} size={20} />
-            </div>
+            {hasRating && (
+              <>
+                <p className="m-0 text-lg font-bold tracking-wide" style={{ fontFamily: "var(--font-heading)" }}>
+                  {ratingWord(score)}
+                </p>
+                <div className="mt-1 flex justify-center lg:justify-start">
+                  <Stars filled={Math.round(score)} size={20} />
+                </div>
+              </>
+            )}
             {count && (
               <p className="mt-1 text-[13px]" style={{ color: "var(--color-neutral-600)" }}>
                 Based on {count} reviews
@@ -111,9 +108,9 @@ export async function GoogleReviewsBlock({
 
         {reviews.length > 0 && (
           <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: "thin" }}>
-            {reviews.map((r, i) => (
+            {reviews.map((r) => (
               <figure
-                key={i}
+                key={r.id}
                 className="m-0 flex w-[280px] shrink-0 flex-col bg-white p-4"
                 style={{ border: "1px solid var(--color-divider)" }}
               >
@@ -124,13 +121,13 @@ export async function GoogleReviewsBlock({
                       style={{ background: "var(--color-accent-700)" }}
                       aria-hidden
                     >
-                      {(r.name || "?").charAt(0).toUpperCase()}
+                      {(r.author || "?").charAt(0).toUpperCase()}
                     </span>
                     <div>
-                      <p className="m-0 text-[13px] font-semibold">{r.name}</p>
-                      {r.date && (
+                      <p className="m-0 text-[13px] font-semibold">{r.author}</p>
+                      {r.whenLabel && (
                         <p className="m-0 text-xs" style={{ color: "var(--color-neutral-600)" }}>
-                          {r.date}
+                          {r.whenLabel}
                         </p>
                       )}
                     </div>
@@ -138,11 +135,11 @@ export async function GoogleReviewsBlock({
                   <GoogleG size={16} />
                 </div>
                 <div className="mt-2 flex items-center gap-1.5">
-                  <Stars filled={5} size={14} />
+                  <Stars filled={r.rating} size={14} />
                   <VerifiedTick />
                 </div>
                 <blockquote className="mt-2 line-clamp-4 text-[13px] leading-relaxed" style={{ color: "var(--color-neutral-700)" }}>
-                  {r.quote}
+                  {r.text}
                 </blockquote>
                 {url && (
                   <a

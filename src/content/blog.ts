@@ -1,7 +1,8 @@
 export interface BlogBlock {
-  type: "p" | "h2" | "ul";
+  type: "p" | "h2" | "ul" | "image";
   text?: string;
   items?: string[];
+  imageUrl?: string;
 }
 
 export interface BlogPost {
@@ -9,6 +10,7 @@ export interface BlogPost {
   title: string;
   description: string;
   cluster: string;
+  coverImageUrl?: string;
   datePublished: string;
   dateModified: string;
   relatedServicePath: string;

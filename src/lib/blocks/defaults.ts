@@ -1,6 +1,5 @@
 import type { Block, BlockType } from "./types";
 import type { PageKey } from "@/lib/pageKeys";
-import { placeholderPhoto } from "@/lib/placeholderImages";
 
 function b(id: string, type: BlockType, props: Record<string, unknown>): Block {
   return { id, type, props };
@@ -12,7 +11,7 @@ const homeFaqs = [
     a: "Corporate events (offsites, annual day, recognition ceremonies, team building, gifting, conferences), artist booking and entertainment, venue booking, and event rentals and equipment — either as separate bookings or combined into one managed event.",
   },
   { q: "Which cities do you operate in?", a: "We're headquartered in our primary city and manage events, artist bookings, venues, and rentals across India." },
-  { q: "How quickly can we get a quote?", a: "Most enquiries receive a costed proposal within 24–48 hours of sharing your requirements." },
+  { q: "How quickly can we get a quote?", a: "We share a costed proposal once we understand your requirements." },
   { q: "Do you work with companies of all sizes?", a: "Yes — from 15-person leadership offsites to company-wide annual day events with several hundred attendees." },
   {
     q: "How is Elephant Corporate different from a generic event management company?",
@@ -27,7 +26,7 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
       title: "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End",
       description:
         "Elephant Corporate plans corporate offsites and employee engagement events, and books artists, venues, and event equipment for companies across Gurugram and India — one accountable team from the first brief to the final invoice.",
-      imageUrl: placeholderPhoto("elephant-hero-offsite", 900, 675),
+      imageUrl: "",
     }),
     b("home-categories", "categoryOverviewGrid", {
       eyebrow: "What We Do",
@@ -45,7 +44,7 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
         { title: "Events, entertainment and venues under one roof", desc: "When your offsite needs a venue and a performer too, it's planned as one engagement by one team, not handed off between agencies." },
         { title: "On-ground execution, not just planning", desc: "A dedicated coordinator is present at every event we manage — planning is only half the job." },
         { title: "Built for corporate procurement", desc: "Structured proposals, GST-compliant invoicing, and documentation that works with your finance and procurement process." },
-        { title: "Responsive communication", desc: "A single point of contact who responds within 24 hours, from first enquiry through post-event reporting." },
+        { title: "Responsive communication", desc: "A single point of contact from first enquiry through post-event reporting." },
       ],
     }),
     b("home-process", "numberedSteps", {
@@ -54,7 +53,7 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
       description: "No lengthy back-and-forth before you get a real number. Here's exactly how an engagement with Elephant Corporate runs.",
       items: [
         { title: "Brief", desc: "Tell us your objective, headcount, dates, and budget — by call, WhatsApp, or the enquiry form." },
-        { title: "Proposal", desc: "We share a costed proposal with venue, artist, and format options within 24–48 hours." },
+        { title: "Proposal", desc: "We share a costed proposal with venue, artist, and format options." },
         { title: "Planning", desc: "Once approved, we lock vendors, build the detailed schedule, and confirm every logistic." },
         { title: "Execution", desc: "Our team manages the event on the ground, in real time, start to finish." },
         { title: "Reporting", desc: "You receive a wrap-up report — attendance, spend reconciliation, and photos — after every engagement." },
@@ -79,22 +78,12 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
         "Real Estate & Infrastructure",
       ],
     }),
-    b("home-testimonials", "testimonials", {
-      eyebrow: "Client Feedback",
-      title: "What clients say",
-      items: [
-        { quote: "We had six weeks and a leadership team that couldn't afford a badly run offsite. Elephant Corporate handled everything we didn't have time for and the whole thing ran itself.", name: "Ritika Sen", role: "Head of People, Nexora Tech" },
-        { quote: "The venue capacity issue would have blindsided us on the day. Elephant Corporate caught it during shortlisting, not after we'd already booked.", name: "Arjun Malhotra", role: "Admin Manager, Bluewave Systems" },
-        { quote: "One point of contact for the venue, the anchor, and the band meant we weren't juggling three vendor relationships during our launch week.", name: "Priya Nambiar", role: "Marketing Lead, Orbit Retail" },
-      ],
-    }),
+    // Testimonials are hidden until real, permissioned client quotes are added
+    // in the admin — the site never ships invented testimonials (spec §14).
+    b("home-testimonials", "testimonials", { eyebrow: "Client Feedback", title: "What clients say", items: [] }),
     b("home-google-reviews", "googleReviews", {
       eyebrow: "Client Feedback",
       title: "What clients say on Google",
-      rating: "",
-      reviewCount: "",
-      profileUrl: "",
-      items: [],
     }),
     b("home-social", "socialFeed", {
       eyebrow: "Follow along",
@@ -105,7 +94,7 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
     }),
     b("home-stats", "statsBand", {
       items: [
-        { value: "24–48 hrs", label: "Proposal turnaround" },
+        { value: "One team", label: "From brief to bill" },
         { value: "Pan-India", label: "Service coverage" },
         { value: "1 dedicated", label: "Point of contact per client" },
         { value: "Every engagement", label: "On-ground presence" },
@@ -184,7 +173,7 @@ export const DEFAULT_BLOCKS: Record<PageKey, Block[]> = {
       eyebrow: "Why Elephant Corporate",
       title: "A planning process built for corporate accountability",
       body: [
-        "Every engagement follows the same structure: a discovery call, a costed proposal within 24–48 hours, confirmed planning, on-ground execution, and a post-event report — so procurement and finance always know where things stand.",
+        "Every engagement follows the same structure: a discovery call, a costed proposal, confirmed planning, on-ground execution, and a post-event report — so procurement and finance always know where things stand.",
       ],
     }),
     b("ce-faq", "faq", {

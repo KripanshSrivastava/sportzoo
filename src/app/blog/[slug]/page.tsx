@@ -1,29 +1,32 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { JsonLd, articleJsonLd } from "@/components/seo/JsonLd";
-import { blogPosts, getBlogPostBySlug } from "@/content/blog";
+import { getPublishedBlogPostBySlug } from "@/lib/blogData";
 import { siteConfig } from "@/config/site";
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await getPublishedBlogPostBySlug(slug);
   if (!post) return {};
   return buildMetadata({ title: post.title, description: post.description, path: `/blog/${post.slug}` });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+  const post = await getPublishedBlogPostBySlug(slug);
   if (!post) notFound();
+
+  const dateLabel = post.datePublished
+    ? new Date(post.datePublished).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })
+    : "";
 
   return (
     <>
@@ -41,13 +44,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-16">
         <div className="container-page">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">{post.cluster}</p>
+          {post.cluster && <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">{post.cluster}</p>}
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">{post.title}</h1>
-          <time dateTime={post.datePublished} className="mt-4 block text-sm text-slate-400">
-            Published {new Date(post.datePublished).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })}
-          </time>
+          {dateLabel && (
+            <time dateTime={post.datePublished} className="mt-4 block text-sm text-slate-400">
+              Published {dateLabel}
+            </time>
+          )}
         </div>
       </section>
+
+      {post.coverImageUrl && (
+        <div className="relative aspect-[21/9] w-full bg-slate-100">
+          <Image src={post.coverImageUrl} alt={post.title} fill sizes="100vw" className="object-cover" priority unoptimized />
+        </div>
+      )}
 
       <Section className="bg-white">
         <article className="max-w-3xl space-y-5 text-base leading-relaxed text-slate-700">
@@ -68,18 +79,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </ul>
               );
             }
+            if (block.type === "image" && block.imageUrl) {
+              return (
+                <span key={i} className="relative block aspect-video w-full overflow-hidden rounded-lg bg-slate-100">
+                  <Image src={block.imageUrl} alt="" fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" unoptimized />
+                </span>
+              );
+            }
             return <p key={i}>{block.text}</p>;
           })}
         </article>
 
-        <div className="mt-10 max-w-3xl rounded-xl border border-slate-200 bg-slate-50 p-6">
-          <p className="text-sm text-slate-600">
-            Related service:{" "}
-            <Link href={post.relatedServicePath} className="font-semibold text-[color:var(--color-electric)]">
-              {post.relatedServiceLabel} →
-            </Link>
-          </p>
-        </div>
+        {post.relatedServicePath && (
+          <div className="mt-10 max-w-3xl rounded-xl border border-slate-200 bg-slate-50 p-6">
+            <p className="text-sm text-slate-600">
+              Related service:{" "}
+              <Link href={post.relatedServicePath} className="font-semibold text-[color:var(--color-electric)]">
+                {post.relatedServiceLabel || "Learn more"} →
+              </Link>
+            </p>
+          </div>
+        )}
       </Section>
 
       <LeadFormSection sourcePage={post.title} />
