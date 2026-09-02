@@ -1,13 +1,17 @@
 "use client";
 
 import { ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { WhatsAppFloat } from "@/components/cta/WhatsAppFloat";
 import { MobileStickyBar } from "@/components/cta/MobileStickyBar";
-import { LeadPopup } from "@/components/forms/LeadPopup";
+
+// The entry popup shows nothing for the first 4s — load its code (and the
+// quote-form validation bundle it pulls in) lazily, after hydration.
+const LeadPopup = dynamic(() => import("@/components/forms/LeadPopup").then((m) => m.LeadPopup), { ssr: false });
 
 /**
  * The admin panel (/admin/**) is a separate application surface — no public

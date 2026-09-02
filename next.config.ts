@@ -28,11 +28,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Canonical host: everything served from https://www.elephantcorporate.app
+      // Canonical host: the bare domain (no www). www → apex, one hop.
       {
         source: "/:path*",
-        has: [{ type: "host", value: "elephantcorporate.app" }],
-        destination: "https://www.elephantcorporate.app/:path*",
+        has: [{ type: "host", value: "www.elephantcorporate.app" }],
+        destination: "https://elephantcorporate.app/:path*",
         permanent: true,
       },
     ];

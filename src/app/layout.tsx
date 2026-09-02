@@ -12,12 +12,15 @@ const barlow = Barlow({
   variable: "--font-barlow",
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
+  display: "swap",
 });
 
+// Display face — headings only use 600/700.
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
-  weight: ["400", "500", "600", "700"],
+  weight: ["600", "700"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {

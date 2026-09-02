@@ -195,7 +195,7 @@ alter table service_pages add column if not exists gallery_image_urls text[] not
 create table if not exists cities (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
-  name text not null,
+  name text not null, The S by Dick that he will docad legal Shandom Admiral
   published boolean not null default true,
   sort_order int not null default 0,
   created_at timestamptz not null default now()

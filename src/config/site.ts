@@ -12,8 +12,8 @@
 export const siteConfig = {
   brand: "Elephant Corporate",
   legalName: "Elephant Corporate Events & Entertainment Pvt. Ltd.",
-  domain: "www.elephantcorporate.app",
-  url: "https://www.elephantcorporate.app",
+  domain: "elephantcorporate.app",
+  url: "https://elephantcorporate.app",
   tagline: "Corporate Events, Artists, Venues and Rentals — Planned Precisely, Delivered End to End.",
   shortTagline: "Corporate Event Management, Artist Booking, Venues & Rentals",
   description:
