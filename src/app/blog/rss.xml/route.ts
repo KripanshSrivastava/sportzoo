@@ -1,7 +1,7 @@
 import { getPublishedBlogPosts } from "@/lib/blogData";
 import { siteConfig } from "@/config/site";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 function escapeXml(input: string) {
   return input

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllClientLogosForAdmin } from "@/lib/clientLogosData";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const logos = await getAllClientLogosForAdmin();
@@ -29,6 +30,7 @@ export async function POST(req: NextRequest) {
     console.error("[elephant-corporate] Creating client logo failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, logo: data });
 }
 
@@ -46,5 +48,6 @@ export async function PUT(req: NextRequest) {
     const { error } = await supabase.from("client_logos").update({ sort_order: i }).eq("id", body[i]);
     if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

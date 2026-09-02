@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getBlogPostForAdminById } from "@/lib/blogData";
 import { resilientUpsert } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -44,6 +45,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     console.error("[elephant-corporate] Saving blog post failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }
 
@@ -54,5 +56,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
 
   const { error } = await supabase.from("blog_posts").delete().eq("id", id);
   if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

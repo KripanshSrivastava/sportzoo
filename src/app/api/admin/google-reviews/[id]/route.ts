@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -17,6 +18,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const { error } = await supabase.from("google_reviews").update(patch).eq("id", id);
   if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }
 
@@ -27,5 +29,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
 
   const { error } = await supabase.from("google_reviews").delete().eq("id", id);
   if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

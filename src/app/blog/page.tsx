@@ -6,7 +6,8 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { getPublishedBlogPosts } from "@/lib/blogData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: "Blog & Resources | Elephant Corporate",
@@ -48,7 +49,7 @@ export default async function BlogIndexPage() {
                 >
                   {post.coverImageUrl && (
                     <div className="relative aspect-[16/10] bg-slate-100">
-                      <Image src={post.coverImageUrl} alt={post.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" unoptimized />
+                      <Image src={post.coverImageUrl} alt={post.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
                     </div>
                   )}
                   <div className="flex flex-1 flex-col p-6">

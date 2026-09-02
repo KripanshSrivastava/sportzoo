@@ -6,7 +6,8 @@ import { Section, SectionHeading } from "@/components/ui/Section";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getPublishedEvents } from "@/lib/eventsData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: "Upcoming Events | Elephant Corporate",
@@ -53,7 +54,6 @@ export default async function EventsPage() {
                         fill
                         sizes="(min-width: 768px) 33vw, 100vw"
                         className="object-cover"
-                        unoptimized
                       />
                     )}
                   </div>

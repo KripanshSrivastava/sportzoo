@@ -30,7 +30,6 @@ export async function CaseStudiesPreviewBlock({ eyebrow, title }: { eyebrow?: st
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover transition-transform group-hover:scale-105"
-                  unoptimized
                 />
               )}
             </div>

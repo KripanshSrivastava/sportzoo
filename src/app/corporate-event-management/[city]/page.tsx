@@ -12,8 +12,14 @@ import { FinalCta } from "@/components/sections/FinalCta";
 import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { getPublishedCityBySlug } from "@/lib/citiesData";
 import { getServicePagesForCategory } from "@/lib/servicePagesData";
+import { targetCities } from "@/config/site";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
+
+export function generateStaticParams() {
+  return targetCities.map((c) => ({ city: c.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ city: string }> }) {
   const { city } = await params;
@@ -59,7 +65,7 @@ export default async function CityEventPage({ params }: { params: Promise<{ city
       <section className="relative overflow-hidden bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
         {cityData.heroImageUrl && !isVideoUrl(cityData.heroImageUrl) && (
           <>
-            <Image src={cityData.heroImageUrl} alt="" fill sizes="100vw" className="object-cover opacity-30" priority unoptimized />
+            <Image src={cityData.heroImageUrl} alt="" fill sizes="100vw" className="object-cover opacity-30" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--color-navy-950)] via-[color:var(--color-navy-950)]/85 to-transparent" />
           </>
         )}

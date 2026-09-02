@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllServicePagesForAdmin } from "@/lib/servicePagesData";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const rows = await getAllServicePagesForAdmin();
@@ -64,5 +65,6 @@ export async function POST(req: NextRequest) {
       : error.message;
     return NextResponse.json({ ok: false, message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, servicePage: data });
 }

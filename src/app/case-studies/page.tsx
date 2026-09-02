@@ -7,7 +7,8 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getPublishedCaseStudies } from "@/lib/caseStudiesData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: "Our Work | Corporate Event Case Studies | Elephant Corporate",
@@ -60,7 +61,6 @@ export default async function CaseStudiesPage() {
                     fill
                     sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover"
-                    unoptimized
                   />
                 )}
               </div>

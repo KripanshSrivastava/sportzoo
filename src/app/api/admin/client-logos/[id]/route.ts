@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,6 +19,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     console.error("[elephant-corporate] Updating client logo failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }
 
@@ -31,5 +33,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     console.error("[elephant-corporate] Deleting client logo failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

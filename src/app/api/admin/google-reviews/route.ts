@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllGoogleReviewsForAdmin } from "@/lib/googleReviewsData";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const reviews = await getAllGoogleReviewsForAdmin();
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
+  revalidateSite();
   return NextResponse.json({ ok: true, review: data });
 }
 
@@ -42,5 +44,6 @@ export async function PUT(req: NextRequest) {
     const { error } = await supabase.from("google_reviews").update({ sort_order: i }).eq("id", body[i]);
     if (error) return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

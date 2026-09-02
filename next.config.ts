@@ -13,7 +13,18 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        // Hashed build assets never change — cache them forever.
+        source: "/_next/static/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
+        source: "/_next/image",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      },
+    ];
   },
   async redirects() {
     return [
@@ -26,7 +37,13 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // No remote image hosts — every image is an uploaded asset or an admin-set URL.
+  images: {
+    // Uploaded media lives in Supabase Storage; let the Next image optimizer
+    // resize it and serve AVIF/WebP with a responsive srcset.
+    remotePatterns: [{ protocol: "https", hostname: "**.supabase.co", pathname: "/storage/v1/object/public/**" }],
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 2678400, // 31 days — optimized images rarely change
+  },
 };
 
 export default nextConfig;

@@ -7,7 +7,8 @@ import { JsonLd, serviceJsonLd } from "@/components/seo/JsonLd";
 import { EventRegistrationForm } from "@/components/forms/EventRegistrationForm";
 import { getPublishedEventBySlug } from "@/lib/eventsData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

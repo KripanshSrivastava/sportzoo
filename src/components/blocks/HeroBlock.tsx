@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { BlueprintCorners } from "@/components/ui/Blueprint";
+import { isVideoUrl } from "@/lib/media";
 
 export function HeroBlock({ eyebrow, title, description, imageUrl }: { eyebrow?: string; title: string; description?: string; imageUrl?: string }) {
-  if (!imageUrl) {
+  if (!imageUrl || isVideoUrl(imageUrl)) {
     return (
       <section className="bg-[color:var(--color-navy-950)] py-14 text-white sm:py-20">
         <div className="container-page">
@@ -57,7 +58,7 @@ export function HeroBlock({ eyebrow, title, description, imageUrl }: { eyebrow?:
             sizes="(min-width: 1024px) 40vw, 90vw"
             className="object-cover"
             priority
-            unoptimized
+            fetchPriority="high"
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to top, color-mix(in srgb, var(--color-accent-900) 70%, transparent), transparent)" }} />
         </div>

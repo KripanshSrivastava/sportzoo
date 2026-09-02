@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllGalleryImagesForAdmin } from "@/lib/galleryData";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const rows = await getAllGalleryImagesForAdmin();
@@ -26,5 +27,6 @@ export async function POST(req: NextRequest) {
     console.error("[elephant-corporate] Saving gallery image failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, image: data });
 }

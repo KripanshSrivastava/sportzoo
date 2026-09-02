@@ -46,6 +46,9 @@ export function MediaFrame({
     );
   }
 
+  // Optimize images we host (Supabase Storage); leave arbitrary pasted URLs untouched.
+  const canOptimize = /^https:\/\/[^/]+\.supabase\.co\/storage\/v1\/object\/public\//.test(url);
+
   return (
     <Image
       src={url}
@@ -53,7 +56,7 @@ export function MediaFrame({
       fill
       sizes={sizes}
       priority={priority}
-      unoptimized
+      unoptimized={!canOptimize}
       className={`object-cover ${className}`}
     />
   );

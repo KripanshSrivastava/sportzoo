@@ -20,7 +20,7 @@ function LogoTile({ logo }: { logo: Logo }) {
     >
       {logo.url ? (
         <div className="relative h-full w-full">
-          <Image src={logo.url} alt={logo.name || "Client logo"} fill sizes="240px" className="object-contain" unoptimized />
+          <Image src={logo.url} alt={logo.name || "Client logo"} fill sizes="240px" className="object-contain" />
         </div>
       ) : (
         <span className="text-center text-sm font-semibold leading-tight" style={{ color: "var(--color-neutral-700)" }}>

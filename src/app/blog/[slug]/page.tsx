@@ -8,9 +8,15 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { JsonLd, articleJsonLd } from "@/components/seo/JsonLd";
 import { getPublishedBlogPostBySlug } from "@/lib/blogData";
+import { blogPosts as staticBlogPosts } from "@/content/blog";
 import { siteConfig } from "@/config/site";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
+
+export function generateStaticParams() {
+  return staticBlogPosts.map((p) => ({ slug: p.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -56,7 +62,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {post.coverImageUrl && (
         <div className="relative aspect-[21/9] w-full bg-slate-100">
-          <Image src={post.coverImageUrl} alt={post.title} fill sizes="100vw" className="object-cover" priority unoptimized />
+          <Image src={post.coverImageUrl} alt={post.title} fill sizes="100vw" className="object-cover" priority />
         </div>
       )}
 

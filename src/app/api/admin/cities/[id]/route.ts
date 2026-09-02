@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { resilientUpsert } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 /** Upsert keyed by slug — a static city (id === slug) gets its first DB row created here. */
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -47,5 +48,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     console.error("[elephant-corporate] Deleting city failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

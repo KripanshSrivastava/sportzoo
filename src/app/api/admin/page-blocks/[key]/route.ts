@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { PAGE_KEYS, type PageKey } from "@/lib/pageKeys";
 import { DEFAULT_BLOCKS } from "@/lib/blocks/defaults";
 import { BLOCK_TYPES } from "@/lib/blocks/types";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
@@ -46,5 +47,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ key:
     console.error("[elephant-corporate] Saving page blocks failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

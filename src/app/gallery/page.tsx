@@ -6,7 +6,8 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { getGalleryByCategory } from "@/lib/galleryData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: "Gallery | Elephant Corporate",

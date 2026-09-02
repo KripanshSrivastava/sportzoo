@@ -3,7 +3,8 @@ import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 import { getPageBlocks } from "@/lib/pageBlocksData";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: "Corporate Event Management Company | Elephant Corporate",

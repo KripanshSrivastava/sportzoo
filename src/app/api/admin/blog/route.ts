@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllBlogPostsForAdmin } from "@/lib/blogData";
 import { resilientUpsert } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 function slugify(input: string) {
   return input
@@ -51,5 +52,6 @@ export async function POST(req: NextRequest) {
     const message = /duplicate key/i.test(error.message) ? "That URL slug is already used by another post." : error.message;
     return NextResponse.json({ ok: false, message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, slug });
 }

@@ -3,7 +3,8 @@ import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 import { getPageBlocks } from "@/lib/pageBlocksData";
 import { siteConfig } from "@/config/site";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export const metadata = buildMetadata({
   title: `Corporate Event Management Company | ${siteConfig.brand}`,

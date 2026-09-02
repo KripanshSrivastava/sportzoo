@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllEventsForAdmin } from "@/lib/eventsData";
 import { resilientInsert } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const rows = await getAllEventsForAdmin();
@@ -54,5 +55,6 @@ export async function POST(req: NextRequest) {
       : error.message;
     return NextResponse.json({ ok: false, message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, event: data });
 }

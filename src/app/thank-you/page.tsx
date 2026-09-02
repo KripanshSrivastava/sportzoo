@@ -12,7 +12,8 @@ export const metadata = buildMetadata({
   noIndex: true,
 });
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export default async function ThankYouPage() {
   const settings = await getBusinessSettings();

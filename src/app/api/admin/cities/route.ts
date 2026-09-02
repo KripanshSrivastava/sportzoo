@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllCitiesForAdmin } from "@/lib/citiesData";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const rows = await getAllCitiesForAdmin();
@@ -37,5 +38,6 @@ export async function POST(req: NextRequest) {
     const message = /duplicate key/i.test(error.message) ? "That city slug already exists." : error.message;
     return NextResponse.json({ ok: false, message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true, city: data });
 }

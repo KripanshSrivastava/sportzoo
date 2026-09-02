@@ -79,7 +79,6 @@ export function ServicePageTemplate({ service }: { service: ServicePage }) {
               sizes="100vw"
               className="object-cover opacity-30"
               priority
-              unoptimized
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--color-navy-950)] via-[color:var(--color-navy-950)]/85 to-transparent" />
           </>

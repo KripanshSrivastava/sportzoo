@@ -30,7 +30,6 @@ export function Header() {
               height={180}
               className="h-12 w-auto sm:h-14"
               priority
-              unoptimized
             />
           ) : (
             <span className="flex items-center gap-2 text-lg font-semibold" style={{ color: "var(--color-text)", fontFamily: "var(--font-heading)" }}>

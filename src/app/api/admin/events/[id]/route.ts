@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { resilientUpdate } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -66,5 +67,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
     console.error("[elephant-corporate] Deleting event failed:", error.message);
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
+  revalidateSite();
   return NextResponse.json({ ok: true });
 }

@@ -52,26 +52,31 @@ function fromStatic(s: ServicePage, i: number): AdminServicePage {
   return { ...s, id: s.slug, published: true, sortOrder: i };
 }
 
-/** Every service page for a category — DB row if one exists for a slug, else the static fallback. */
-export const getServicePagesForCategory = cache(async (category: ServiceCategory): Promise<AdminServicePage[]> => {
-  const staticList = staticByCategory[category].map(fromStatic);
+/** All published service pages, grouped by category — a single Supabase query, cached per request. */
+const getPublishedServicePagesByCategory = cache(async (): Promise<Record<ServiceCategory, AdminServicePage[]>> => {
+  const cats = Object.keys(staticByCategory) as ServiceCategory[];
   const supabase = getSupabaseAdmin();
-  if (!supabase) return staticList;
+  const rowsBySlug = new Map<string, AdminServicePage>();
 
-  const { data, error } = await supabase.from("service_pages").select("*").eq("category", category);
-  if (error || !data) return staticList;
-
-  const dbBySlug = new Map(data.map((row) => [row.slug as string, fromRow(row)]));
-  // A DB row overrides its static counterpart entirely, including whether it's published.
-  const merged = staticList
-    .map((s) => dbBySlug.get(s.slug) ?? s)
-    .filter((s) => s.published);
-  // Include any DB-only, published service pages (created directly in the admin) too.
-  for (const row of data) {
-    const parsed = fromRow(row);
-    if (parsed.published && !merged.some((m) => m.slug === parsed.slug)) merged.push(parsed);
+  if (supabase) {
+    const { data } = await supabase.from("service_pages").select("*");
+    for (const row of data ?? []) rowsBySlug.set(row.slug as string, fromRow(row));
   }
-  return merged;
+
+  const out = {} as Record<ServiceCategory, AdminServicePage[]>;
+  for (const cat of cats) {
+    const merged = staticByCategory[cat].map(fromStatic).map((s) => rowsBySlug.get(s.slug) ?? s);
+    for (const p of rowsBySlug.values()) {
+      if (p.category === cat && !merged.some((m) => m.slug === p.slug)) merged.push(p);
+    }
+    out[cat] = merged.filter((s) => s.published);
+  }
+  return out;
+});
+
+/** Every published service page for a category — DB row if one exists for a slug, else the static fallback. */
+export const getServicePagesForCategory = cache(async (category: ServiceCategory): Promise<AdminServicePage[]> => {
+  return (await getPublishedServicePagesByCategory())[category];
 });
 
 export async function getServicePageBySlug(category: ServiceCategory, slug: string): Promise<AdminServicePage | undefined> {

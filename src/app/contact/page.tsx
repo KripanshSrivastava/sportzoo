@@ -6,7 +6,8 @@ import { getPageBlocks } from "@/lib/pageBlocksData";
 import { siteConfig } from "@/config/site";
 import { getBusinessSettings } from "@/lib/businessSettings";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache; admin saves call revalidateSite() to push changes live immediately.
+export const revalidate = 3600;
 
 export async function generateMetadata() {
   const settings = await getBusinessSettings();

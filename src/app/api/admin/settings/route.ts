@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabaseAdmin";
 import { getBusinessSettings } from "@/lib/businessSettings";
 import { resilientUpsert } from "@/lib/resilientUpsert";
+import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
   const settings = await getBusinessSettings();
@@ -56,6 +57,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ ok: false, message: error.message }, { status: 500 });
   }
 
+  revalidateSite();
   return NextResponse.json({
     ok: true,
     message: skipped.length
