@@ -3,14 +3,32 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { mainNav } from "@/config/nav";
+import { navLeading, navTrailing } from "@/config/nav";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { useNav } from "@/components/providers/NavProvider";
+
+interface HeaderNavItem {
+  href: string;
+  label: string;
+  dropdown?: { href: string; label: string }[];
+}
 
 export function Header() {
   const siteConfig = useSiteConfig();
+  const { categories, hiddenPaths } = useNav();
   const [open, setOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+
+  const mainNav: HeaderNavItem[] = [
+    ...navLeading,
+    ...categories.map((c) => ({
+      href: c.href,
+      label: c.name,
+      dropdown: [{ href: c.href, label: `${c.name} Overview` }, ...c.services],
+    })),
+    ...navTrailing.filter((item) => !hiddenPaths.includes(item.href)),
+  ];
 
   return (
     <header

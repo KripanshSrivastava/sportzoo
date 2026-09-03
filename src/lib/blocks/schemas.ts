@@ -181,7 +181,7 @@ export const BLOCK_DEFS: Record<BlockType, BlockDef> = {
         key: "category",
         label: "Category",
         type: "text",
-        hint: "Exact value: corporate-events, artist-booking, venue-booking, or event-rentals",
+        hint: "A category URL slug (see Admin → Categories), e.g. corporate-events",
       },
     ],
     defaultProps: { eyebrow: "", title: "", description: "", category: "corporate-events" },

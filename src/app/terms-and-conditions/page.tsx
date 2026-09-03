@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/config/site";
@@ -9,7 +11,9 @@ export const metadata = buildMetadata({
   path: "/terms-and-conditions",
 });
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  if (await isPathHidden("/terms-and-conditions")) notFound();
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Terms and Conditions", path: "/terms-and-conditions" }]} />

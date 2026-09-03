@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
@@ -19,6 +21,8 @@ export async function generateMetadata() {
 }
 
 export default async function ContactPage() {
+  if (await isPathHidden("/contact")) notFound();
+
   const settings = await getBusinessSettings();
   const blocks = await getPageBlocks("contact");
   return (

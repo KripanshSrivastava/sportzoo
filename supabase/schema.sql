@@ -160,10 +160,45 @@ create policy "public read published events" on events for select using (publish
 -- reads/writes to it go through the admin API or the registration API route,
 -- both of which use the service-role key and bypass RLS entirely.
 
--- Service pages (the ~25 pages under /corporate-events/[slug],
--- /artist-booking/[slug], /venue-booking/[slug], /event-rentals/[slug]).
+-- Service categories — the top-level service groups. Each one is a public
+-- page at /<slug> (e.g. /corporate-events) plus a nav dropdown, and every
+-- service_pages row belongs to one via service_pages.category = slug.
+-- Fully managed from /admin/categories: create, rename, reorder, hide, delete.
+-- Seeded with the original four below; the app falls back to those seeds until
+-- this table has rows.
+create table if not exists service_categories (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  name text not null,                       -- nav label, e.g. "Corporate Events"
+  h1 text not null default '',              -- overview page heading
+  intro text not null default '',           -- overview page intro paragraph
+  meta_title text not null default '',
+  meta_description text not null default '',
+  hero_image_url text,
+  published boolean not null default true,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table service_categories enable row level security;
+drop policy if exists "public read published service_categories" on service_categories;
+create policy "public read published service_categories" on service_categories for select using (published = true);
+
+insert into service_categories (slug, name, sort_order)
+select v.slug, v.name, v.ord
+from (values
+  ('corporate-events', 'Corporate Events', 0),
+  ('artist-booking', 'Artist Booking', 1),
+  ('venue-booking', 'Venue Booking', 2),
+  ('event-rentals', 'Event Rentals', 3)
+) as v(slug, name, ord)
+where not exists (select 1 from service_categories);
+
+-- Service pages (the service detail pages under /<category>/<slug>).
 -- Seeded from src/config/services.ts on first read; once a row exists here
 -- for a slug it takes over from the static fallback for that page.
+-- service_pages.category holds a service_categories.slug.
 create table if not exists service_pages (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
@@ -195,7 +230,7 @@ alter table service_pages add column if not exists gallery_image_urls text[] not
 create table if not exists cities (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
-  name text not null, The S by Dick that he will docad legal Shandom Admiral Bizly bill, Shencote, it's not licensed branch documentation, bands go to documentation documentation message showed neck shocks payment,or shipon sharp down case no shown, calfmit, late marks center, made a cover ticketon game
+  name text not null,
   published boolean not null default true,
   sort_order int not null default 0,
   created_at timestamptz not null default now()
@@ -305,6 +340,19 @@ from (values
   ('FIS', 8), ('HDFC', 9), ('Cognizant', 10)
 ) as v(name, ord)
 where not exists (select 1 from client_logos);
+
+-- Pages the owner has hidden from the live site. One row per hidden path
+-- (e.g. "/about"). Managed from /admin/pages; the public route for each
+-- hideable page checks this and returns 404 when its path is listed.
+-- Home is never hideable.
+create table if not exists hidden_pages (
+  path text primary key,
+  hidden_at timestamptz not null default now()
+);
+
+alter table hidden_pages enable row level security;
+drop policy if exists "public read hidden_pages" on hidden_pages;
+create policy "public read hidden_pages" on hidden_pages for select using (true);
 
 -- ---------------------------------------------------------------------
 -- After running this file, also create a public Storage bucket named

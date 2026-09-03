@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/admin/reviews", label: "Google Reviews" },
   { href: "/admin/logos", label: "Client Logos" },
   { href: "/admin/pages", label: "Pages" },
+  { href: "/admin/categories", label: "Categories" },
   { href: "/admin/service-pages", label: "Service Pages" },
   { href: "/admin/cities", label: "Cities" },
   { href: "/admin/case-studies", label: "Our Work" },

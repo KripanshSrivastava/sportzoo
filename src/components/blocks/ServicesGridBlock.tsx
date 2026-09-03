@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { getServicePagesForCategory } from "@/lib/servicePagesData";
-import type { ServiceCategory } from "@/config/services";
-
-const VALID_CATEGORIES: ServiceCategory[] = ["corporate-events", "artist-booking", "venue-booking", "event-rentals"];
+import { getServiceCategoryBySlug } from "@/lib/serviceCategoriesData";
 
 export async function ServicesGridBlock({
   eyebrow,
@@ -16,8 +14,10 @@ export async function ServicesGridBlock({
   description?: string;
   category: string;
 }) {
-  if (!VALID_CATEGORIES.includes(category as ServiceCategory)) return null;
-  const services = await getServicePagesForCategory(category as ServiceCategory);
+  const cat = await getServiceCategoryBySlug(category);
+  if (!cat) return null;
+  const services = await getServicePagesForCategory(category);
+  if (services.length === 0) return null;
 
   return (
     <Section className="bg-white">

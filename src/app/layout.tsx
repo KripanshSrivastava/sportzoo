@@ -3,7 +3,9 @@ import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { getBusinessSettings } from "@/lib/businessSettings";
+import { getNavModel } from "@/lib/navData";
 import { SiteConfigProvider } from "@/components/providers/SiteConfigProvider";
+import { NavProvider } from "@/components/providers/NavProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { JsonLd, organizationJsonLd, websiteJsonLd } from "@/components/seo/JsonLd";
 import { AnalyticsScripts } from "@/components/seo/AnalyticsScripts";
@@ -40,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const settings = await getBusinessSettings();
+  const [settings, navModel] = await Promise.all([getBusinessSettings(), getNavModel()]);
 
   return (
     <html
@@ -49,10 +51,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <SiteConfigProvider value={settings}>
-          <JsonLd data={organizationJsonLd(settings)} />
-          <JsonLd data={websiteJsonLd(settings)} />
-          <AnalyticsScripts />
-          <SiteChrome>{children}</SiteChrome>
+          <NavProvider value={navModel}>
+            <JsonLd data={organizationJsonLd(settings)} />
+            <JsonLd data={websiteJsonLd(settings)} />
+            <AnalyticsScripts />
+            <SiteChrome>{children}</SiteChrome>
+          </NavProvider>
         </SiteConfigProvider>
       </body>
     </html>

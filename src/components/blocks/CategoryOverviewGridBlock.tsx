@@ -1,28 +1,32 @@
 import Link from "next/link";
 import { Section } from "@/components/ui/Section";
+import { getServiceCategories } from "@/lib/serviceCategoriesData";
 import { getServicePagesForCategory } from "@/lib/servicePagesData";
 
-function CategoryCard({ title, blurb, size = "md" }: { title: string; blurb: string; size?: "md" | "sm" }) {
+function CategoryCard({ title, blurb }: { title: string; blurb: string }) {
   return (
     <div className="card elev-sm p-3.5">
-      <p className="card-title" style={size === "sm" ? { fontSize: "15px" } : undefined}>
-        {title}
-      </p>
+      <p className="card-title">{title}</p>
       <p className="card-body">{blurb}</p>
     </div>
   );
 }
 
-export async function CategoryOverviewGridBlock({ eyebrow, title, description }: { eyebrow?: string; title?: string; description?: string }) {
-  const [corporateEventServices, artistBookingServices, venueBookingServices, eventRentalServices] = await Promise.all([
-    getServicePagesForCategory("corporate-events"),
-    getServicePagesForCategory("artist-booking"),
-    getServicePagesForCategory("venue-booking"),
-    getServicePagesForCategory("event-rentals"),
-  ]);
-
-  const events = corporateEventServices.slice(0, 4);
-  const [artist1, artist2, artist3] = artistBookingServices;
+export async function CategoryOverviewGridBlock({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}) {
+  const categories = await getServiceCategories();
+  const groups = await Promise.all(
+    categories.map(async (c) => ({ category: c, services: await getServicePagesForCategory(c.slug) }))
+  );
+  const visible = groups.filter((g) => g.services.length > 0);
+  if (visible.length === 0) return null;
 
   return (
     <Section className="bg-transparent">
@@ -31,87 +35,23 @@ export async function CategoryOverviewGridBlock({ eyebrow, title, description }:
       {description && <p className="text-muted max-w-xl text-[15px]">{description}</p>}
 
       <div className="mt-12 grid gap-10 lg:grid-cols-2">
-        <div className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="tag tag-accent">Plan</span>
-              <h3 className="m-0 text-[19px]">Corporate Events</h3>
-            </div>
-            <Link href="/corporate-events" className="text-[13px] font-semibold">
-              View all →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            {events.map((s) => (
-              <Link key={s.slug} href={`/corporate-events/${s.slug}`} className="block">
-                <CategoryCard title={s.name} blurb={(s.intro[0] ?? "").slice(0, 100) + "…"} />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {artist1 && artist2 && artist3 && (
-          <div className="p-6">
+        {visible.map(({ category, services }) => (
+          <div key={category.slug} className="p-6">
             <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="tag tag-accent-2">Perform</span>
-                <h3 className="m-0 text-[19px]">Artist Booking &amp; Entertainment</h3>
-              </div>
-              <Link href="/artist-booking" className="text-[13px] font-semibold">
+              <h3 className="m-0 text-[19px]">{category.name}</h3>
+              <Link href={`/${category.slug}`} className="text-[13px] font-semibold">
                 View all →
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-              <Link href={`/artist-booking/${artist1.slug}`} className="block">
-                <CategoryCard title={artist1.name} blurb={(artist1.intro[0] ?? "").slice(0, 100) + "…"} />
-              </Link>
-              <Link href={`/artist-booking/${artist2.slug}`} className="block">
-                <CategoryCard title={artist2.name} blurb={(artist2.intro[0] ?? "").slice(0, 100) + "…"} />
-              </Link>
-              <Link href={`/artist-booking/${artist3.slug}`} className="block sm:col-span-2">
-                <CategoryCard title={artist3.name} blurb={(artist3.intro[0] ?? "").slice(0, 130) + "…"} />
-              </Link>
+              {services.slice(0, 4).map((s) => (
+                <Link key={s.slug} href={`/${category.slug}/${s.slug}`} className="block">
+                  <CategoryCard title={s.name} blurb={(s.intro[0] ?? "").slice(0, 100) + "…"} />
+                </Link>
+              ))}
             </div>
           </div>
-        )}
-
-        <div className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="tag tag-accent">Host</span>
-              <h3 className="m-0 text-[19px]">Venue Booking &amp; Management</h3>
-            </div>
-            <Link href="/venue-booking" className="text-[13px] font-semibold">
-              View all →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-            {venueBookingServices.map((s) => (
-              <Link key={s.slug} href={`/venue-booking/${s.slug}`} className="block">
-                <CategoryCard title={s.name} blurb={(s.intro[0] ?? "").slice(0, 60) + "…"} size="sm" />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="tag tag-accent-2">Equip</span>
-              <h3 className="m-0 text-[19px]">Event Rentals &amp; Equipment</h3>
-            </div>
-            <Link href="/event-rentals" className="text-[13px] font-semibold">
-              View all →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
-            {eventRentalServices.map((s) => (
-              <Link key={s.slug} href={`/event-rentals/${s.slug}`} className="block">
-                <CategoryCard title={s.name} blurb={(s.intro[0] ?? "").slice(0, 60) + "…"} size="sm" />
-              </Link>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </Section>
   );

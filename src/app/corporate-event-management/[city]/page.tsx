@@ -93,6 +93,7 @@ export default async function CityEventPage({ params }: { params: Promise<{ city
         />
       </Section>
 
+      {corporateEventServices.length > 0 && (
       <Section className="bg-slate-50">
         <SectionHeading eyebrow="Services Available" title={`Corporate event services in ${cityData.name}`} />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -107,6 +108,7 @@ export default async function CityEventPage({ params }: { params: Promise<{ city
           ))}
         </div>
       </Section>
+      )}
 
       <Section className="bg-white">
         <SectionHeading

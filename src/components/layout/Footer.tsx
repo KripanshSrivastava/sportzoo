@@ -3,9 +3,9 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { siteConfig, targetCities, mapEmbedSrc } from "@/config/site";
-import { eventsDropdown, artistDropdown, venueDropdown, rentalsDropdown } from "@/config/nav";
 import { trackEvent } from "@/lib/analytics";
 import { useSiteConfig } from "@/components/providers/SiteConfigProvider";
+import { useNav } from "@/components/providers/NavProvider";
 
 const linkStyle = { color: "var(--color-neutral-400)" };
 const headingStyle = { color: "var(--color-neutral-100)" };
@@ -45,7 +45,10 @@ function SocialIcon({ href, label, path, network }: { href: string; label: strin
 
 export function Footer() {
   const settings = useSiteConfig();
+  const { categories, hiddenPaths } = useNav();
   const year = new Date().getFullYear();
+  // Show at most the first 4 categories as link columns so the footer grid stays intact.
+  const footerCategories = categories.slice(0, 4);
 
   const socialLinks = [
     { key: "linkedin", label: "LinkedIn", href: settings.linkedinUrl },
@@ -98,70 +101,48 @@ export function Footer() {
           )}
         </div>
 
-        <div>
-          <h6 style={headingStyle}>Corporate Events</h6>
-          <div className="mt-3 flex flex-col gap-2 text-[13px]">
-            {eventsDropdown.map((l) => (
-              <Link key={l.href} href={l.href} style={linkStyle}>
-                {l.label}
+        {footerCategories.map((c) => (
+          <div key={c.slug}>
+            <h6 style={headingStyle}>{c.name}</h6>
+            <div className="mt-3 flex flex-col gap-2 text-[13px]">
+              <Link href={c.href} style={linkStyle}>
+                {c.name} Overview
               </Link>
-            ))}
+              {c.services.map((l) => (
+                <Link key={l.href} href={l.href} style={linkStyle}>
+                  {l.label}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div>
-          <h6 style={headingStyle}>Artist Booking</h6>
-          <div className="mt-3 flex flex-col gap-2 text-[13px]">
-            {artistDropdown.map((l) => (
-              <Link key={l.href} href={l.href} style={linkStyle}>
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h6 style={headingStyle}>Venue &amp; Rentals</h6>
-          <div className="mt-3 flex flex-col gap-2 text-[13px]">
-            {venueDropdown.map((l) => (
-              <Link key={l.href} href={l.href} style={linkStyle}>
-                {l.label}
-              </Link>
-            ))}
-            {rentalsDropdown.map((l) => (
-              <Link key={l.href} href={l.href} style={linkStyle}>
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        </div>
+        ))}
 
         <div>
           <h6 style={headingStyle}>Company</h6>
           <div className="mt-3 flex flex-col gap-2 text-[13px]">
-            <Link href="/about" style={linkStyle}>
-              About
-            </Link>
-            <Link href="/case-studies" style={linkStyle}>
-              Our Work
-            </Link>
-            <Link href="/gallery" style={linkStyle}>
-              Gallery
-            </Link>
-            <Link href="/blog" style={linkStyle}>
-              Blog &amp; Resources
-            </Link>
-            <Link href="/contact" style={linkStyle}>
-              Contact
-            </Link>
-            <Link
-              href="/request-a-quote"
-              onClick={() => trackEvent("quote_button_click", { source: "footer" })}
-              className="font-semibold"
-              style={{ color: "var(--color-accent-300)" }}
-            >
-              Request a Quote
-            </Link>
+            {[
+              { href: "/about", label: "About" },
+              { href: "/case-studies", label: "Our Work" },
+              { href: "/gallery", label: "Gallery" },
+              { href: "/blog", label: "Blog & Resources" },
+              { href: "/contact", label: "Contact" },
+            ]
+              .filter((l) => !hiddenPaths.includes(l.href))
+              .map((l) => (
+                <Link key={l.href} href={l.href} style={linkStyle}>
+                  {l.label}
+                </Link>
+              ))}
+            {!hiddenPaths.includes("/request-a-quote") && (
+              <Link
+                href="/request-a-quote"
+                onClick={() => trackEvent("quote_button_click", { source: "footer" })}
+                className="font-semibold"
+                style={{ color: "var(--color-accent-300)" }}
+              >
+                Request a Quote
+              </Link>
+            )}
           </div>
           <h6 className="mt-5" style={headingStyle}>
             Service Locations
@@ -239,12 +220,16 @@ export function Footer() {
           &copy; {year} {settings.legalName || siteConfig.legalName}. All rights reserved.
         </p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
-          <Link href="/privacy-policy" style={{ color: "inherit" }}>
-            Privacy Policy
-          </Link>
-          <Link href="/terms-and-conditions" style={{ color: "inherit" }}>
-            Terms
-          </Link>
+          {!hiddenPaths.includes("/privacy-policy") && (
+            <Link href="/privacy-policy" style={{ color: "inherit" }}>
+              Privacy Policy
+            </Link>
+          )}
+          {!hiddenPaths.includes("/terms-and-conditions") && (
+            <Link href="/terms-and-conditions" style={{ color: "inherit" }}>
+              Terms
+            </Link>
+          )}
         </div>
       </div>
     </footer>

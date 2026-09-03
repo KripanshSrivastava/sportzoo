@@ -1,4 +1,64 @@
-export type ServiceCategory = "corporate-events" | "artist-booking" | "venue-booking" | "event-rentals";
+// Category slugs are dynamic — managed from /admin/categories and stored in the
+// service_categories table. This stays as a plain string alias so existing code
+// keeps type-checking; the four originals below are only seed data now.
+export type ServiceCategory = string;
+
+export interface CategorySeed {
+  slug: string;
+  name: string;
+  h1: string;
+  intro: string;
+  metaTitle: string;
+  metaDescription: string;
+}
+
+/**
+ * The original four service categories. Seeded into service_categories by
+ * supabase/schema.sql; also the fallback the app renders when that table is
+ * empty or unreachable (e.g. before the migration is run).
+ */
+export const CATEGORY_SEEDS: CategorySeed[] = [
+  {
+    slug: "corporate-events",
+    name: "Corporate Events",
+    h1: "Corporate Event Management, Handled End to End",
+    intro:
+      "Offsites, annual day, recognition ceremonies, sports days, team building, gifting, and conferences — planned and run by one accountable team.",
+    metaTitle: "Corporate Event Management Company | Elephant Corporate",
+    metaDescription:
+      "Elephant Corporate is a corporate event management company handling offsites, annual day, recognition ceremonies, sports days, team building, gifting, and conferences — end to end.",
+  },
+  {
+    slug: "artist-booking",
+    name: "Artist Booking & Entertainment",
+    h1: "Artist Booking & Entertainment for Corporate Events",
+    intro:
+      "Singers, bands, DJs, anchors, speakers, and comedians for corporate events — vetted, briefed, and coordinated end to end.",
+    metaTitle: "Artist Booking & Entertainment for Corporate Events | Elephant Corporate",
+    metaDescription:
+      "Elephant Corporate books singers, bands, DJs, anchors, speakers, and comedians for corporate events — vetted, briefed, and coordinated end to end.",
+  },
+  {
+    slug: "venue-booking",
+    name: "Venue Booking & Management",
+    h1: "Corporate Venue Booking & Management",
+    intro:
+      "Conference halls, offsite resorts, and banquet venues for corporate events — capacity and AV verified before you commit.",
+    metaTitle: "Corporate Venue Booking & Management | Elephant Corporate",
+    metaDescription:
+      "Elephant Corporate sources and books conference halls, offsite resorts, and banquet venues for corporate events — capacity and AV verified before you commit.",
+  },
+  {
+    slug: "event-rentals",
+    name: "Event Rentals & Equipment",
+    h1: "Event Rentals & Equipment for Corporate Events",
+    intro:
+      "AV equipment, decor and branding, and engagement activities for corporate events — staffed on-site, not just dropped off.",
+    metaTitle: "Event Rentals & Equipment for Corporate Events | Elephant Corporate",
+    metaDescription:
+      "Elephant Corporate rents and manages AV equipment, decor and branding, and engagement activities for corporate events — staffed on-site, not just dropped off.",
+  },
+];
 
 export interface FaqItem {
   q: string;

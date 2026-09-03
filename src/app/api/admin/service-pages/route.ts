@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { getAllServicePagesForAdmin } from "@/lib/servicePagesData";
+import { getAllServiceCategoriesForAdmin } from "@/lib/serviceCategoriesData";
 import { revalidateSite } from "@/lib/revalidate";
 
 export async function GET() {
@@ -16,8 +17,6 @@ function slugify(input: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-const VALID_CATEGORIES = ["corporate-events", "artist-booking", "venue-booking", "event-rentals"];
-
 export async function POST(req: NextRequest) {
   const supabase = getSupabaseAdmin();
   if (!supabase) {
@@ -28,8 +27,9 @@ export async function POST(req: NextRequest) {
   if (!body?.name || typeof body.name !== "string") {
     return NextResponse.json({ ok: false, message: "Name is required." }, { status: 400 });
   }
-  if (!VALID_CATEGORIES.includes(body.category)) {
-    return NextResponse.json({ ok: false, message: "Invalid category." }, { status: 400 });
+  const validCategories = (await getAllServiceCategoriesForAdmin()).map((c) => c.slug);
+  if (!validCategories.includes(body.category)) {
+    return NextResponse.json({ ok: false, message: "Pick an existing category." }, { status: 400 });
   }
 
   const slug = body.slug ? slugify(String(body.slug)) : slugify(body.name);

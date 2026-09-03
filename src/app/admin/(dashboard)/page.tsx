@@ -27,12 +27,17 @@ const GROUPS: { heading: string; items: { href: string; title: string; desc: str
       {
         href: "/admin/pages",
         title: "Pages",
-        desc: "Home, About, Contact and the 4 category pages. Add / reorder / hide sections and edit their text and photos.",
+        desc: "Home, About, Contact and the original category pages. Add / reorder / hide sections and edit their text and photos.",
+      },
+      {
+        href: "/admin/categories",
+        title: "Categories",
+        desc: "The top-level service groups and their nav dropdowns. Create, rename, reorder, hide or delete a category.",
       },
       {
         href: "/admin/service-pages",
         title: "Service Pages",
-        desc: "The individual service pages under Corporate Events, Artist Booking, Venues and Rentals.",
+        desc: "The individual service pages, grouped by category. Assign each page to a category here.",
       },
       { href: "/admin/cities", title: "Cities", desc: "The city landing pages (e.g. /corporate-event-management/gurugram)." },
     ],

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
@@ -17,6 +19,8 @@ export const metadata = buildMetadata({
 });
 
 export default async function BlogIndexPage() {
+  if (await isPathHidden("/blog")) notFound();
+
   const blogPosts = await getPublishedBlogPosts();
   return (
     <>

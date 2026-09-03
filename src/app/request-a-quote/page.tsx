@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
@@ -16,6 +18,8 @@ export const metadata = buildMetadata({
 export const revalidate = 3600;
 
 export default async function RequestQuotePage() {
+  if (await isPathHidden("/request-a-quote")) notFound();
+
   const settings = await getBusinessSettings();
   return (
     <>

@@ -1,21 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { ImageListField } from "@/components/admin/ImageListField";
 
-const CATEGORIES = [
-  { value: "corporate-events", label: "Corporate Events" },
-  { value: "artist-booking", label: "Artist Booking" },
-  { value: "venue-booking", label: "Venue Booking" },
-  { value: "event-rentals", label: "Event Rentals" },
-] as const;
-
 export interface ServicePageFormValues {
   id?: string;
   slug: string;
-  category: (typeof CATEGORIES)[number]["value"];
+  category: string;
   name: string;
   h1: string;
   metaTitle: string;
@@ -82,7 +75,23 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
   const [form, setForm] = useState<ServicePageFormValues>(initial);
   const [status, setStatus] = useState<"idle" | "saving" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
+  const [categories, setCategories] = useState<{ value: string; label: string }[]>(
+    initial.category ? [{ value: initial.category, label: initial.category }] : []
+  );
   const isEdit = Boolean(initial.id);
+
+  useEffect(() => {
+    fetch("/api/admin/categories")
+      .then((r) => r.json())
+      .then((d) => {
+        const opts = (d.categories ?? []).map((c: { slug: string; name: string }) => ({ value: c.slug, label: c.name }));
+        if (opts.length) {
+          setCategories(opts);
+          setForm((f) => (f.category ? f : { ...f, category: opts[0].value }));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   function update<K extends keyof ServicePageFormValues>(key: K, value: ServicePageFormValues[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -140,10 +149,9 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
             id="category"
             className="input"
             value={form.category}
-            disabled={isEdit}
-            onChange={(e) => update("category", e.target.value as ServicePageFormValues["category"])}
+            onChange={(e) => update("category", e.target.value)}
           >
-            {CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
               </option>

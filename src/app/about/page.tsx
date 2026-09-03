@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 import { getPageBlocks } from "@/lib/pageBlocksData";
@@ -14,6 +16,8 @@ export const metadata = buildMetadata({
 });
 
 export default async function AboutPage() {
+  if (await isPathHidden("/about")) notFound();
+
   const blocks = await getPageBlocks("about");
   return (
     <>

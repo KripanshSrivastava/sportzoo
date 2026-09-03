@@ -6,27 +6,32 @@ import {
   venueBookingServices,
   eventRentalServices,
   type ServicePage,
-  type ServiceCategory,
 } from "@/config/services";
 
 export interface AdminServicePage extends ServicePage {
   id: string;
   published: boolean;
   sortOrder: number;
+  /** True when this slug ships as built-in content in code (deleting only reverts it). */
+  builtIn: boolean;
 }
 
-const staticByCategory: Record<ServiceCategory, ServicePage[]> = {
-  "corporate-events": corporateEventServices,
-  "artist-booking": artistBookingServices,
-  "venue-booking": venueBookingServices,
-  "event-rentals": eventRentalServices,
-};
+const STATIC_SLUGS = new Set(
+  [...corporateEventServices, ...artistBookingServices, ...venueBookingServices, ...eventRentalServices].map((s) => s.slug)
+);
+
+const staticServices: ServicePage[] = [
+  ...corporateEventServices,
+  ...artistBookingServices,
+  ...venueBookingServices,
+  ...eventRentalServices,
+];
 
 function fromRow(row: Record<string, unknown>): AdminServicePage {
   return {
     id: row.id as string,
     slug: row.slug as string,
-    category: row.category as ServiceCategory,
+    category: row.category as string,
     parentSlug: row.category as string,
     name: row.name as string,
     h1: (row.h1 as string) ?? "",
@@ -45,51 +50,43 @@ function fromRow(row: Record<string, unknown>): AdminServicePage {
     galleryImageUrls: (row.gallery_image_urls as string[]) ?? [],
     published: Boolean(row.published),
     sortOrder: (row.sort_order as number) ?? 0,
+    builtIn: STATIC_SLUGS.has(row.slug as string),
   };
 }
 
 function fromStatic(s: ServicePage, i: number): AdminServicePage {
-  return { ...s, id: s.slug, published: true, sortOrder: i };
+  return { ...s, id: s.slug, published: true, sortOrder: i, builtIn: true };
 }
 
-/** All published service pages, grouped by category — a single Supabase query, cached per request. */
-const getPublishedServicePagesByCategory = cache(async (): Promise<Record<ServiceCategory, AdminServicePage[]>> => {
-  const cats = Object.keys(staticByCategory) as ServiceCategory[];
+/** Every service page — DB row where one exists for a slug, else the static seed. Cached per request. */
+const getAllServicePages = cache(async (): Promise<AdminServicePage[]> => {
   const supabase = getSupabaseAdmin();
-  const rowsBySlug = new Map<string, AdminServicePage>();
+  const bySlug = new Map<string, AdminServicePage>();
+  staticServices.forEach((s, i) => bySlug.set(s.slug, fromStatic(s, i)));
 
   if (supabase) {
     const { data } = await supabase.from("service_pages").select("*");
-    for (const row of data ?? []) rowsBySlug.set(row.slug as string, fromRow(row));
+    for (const row of data ?? []) bySlug.set(row.slug as string, fromRow(row));
   }
-
-  const out = {} as Record<ServiceCategory, AdminServicePage[]>;
-  for (const cat of cats) {
-    const merged = staticByCategory[cat].map(fromStatic).map((s) => rowsBySlug.get(s.slug) ?? s);
-    for (const p of rowsBySlug.values()) {
-      if (p.category === cat && !merged.some((m) => m.slug === p.slug)) merged.push(p);
-    }
-    out[cat] = merged.filter((s) => s.published);
-  }
-  return out;
+  return [...bySlug.values()];
 });
 
-/** Every published service page for a category — DB row if one exists for a slug, else the static fallback. */
-export const getServicePagesForCategory = cache(async (category: ServiceCategory): Promise<AdminServicePage[]> => {
-  return (await getPublishedServicePagesByCategory())[category];
+/** Published service pages for a category slug, ordered by sort order then name. */
+export const getServicePagesForCategory = cache(async (category: string): Promise<AdminServicePage[]> => {
+  return (await getAllServicePages())
+    .filter((s) => s.published && s.category === category)
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name));
 });
 
-export async function getServicePageBySlug(category: ServiceCategory, slug: string): Promise<AdminServicePage | undefined> {
-  const all = await getServicePagesForCategory(category);
-  return all.find((s) => s.slug === slug);
+export async function getServicePageBySlug(category: string, slug: string): Promise<AdminServicePage | undefined> {
+  const page = (await getAllServicePages()).find((s) => s.slug === slug && s.category === category);
+  return page && page.published ? page : undefined;
 }
 
-/** Admin list — every DB row plus every static page that has no DB override yet, across all categories. */
+/** Admin list — every DB row plus every static seed with no DB override yet, across all categories. */
 export async function getAllServicePagesForAdmin(): Promise<AdminServicePage[]> {
   const supabase = getSupabaseAdmin();
-  const allStatic = (Object.keys(staticByCategory) as ServiceCategory[]).flatMap((cat) =>
-    staticByCategory[cat].map(fromStatic)
-  );
+  const allStatic = staticServices.map(fromStatic);
   if (!supabase) return allStatic;
 
   const { data, error } = await supabase.from("service_pages").select("*").order("sort_order", { ascending: true });
@@ -109,7 +106,6 @@ export async function getServicePageForAdminById(id: string): Promise<AdminServi
     const { data } = await supabase.from("service_pages").select("*").eq("id", id).maybeSingle();
     if (data) return fromRow(data);
   }
-  // id can also be a static slug (no DB row yet) — the admin "Edit" link uses whichever id it was shown.
   const all = await getAllServicePagesForAdmin();
   return all.find((s) => s.id === id);
 }

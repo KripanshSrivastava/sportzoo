@@ -1,5 +1,7 @@
 import { MediaFrame } from "@/components/ui/MediaFrame";
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
@@ -17,6 +19,8 @@ export const metadata = buildMetadata({
 });
 
 export default async function GalleryPage() {
+  if (await isPathHidden("/gallery")) notFound();
+
   const gallery = await getGalleryByCategory();
   const categories = Object.keys(gallery);
 

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -16,6 +18,8 @@ export const metadata = buildMetadata({
 });
 
 export default async function EventsPage() {
+  if (await isPathHidden("/events")) notFound();
+
   const events = await getPublishedEvents();
 
   return (

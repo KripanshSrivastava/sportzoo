@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/seo";
+import { isPathHidden } from "@/lib/hiddenPages";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/config/site";
@@ -9,7 +11,9 @@ export const metadata = buildMetadata({
   path: "/privacy-policy",
 });
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  if (await isPathHidden("/privacy-policy")) notFound();
+
   return (
     <>
       <Breadcrumbs items={[{ name: "Privacy Policy", path: "/privacy-policy" }]} />

@@ -9,14 +9,14 @@ import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { CallButton, QuoteButton, WhatsAppButton } from "@/components/cta/CtaLinks";
 import { JsonLd, serviceJsonLd } from "@/components/seo/JsonLd";
-import type { ServicePage, ServiceCategory } from "@/config/services";
-import {
-  corporateEventServices,
-  artistBookingServices,
-  venueBookingServices,
-  eventRentalServices,
-} from "@/config/services";
+import type { ServicePage } from "@/config/services";
 import { serviceOptions } from "@/lib/leadSchema";
+
+interface RelatedService {
+  slug: string;
+  name: string;
+  parentSlug: string;
+}
 
 // Nav labels are kept short; the lead form needs the exact enum value.
 const formServiceNameBySlug: Record<string, (typeof serviceOptions)[number]> = {
@@ -38,26 +38,18 @@ const formServiceNameBySlug: Record<string, (typeof serviceOptions)[number]> = {
   "event-games-and-engagement-activities": "Event Games & Engagement Activities",
 };
 
-const parentLabelByCategory: Record<ServiceCategory, string> = {
-  "corporate-events": "Corporate Events",
-  "artist-booking": "Artist Booking & Entertainment",
-  "venue-booking": "Venue Booking & Management",
-  "event-rentals": "Event Rentals & Equipment",
-};
-
-const servicePoolByCategory: Record<ServiceCategory, ServicePage[]> = {
-  "corporate-events": corporateEventServices,
-  "artist-booking": artistBookingServices,
-  "venue-booking": venueBookingServices,
-  "event-rentals": eventRentalServices,
-};
-
-export function ServicePageTemplate({ service }: { service: ServicePage }) {
-  const parentLabel = parentLabelByCategory[service.category];
+export function ServicePageTemplate({
+  service,
+  categoryName,
+  related,
+}: {
+  service: ServicePage;
+  categoryName: string;
+  related: RelatedService[];
+}) {
+  const parentLabel = categoryName;
   const formServiceName = formServiceNameBySlug[service.slug] ?? "Not sure / need advice";
   const path = `/${service.parentSlug}/${service.slug}`;
-  const siblingPool = servicePoolByCategory[service.category];
-  const related = siblingPool.filter((s) => s.slug !== service.slug).slice(0, 3);
 
   return (
     <>
