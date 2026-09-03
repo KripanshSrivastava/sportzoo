@@ -4,6 +4,7 @@ import Image from "next/image";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
 import { Section } from "@/components/ui/Section";
+import { RichBody } from "@/components/sections/RichBody";
 import { LeadFormSection } from "@/components/sections/LeadFormSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { JsonLd, articleJsonLd } from "@/components/seo/JsonLd";
@@ -67,34 +68,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       )}
 
       <Section className="bg-white">
-        <article className="max-w-3xl space-y-5 text-base leading-relaxed text-slate-700">
-          {post.body.map((block, i) => {
-            if (block.type === "h2") {
-              return (
-                <h2 key={i} className="pt-2 text-2xl font-bold text-[color:var(--color-navy-900)]">
-                  {block.text}
-                </h2>
-              );
-            }
-            if (block.type === "ul") {
-              return (
-                <ul key={i} className="list-disc space-y-2 pl-5">
-                  {block.items?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              );
-            }
-            if (block.type === "image" && block.imageUrl) {
-              return (
-                <span key={i} className="relative block aspect-video w-full overflow-hidden rounded-lg bg-slate-100">
-                  <Image src={block.imageUrl} alt="" fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" unoptimized />
-                </span>
-              );
-            }
-            return <p key={i}>{block.text}</p>;
-          })}
-        </article>
+        <RichBody blocks={post.body} />
 
         {post.relatedServicePath && (
           <div className="mt-10 max-w-3xl rounded-xl border border-slate-200 bg-slate-50 p-6">

@@ -48,6 +48,7 @@ function fromRow(row: Record<string, unknown>): AdminServicePage {
     faqs: (row.faqs as { q: string; a: string }[]) ?? [],
     heroImageUrl: (row.hero_image_url as string) ?? "",
     galleryImageUrls: (row.gallery_image_urls as string[]) ?? [],
+    body: Array.isArray(row.body) ? (row.body as AdminServicePage["body"]) : [],
     published: Boolean(row.published),
     sortOrder: (row.sort_order as number) ?? 0,
     builtIn: STATIC_SLUGS.has(row.slug as string),

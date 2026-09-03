@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
       h1: body.h1 || "",
       meta_title: body.metaTitle || "",
       meta_description: body.metaDescription || "",
+      body: Array.isArray(body.body) ? body.body : [],
       intro: Array.isArray(body.intro) ? body.intro : [],
       problems: Array.isArray(body.problems) ? body.problems : [],
       inclusions: Array.isArray(body.inclusions) ? body.inclusions : [],

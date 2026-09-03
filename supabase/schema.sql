@@ -224,6 +224,9 @@ create table if not exists service_pages (
 -- /admin/service-pages). The gallery holds photos or pasted video links.
 alter table service_pages add column if not exists hero_image_url text;
 alter table service_pages add column if not exists gallery_image_urls text[] not null default '{}';
+-- Optional free-form page body ([{type:'p'|'h2'|'ul'|'image', text?, items?, imageUrl?}]).
+-- When set, the page renders this instead of the structured problems/inclusions/… sections.
+alter table service_pages add column if not exists body jsonb not null default '[]';
 
 -- Cities for /corporate-event-management/[city]. Seeded from
 -- src/config/site.ts's targetCities on first read.

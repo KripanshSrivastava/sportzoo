@@ -1,6 +1,8 @@
 // Category slugs are dynamic — managed from /admin/categories and stored in the
 // service_categories table. This stays as a plain string alias so existing code
 // keeps type-checking; the four originals below are only seed data now.
+import type { BlogBlock } from "@/content/blog";
+
 export type ServiceCategory = string;
 
 export interface CategorySeed {
@@ -84,6 +86,12 @@ export interface ServicePage {
   faqs: FaqItem[];
   heroImageUrl?: string;
   galleryImageUrls?: string[];
+  /**
+   * Optional free-form page content (`## heading`, paragraphs, `- bullets`,
+   * image URLs). When set, the service page renders this instead of the
+   * structured problems / inclusions / process / benefits / use-cases sections.
+   */
+  body?: BlogBlock[];
 }
 
 export const corporateEventServices: ServicePage[] = [

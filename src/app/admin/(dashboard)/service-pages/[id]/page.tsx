@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { ServicePageForm, listToLines, pairsToLines, type ServicePageFormValues } from "@/components/admin/ServicePageForm";
+import {
+  ServicePageForm,
+  listToLines,
+  pairsToLines,
+  blocksToBodyText,
+  type ServicePageFormValues,
+} from "@/components/admin/ServicePageForm";
 
 export default function EditServicePagePage() {
   const params = useParams<{ id: string }>();
@@ -26,6 +32,7 @@ export default function EditServicePagePage() {
           h1: s.h1 ?? "",
           metaTitle: s.metaTitle ?? "",
           metaDescription: s.metaDescription ?? "",
+          bodyText: blocksToBodyText(s.body),
           intro: listToLines(s.intro),
           problems: listToLines(s.problems),
           inclusions: pairsToLines(s.inclusions, ["title", "desc"]),

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { ImageListField } from "@/components/admin/ImageListField";
+import { parseBlogBody, serializeBlogBody } from "@/lib/blogBody";
+import type { BlogBlock } from "@/content/blog";
 
 export interface ServicePageFormValues {
   id?: string;
@@ -13,6 +15,7 @@ export interface ServicePageFormValues {
   h1: string;
   metaTitle: string;
   metaDescription: string;
+  bodyText: string; // free-form page content (## heading, paragraphs, - bullets, image URLs)
   intro: string; // paragraphs, one per line
   problems: string; // one per line
   inclusions: string; // "Title :: Description" one per line
@@ -32,6 +35,7 @@ export const emptyServicePage: ServicePageFormValues = {
   h1: "",
   metaTitle: "",
   metaDescription: "",
+  bodyText: "",
   intro: "",
   problems: "",
   inclusions: "",
@@ -66,6 +70,10 @@ function pairsToLines(value: { title?: string; desc?: string; q?: string; a?: st
   return (value ?? [])
     .map((p) => `${(p as Record<string, string>)[keys[0]] ?? ""} :: ${(p as Record<string, string>)[keys[1]] ?? ""}`)
     .join("\n");
+}
+
+export function blocksToBodyText(body: BlogBlock[] | undefined): string {
+  return serializeBlogBody(body ?? []);
 }
 
 export { listToLines, pairsToLines };
@@ -104,6 +112,7 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
 
     const payload = {
       ...form,
+      body: parseBlogBody(form.bodyText),
       intro: linesToList(form.intro),
       problems: linesToList(form.problems),
       benefits: linesToList(form.benefits),
@@ -203,34 +212,58 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
       />
 
       <div className="field">
-        <label htmlFor="intro">Intro paragraphs (one per line)</label>
-        <textarea id="intro" className="input" rows={4} value={form.intro} onChange={(e) => update("intro", e.target.value)} />
+        <label htmlFor="bodyText">Page content</label>
+        <p className="text-muted mb-1 text-xs">
+          Write the page the way you want it read. Blank line = new paragraph. Start a line with
+          <code> ## </code> for a heading, <code> - </code> for a bullet, or paste an image URL on its own line.
+          Leave this empty to use the structured sections below instead.
+        </p>
+        <textarea
+          id="bodyText"
+          className="input"
+          rows={14}
+          value={form.bodyText}
+          onChange={(e) => update("bodyText", e.target.value)}
+          placeholder={"## Smarter business travel\nWe handle flights, hotels and ground transport end to end.\n\n## What we cover\n- Domestic & international flights\n- Business hotels\n- Airport transfers"}
+        />
       </div>
 
-      <div className="field">
-        <label htmlFor="problems">Problems this solves (one per line)</label>
-        <textarea id="problems" className="input" rows={4} value={form.problems} onChange={(e) => update("problems", e.target.value)} />
-      </div>
+      <details className="rounded border p-3" style={{ borderColor: "var(--color-divider)" }}>
+        <summary className="cursor-pointer text-sm font-semibold">
+          Structured sections (used only when “Page content” above is empty)
+        </summary>
+        <div className="mt-4 flex flex-col gap-4">
+          <div className="field">
+            <label htmlFor="intro">Intro paragraphs (one per line)</label>
+            <textarea id="intro" className="input" rows={4} value={form.intro} onChange={(e) => update("intro", e.target.value)} />
+          </div>
 
-      <div className="field">
-        <label htmlFor="inclusions">What&apos;s included — one per line, format: Title :: Description</label>
-        <textarea id="inclusions" className="input" rows={5} value={form.inclusions} onChange={(e) => update("inclusions", e.target.value)} />
-      </div>
+          <div className="field">
+            <label htmlFor="problems">Problems this solves (one per line)</label>
+            <textarea id="problems" className="input" rows={4} value={form.problems} onChange={(e) => update("problems", e.target.value)} />
+          </div>
 
-      <div className="field">
-        <label htmlFor="process">Process steps — one per line, format: Title :: Description</label>
-        <textarea id="process" className="input" rows={5} value={form.process} onChange={(e) => update("process", e.target.value)} />
-      </div>
+          <div className="field">
+            <label htmlFor="inclusions">What&apos;s included — one per line, format: Title :: Description</label>
+            <textarea id="inclusions" className="input" rows={5} value={form.inclusions} onChange={(e) => update("inclusions", e.target.value)} />
+          </div>
 
-      <div className="field">
-        <label htmlFor="benefits">Benefits (one per line)</label>
-        <textarea id="benefits" className="input" rows={4} value={form.benefits} onChange={(e) => update("benefits", e.target.value)} />
-      </div>
+          <div className="field">
+            <label htmlFor="process">Process steps — one per line, format: Title :: Description</label>
+            <textarea id="process" className="input" rows={5} value={form.process} onChange={(e) => update("process", e.target.value)} />
+          </div>
 
-      <div className="field">
-        <label htmlFor="useCases">Use cases (one per line)</label>
-        <textarea id="useCases" className="input" rows={4} value={form.useCases} onChange={(e) => update("useCases", e.target.value)} />
-      </div>
+          <div className="field">
+            <label htmlFor="benefits">Benefits (one per line)</label>
+            <textarea id="benefits" className="input" rows={4} value={form.benefits} onChange={(e) => update("benefits", e.target.value)} />
+          </div>
+
+          <div className="field">
+            <label htmlFor="useCases">Use cases (one per line)</label>
+            <textarea id="useCases" className="input" rows={4} value={form.useCases} onChange={(e) => update("useCases", e.target.value)} />
+          </div>
+        </div>
+      </details>
 
       <div className="field">
         <label htmlFor="faqs">FAQs — one per line, format: Question :: Answer</label>
