@@ -105,6 +105,47 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  /** One-click recovery: fold the structured sections into the free-form Page content box. */
+  function buildBodyFromSections() {
+    const parts: string[] = [];
+    const lines = (v: string) => v.split("\n").map((l) => l.trim()).filter(Boolean);
+    const pairs = (v: string) =>
+      lines(v).map((l) => {
+        const [t, ...r] = l.split("::");
+        const desc = r.join("::").trim();
+        return desc ? `${t.trim()} — ${desc}` : t.trim();
+      });
+
+    lines(form.intro).forEach((p) => parts.push(p));
+    if (form.problems.trim()) {
+      parts.push("## The challenge");
+      lines(form.problems).forEach((p) => parts.push(`- ${p}`));
+    }
+    if (form.inclusions.trim()) {
+      parts.push("## What's included");
+      pairs(form.inclusions).forEach((p) => parts.push(`- ${p}`));
+    }
+    if (form.process.trim()) {
+      parts.push("## How it works");
+      pairs(form.process).forEach((p) => parts.push(`- ${p}`));
+    }
+    if (form.benefits.trim()) {
+      parts.push("## Why choose us");
+      lines(form.benefits).forEach((p) => parts.push(`- ${p}`));
+    }
+    if (form.useCases.trim()) {
+      parts.push("## Suited for");
+      lines(form.useCases).forEach((p) => parts.push(`- ${p}`));
+    }
+
+    const text = parts
+      .join("\n")
+      .replace(/\n(## )/g, "\n\n$1")
+      .replace(/(## .*)\n- /g, "$1\n- ");
+    if (form.bodyText.trim() && !confirm("Replace what's in Page content with the structured sections below?")) return;
+    update("bodyText", text);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("saving");
@@ -232,6 +273,17 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
         <summary className="cursor-pointer text-sm font-semibold">
           Structured sections (used only when “Page content” above is empty)
         </summary>
+        <button
+          type="button"
+          className="btn btn-secondary mt-3"
+          onClick={buildBodyFromSections}
+          style={{ width: "fit-content" }}
+        >
+          ↑ Move these into “Page content”
+        </button>
+        <p className="text-muted mt-1 text-xs">
+          Folds whatever is in these boxes into the free-form Page content field above, then you can clean it up there.
+        </p>
         <div className="mt-4 flex flex-col gap-4">
           <div className="field">
             <label htmlFor="intro">Intro paragraphs (one per line)</label>
