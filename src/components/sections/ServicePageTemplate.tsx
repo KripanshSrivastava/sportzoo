@@ -96,97 +96,95 @@ export function ServicePageTemplate({
         </div>
       )}
 
-      {hasBody ? (
+      {hasBody && (
         <Section className="bg-white">
           <RichBody blocks={service.body!} />
         </Section>
-      ) : (
-        <>
-          {service.intro.length > 0 && (
-            <Section className="bg-white">
-              <div className="prose-none max-w-3xl space-y-4 text-base leading-relaxed text-slate-700">
-                {service.intro.map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+      )}
+
+      {!hasBody && service.intro.length > 0 && (
+        <Section className="bg-white">
+          <div className="prose-none max-w-3xl space-y-4 text-base leading-relaxed text-slate-700">
+            {service.intro.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {service.problems.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="The Problem" title="Challenges companies face without a dedicated partner" />
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            {service.problems.map((p) => (
+              <li key={p} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700">
+                <span aria-hidden="true" className="text-[color:var(--color-accent)]">✕</span>
+                {p}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {service.inclusions.length > 0 && (
+        <Section className="bg-white">
+          <SectionHeading eyebrow="What's Included" title="Services and inclusions" />
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {service.inclusions.map((inc) => (
+              <div key={inc.title} className="rounded-xl border border-slate-200 p-5">
+                <h3 className="text-base font-semibold text-[color:var(--color-navy-900)]">{inc.title}</h3>
+                {inc.desc && <p className="mt-2 text-sm leading-relaxed text-slate-600">{inc.desc}</p>}
               </div>
-            </Section>
-          )}
+            ))}
+          </div>
+        </Section>
+      )}
 
-          {service.problems.length > 0 && (
-            <Section className="bg-slate-50">
-              <SectionHeading eyebrow="The Problem" title="Challenges companies face without a dedicated partner" />
-              <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-                {service.problems.map((p) => (
-                  <li key={p} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700">
-                    <span aria-hidden="true" className="text-[color:var(--color-accent)]">✕</span>
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </Section>
-          )}
+      {service.process.length > 0 && (
+        <Section className="bg-slate-50">
+          <SectionHeading eyebrow="How It Works" title="Our planning and booking process" />
+          <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {service.process.map((step, i) => (
+              <li key={step.title} className="rounded-xl border border-slate-200 bg-white p-5">
+                <span className="text-2xl font-bold text-[color:var(--color-accent)]">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="mt-2 text-sm font-semibold text-[color:var(--color-navy-900)]">{step.title}</h3>
+                {step.desc && <p className="mt-2 text-xs leading-relaxed text-slate-600">{step.desc}</p>}
+              </li>
+            ))}
+          </ol>
+        </Section>
+      )}
 
-          {service.inclusions.length > 0 && (
-            <Section className="bg-white">
-              <SectionHeading eyebrow="What's Included" title="Services and inclusions" />
-              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {service.inclusions.map((inc) => (
-                  <div key={inc.title} className="rounded-xl border border-slate-200 p-5">
-                    <h3 className="text-base font-semibold text-[color:var(--color-navy-900)]">{inc.title}</h3>
-                    {inc.desc && <p className="mt-2 text-sm leading-relaxed text-slate-600">{inc.desc}</p>}
-                  </div>
-                ))}
+      {(service.benefits.length > 0 || service.useCases.length > 0) && (
+        <Section className="bg-white">
+          <div className="grid gap-10 lg:grid-cols-2">
+            {service.benefits.length > 0 && (
+              <div>
+                <SectionHeading eyebrow="Benefits" title={`Why choose Elephant Corporate for ${service.name.toLowerCase()}`} />
+                <ul className="mt-6 space-y-3">
+                  {service.benefits.map((b) => (
+                    <li key={b} className="flex gap-3 text-sm leading-relaxed text-slate-700">
+                      <span aria-hidden="true" className="mt-0.5 text-emerald-600">✓</span>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </Section>
-          )}
-
-          {service.process.length > 0 && (
-            <Section className="bg-slate-50">
-              <SectionHeading eyebrow="How It Works" title="Our planning and booking process" />
-              <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-                {service.process.map((step, i) => (
-                  <li key={step.title} className="rounded-xl border border-slate-200 bg-white p-5">
-                    <span className="text-2xl font-bold text-[color:var(--color-accent)]">{String(i + 1).padStart(2, "0")}</span>
-                    <h3 className="mt-2 text-sm font-semibold text-[color:var(--color-navy-900)]">{step.title}</h3>
-                    {step.desc && <p className="mt-2 text-xs leading-relaxed text-slate-600">{step.desc}</p>}
-                  </li>
-                ))}
-              </ol>
-            </Section>
-          )}
-
-          {(service.benefits.length > 0 || service.useCases.length > 0) && (
-            <Section className="bg-white">
-              <div className="grid gap-10 lg:grid-cols-2">
-                {service.benefits.length > 0 && (
-                  <div>
-                    <SectionHeading eyebrow="Benefits" title={`Why choose Elephant Corporate for ${service.name.toLowerCase()}`} />
-                    <ul className="mt-6 space-y-3">
-                      {service.benefits.map((b) => (
-                        <li key={b} className="flex gap-3 text-sm leading-relaxed text-slate-700">
-                          <span aria-hidden="true" className="mt-0.5 text-emerald-600">✓</span>
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {service.useCases.length > 0 && (
-                  <div>
-                    <SectionHeading eyebrow="Use Cases" title="Suited for" />
-                    <ul className="mt-6 space-y-3">
-                      {service.useCases.map((u) => (
-                        <li key={u} className="rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
-                          {u}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+            )}
+            {service.useCases.length > 0 && (
+              <div>
+                <SectionHeading eyebrow="Use Cases" title="Suited for" />
+                <ul className="mt-6 space-y-3">
+                  {service.useCases.map((u) => (
+                    <li key={u} className="rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
+                      {u}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </Section>
-          )}
-        </>
+            )}
+          </div>
+        </Section>
       )}
 
       {service.galleryImageUrls && service.galleryImageUrls.length > 0 && (

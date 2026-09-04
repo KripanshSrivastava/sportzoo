@@ -253,11 +253,11 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
       />
 
       <div className="field">
-        <label htmlFor="bodyText">Page content</label>
+        <label htmlFor="bodyText">Page content (main body)</label>
         <p className="text-muted mb-1 text-xs">
-          Write the page the way you want it read. Blank line = new paragraph. Start a line with
-          <code> ## </code> for a heading, <code> - </code> for a bullet, or paste an image URL on its own line.
-          Leave this empty to use the structured sections below instead.
+          The main text of the page, right under the header. Write it the way you want it read: blank line = new
+          paragraph, start a line with <code> ## </code> for a heading, <code> - </code> for a bullet, or paste an image
+          URL on its own line. If you leave this empty the &ldquo;Intro paragraphs&rdquo; box below is used instead.
         </p>
         <textarea
           id="bodyText"
@@ -270,20 +270,20 @@ export function ServicePageForm({ initial }: { initial: ServicePageFormValues })
       </div>
 
       <details className="rounded border p-3" style={{ borderColor: "var(--color-divider)" }}>
-        <summary className="cursor-pointer text-sm font-semibold">
-          Structured sections (used only when “Page content” above is empty)
-        </summary>
+        <summary className="cursor-pointer text-sm font-semibold">Extra sections (optional)</summary>
+        <p className="text-muted mt-2 text-xs">
+          Each of these becomes its own section further down the page, but only if you put something in it. Empty boxes
+          show nothing on the live page. Prefer to write everything as one flowing page? Use the{" "}
+          <strong>Page content</strong> box above and leave these empty.
+        </p>
         <button
           type="button"
-          className="btn btn-secondary mt-3"
+          className="btn btn-secondary mt-2"
           onClick={buildBodyFromSections}
           style={{ width: "fit-content" }}
         >
-          ↑ Move these into “Page content”
+          ↑ Fold these into “Page content” instead
         </button>
-        <p className="text-muted mt-1 text-xs">
-          Folds whatever is in these boxes into the free-form Page content field above, then you can clean it up there.
-        </p>
         <div className="mt-4 flex flex-col gap-4">
           <div className="field">
             <label htmlFor="intro">Intro paragraphs (one per line)</label>
